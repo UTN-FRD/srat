@@ -18,6 +18,12 @@
 		}
 	],
 	"require": {
+		"cakephp/localized": "2.1.*",
 		"pear-pear.cakephp.org/CakePHP": "~2.4.0"
+	},
+	"extra": {
+		"installer-paths": {
+			"src/Plugin/Localized": ["cakephp/localized"]
+		}
 	}
 }
