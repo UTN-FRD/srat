@@ -1,24 +1,24 @@
 <?php
 /**
- * Application model for Cake.
+ * Sistema de Registro de Asistenca y Temas
  *
- * This file is application-wide model file. You can put all
- * application-wide model-related methods here.
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.Model
- * @since         CakePHP(tm) v 0.2.9
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo licencia.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
 
+/**
+ * Dependencias
+ */
 App::uses('Model', 'Model');
 
 /**
- * Application model for Cake.
+ * Modelo de datos de la aplicación
  *
- * Add your application-wide methods in the class below, your models
- * will inherit them.
- *
- * @package       app.Model
+ * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
 class AppModel extends Model {
 }
