@@ -1,0 +1,16 @@
+# Archivos de texto con fin de línea LF
+* text eol=lf
+
+# Archivos de texto con fin de línea CRLF
+*.bat eol=crlf
+
+# Archivos binarios
+*.eot binary
+*.gif binary
+*.ico binary
+*.jpg binary
+*.mo binary
+*.otf binary
+*.png binary
+*.ttf binary
+*.woff binary
