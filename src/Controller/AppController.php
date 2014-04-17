@@ -41,4 +41,15 @@ class AppController extends Controller {
 		'Html',
 		'Session'
 	);
+
+/**
+ * beforeFilter
+ *
+ * @return void
+ */
+	public function beforeFilter() {
+		parent::beforeFilter();
+
+		$this->response->disableCache();
+	}
 }
