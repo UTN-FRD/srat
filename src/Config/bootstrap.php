@@ -78,3 +78,10 @@ Cache::config('default', array(
 	'engine' => 'File',
 	'prefix' => APP_DIR . '_default_'
 ));
+
+/**
+ * Plugins
+ */
+CakePlugin::load(array(
+	'DebugKit'
+));
