@@ -1,0 +1,10 @@
+# Aplicación
+/src/Config/database.php
+/src/tmp
+
+# Composer
+/composer.lock
+/vendor
+
+# Editores
+*.sublime-*
