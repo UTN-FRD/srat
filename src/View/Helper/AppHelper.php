@@ -1,24 +1,24 @@
 <?php
 /**
- * Application level View Helper
+ * Sistema de Registro de Asistenca y Temas
  *
- * This file is application-wide helper file. You can put all
- * application-wide helper-related methods here.
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.View.Helper
- * @since         CakePHP(tm) v 0.2.9
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo licencia.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
 
+/**
+ * Dependencias
+ */
 App::uses('Helper', 'View');
 
 /**
- * Application helper
+ * Ayudante de la aplicación
  *
- * Add your application-wide methods in the class below, your helpers
- * will inherit them.
- *
- * @package       app.View.Helper
+ * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
 class AppHelper extends Helper {
 }
