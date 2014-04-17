@@ -1,35 +1,31 @@
 <?php
 /**
- * Routes configuration
+ * Configuración de las rutas
  *
- * In this file, you set up routes to your controllers and their actions.
- * Routes are very important mechanism that allows you to freely connect
- * different URLs to chosen controllers and their actions (functions).
+ * Sistema de Registro de Asistenca y Temas
  *
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.Config
- * @since         CakePHP(tm) v 0.2.9
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
+ *
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo licencia.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
 
 /**
- * Here, we are connecting '/' (base path) to controller called 'Pages',
- * its action called 'display', and we pass a param to select the view file
- * to use (in this case, /app/View/Pages/home.ctp)...
+ * Índice
  */
-	Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
-/**
- * ...and connect the rest of 'Pages' controller's URLs.
- */
-	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+Router::connect('/', array(
+	'controller' => 'usuarios',
+	'action' => 'dashboard'
+));
 
 /**
- * Load all plugin routes. See the CakePlugin documentation on
- * how to customize the loading of plugin routes.
+ * Rutas de los plugins
  */
-	CakePlugin::routes();
+CakePlugin::routes();
 
 /**
- * Load the CakePHP default routes. Only remove this if you do not want to use
- * the built-in default routes.
+ * Rutas predeterminadas de CakePHP
  */
-	require CAKE . 'Config' . DS . 'routes.php';
+require CAKE . 'Config' . DS . 'routes.php';
