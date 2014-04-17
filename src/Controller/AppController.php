@@ -21,4 +21,13 @@ App::uses('Controller', 'Controller');
  * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
 class AppController extends Controller {
+
+/**
+ * Componentes
+ *
+ * @var array
+ */
+	public $components = array(
+		'Session'
+	);
 }
