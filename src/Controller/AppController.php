@@ -30,4 +30,15 @@ class AppController extends Controller {
 	public $components = array(
 		'Session'
 	);
+
+/**
+ * Ayudantes
+ *
+ * @var array
+ */
+	public $helpers = array(
+		'Form',
+		'Html',
+		'Session'
+	);
 }
