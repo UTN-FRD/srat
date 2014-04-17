@@ -1,25 +1,24 @@
 <?php
 /**
- * Application level Controller
+ * Sistema de Registro de Asistenca y Temas
  *
- * This file is application-wide controller file. You can put all
- * application-wide controller-related methods here.
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.Controller
- * @since         CakePHP(tm) v 0.2.9
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo licencia.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
 
+/**
+ * Dependencias
+ */
 App::uses('Controller', 'Controller');
 
 /**
- * Application Controller
+ * Controlador de la aplicación
  *
- * Add your application-wide methods in the class below, your controllers
- * will inherit them.
- *
- * @package		app.Controller
- * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
+ * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
 class AppController extends Controller {
 }
