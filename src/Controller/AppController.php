@@ -28,7 +28,8 @@ class AppController extends Controller {
  * @var array
  */
 	public $components = array(
-		'Session'
+		'Session',
+		'DebugKit.Toolbar'
 	);
 
 /**
