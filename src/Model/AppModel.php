@@ -21,4 +21,12 @@ App::uses('Model', 'Model');
  * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
 class AppModel extends Model {
+
+/**
+ * Nombre del campo utilizado
+ * por el tipo de búsqueda `list`
+ *
+ * @var string
+ */
+	public $displayField = 'nombre';
 }
