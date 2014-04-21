@@ -29,4 +29,11 @@ class AppModel extends Model {
  * @var string
  */
 	public $displayField = 'nombre';
+
+/**
+ * Nivel de recursividad
+ *
+ * @var integer
+ */
+	public $recursive = -1;
 }
