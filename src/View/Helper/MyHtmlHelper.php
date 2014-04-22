@@ -142,4 +142,20 @@ class MyHtmlHelper extends HtmlHelper {
 		$depth--;
 		return $out;
 	}
+
+/**
+ * Genera una lista HTML de enlaces
+ *
+ * @param array $links Enlaces
+ * @param array $options Opciones para el elemento UL pasadas a `MyHtmlHelper::tag()`
+ *
+ * @return string Lista HTML de enlaces o una cadena vacía en caso contrario
+ */
+	public function generateLinkList($links, $options = array()) {
+		$out = $this->parseLinkList($links);
+		if ($out) {
+			$out = $this->tag('ul', $out, $options);
+		}
+		return $out;
+	}
 }
