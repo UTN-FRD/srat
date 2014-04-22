@@ -30,4 +30,13 @@ class UsuariosController extends AppController {
 	public function dashboard() {
 		$this->set('title_for_layout', 'Dashboard');
 	}
+
+/**
+ * Inicio de sesión
+ *
+ * @return void
+ */
+	public function login() {
+		$this->set('title_for_layout', 'Inicio de sesión');
+	}
 }

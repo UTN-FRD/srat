@@ -21,6 +21,14 @@ Router::connect('/', array(
 ));
 
 /**
+ * Inicio de sesión
+ */
+Router::connect('/login', array(
+	'controller' => 'usuarios',
+	'action' => 'login'
+));
+
+/**
  * Rutas de los plugins
  */
 CakePlugin::routes();
