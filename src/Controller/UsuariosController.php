@@ -23,6 +23,22 @@ App::uses('AppController', 'Controller');
 class UsuariosController extends AppController {
 
 /**
+ * beforeFilter
+ *
+ * @return void
+ */
+	public function beforeFilter() {
+		parent::beforeFilter();
+
+		if (!$this->Auth->loggedIn()) {
+			if (in_array(strtolower($this->request->action), array('dashboard', 'logout'))) {
+				$this->Auth->authError = false;
+			}
+			$this->Auth->allow('login');
+		}
+	}
+
+/**
  * Dashboard
  *
  * @return void
