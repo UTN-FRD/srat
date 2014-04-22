@@ -37,6 +37,19 @@ class UsuariosController extends AppController {
  * @return void
  */
 	public function login() {
+		if ($this->Auth->loggedIn()) {
+			$this->redirect($this->Auth->loginRedirect);
+		}
+
+		if ($this->request->is('post')) {
+			if ($this->Auth->login()) {
+				$this->redirect($this->Auth->redirectUrl());
+			}
+
+			$this->request->data['Usuario']['password'] = null;
+			$this->Auth->flash('Los datos ingresados no son correctos.');
+		}
+
 		$this->set('title_for_layout', 'Inicio de sesión');
 	}
 
@@ -46,6 +59,6 @@ class UsuariosController extends AppController {
  * @return void
  */
 	public function logout() {
-		$this->autoRender = false;
+		$this->redirect($this->Auth->logout());
 	}
 }

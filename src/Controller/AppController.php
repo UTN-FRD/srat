@@ -30,6 +30,22 @@ class AppController extends Controller {
 	public $components = array(
 		'Security' => array('blackHoleCallback' => 'blackHole'),
 		'Session',
+		'Auth' => array(
+			'authenticate' => array(
+				'Form' => array(
+					'fields' => array('username' => 'legajo'),
+					'passwordHasher' => 'Blowfish',
+					'recursive' => -1,
+					'scope' => array('estado' => 1),
+					'userModel' => 'Usuario'
+				)
+			),
+			'authError' => 'La operación solicitada ha sido rechazada debido a que no cuenta con suficientes privilegios.',
+			'authorize' => 'Controller',
+			'loginAction' => array('controller' => 'usuarios', 'action' => 'login', 'admin' => false, 'plugin' => false),
+			'loginRedirect' => array('controller' => 'usuarios', 'action' => 'dashboard', 'admin' => false, 'plugin' => false),
+			'logoutRedirect' => array('controller' => 'usuarios', 'action' => 'login', 'admin' => false, 'plugin' => false)
+		),
 		'DebugKit.Toolbar'
 	);
 
@@ -53,6 +69,22 @@ class AppController extends Controller {
 		parent::beforeFilter();
 
 		$this->response->disableCache();
+	}
+
+/**
+ * Comprueba si un usuario tiene acceso a las acciones de un controlador
+ *
+ * @param array $user Datos del usuario
+ *
+ * @return boolean `true` en caso exitoso o `false` en caso contrario
+ */
+	public function isAuthorized($user = null) {
+		if ($this->request->prefix === 'admin') {
+			if ($user['rol_id'] != 1) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 /**
