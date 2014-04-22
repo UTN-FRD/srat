@@ -16,11 +16,11 @@
 App::uses('AppModel', 'Model');
 
 /**
- * Usuario
+ * Asignatura
  *
  * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
-class Usuario extends AppModel {
+class Asignatura extends AppModel {
 
 /**
  * belongsTo
@@ -28,9 +28,25 @@ class Usuario extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
-		'Rol' => array(
-			'className' => 'UsuariosRol',
-			'foreignKey' => 'rol_id'
+		'Area' => array(
+			'className' => 'AsignaturasArea',
+			'foreignKey' => 'area_id'
+		),
+		'Carrera' => array(
+			'className' => 'AsignaturasCarrera',
+			'foreignKey' => 'carrera_id'
+		),
+		'Materia' => array(
+			'className' => 'AsignaturasMateria',
+			'foreignKey' => 'materia_id'
+		),
+		'Nivel' => array(
+			'className' => 'AsignaturasNivel',
+			'foreignKey' => 'nivel_id'
+		),
+		'Tipo' => array(
+			'className' => 'AsignaturasTipo',
+			'foreignKey' => 'tipo_id'
 		)
 	);
 
@@ -40,6 +56,7 @@ class Usuario extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-		'Cargo'
+		'Cargo',
+		'Horario'
 	);
 }
