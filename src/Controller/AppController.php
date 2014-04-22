@@ -28,7 +28,7 @@ class AppController extends Controller {
  * @var array
  */
 	public $components = array(
-		'Security',
+		'Security' => array('blackHoleCallback' => 'blackHole'),
 		'Session',
 		'DebugKit.Toolbar'
 	);
@@ -53,5 +53,22 @@ class AppController extends Controller {
 		parent::beforeFilter();
 
 		$this->response->disableCache();
+	}
+
+/**
+ * Responde a solicitudes invalidadas por el componente Security
+ *
+ * @param null|string $type Tipo de error
+ *
+ * @return void
+ */
+	public function blackHole($type = null) {
+		$this->Session->setFlash('Se ha rechazado la solicitud debido a que los datos recibidos no son válidos.');
+
+		$action = $this->request->action;
+		if (isset($this->request->prefix)) {
+			$action = str_replace($this->request->prefix . '_', '', $action);
+		}
+		$this->redirect(compact('action'));
 	}
 }
