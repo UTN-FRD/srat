@@ -39,4 +39,13 @@ class UsuariosController extends AppController {
 	public function login() {
 		$this->set('title_for_layout', 'Inicio de sesión');
 	}
+
+/**
+ * Cierre de sesión
+ *
+ * @return void
+ */
+	public function logout() {
+		$this->autoRender = false;
+	}
 }

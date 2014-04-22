@@ -29,6 +29,14 @@ Router::connect('/login', array(
 ));
 
 /**
+ * Cierre de sesión
+ */
+Router::connect('/logout', array(
+	'controller' => 'usuarios',
+	'action' => 'logout'
+));
+
+/**
  * Rutas de los plugins
  */
 CakePlugin::routes();
