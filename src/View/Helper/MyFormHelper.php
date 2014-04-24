@@ -98,4 +98,69 @@ class MyFormHelper extends FormHelper {
 
 		return parent::label($fieldName, $text, $options);
 	}
+
+/**
+ * Genera uno o más elementos button
+ *
+ * Cada clave de la matriz `$buttons` se utiliza como texto del botón.
+ *
+ * ### Opciones
+ *
+ * - (boolean) `condition`
+ * Un valor verdadero determina si se procesa el botón.
+ *
+ * - (string) `type`
+ * Tipo de bótón.
+ *
+ * - (string|array) `url`
+ * Convierte el botón en un enlace.
+ *
+ * @param array $buttons Botones
+ * @param boolean $close Indica si se debe cerrar el formulario utilizando
+ * el método `MyFormHelper::end()`
+ *
+ * @return string Uno o más elementos button dentro de un elemento DIV y/o el
+ * cierre del formulario si `$close` es verdadero. Si no hay botones y
+ * `$close` es falso, una cadena vacía.
+ */
+	public function buttons($buttons, $close = true) {
+		$out = '';
+		if (!empty($buttons)) {
+			foreach ($buttons as $label => $options) {
+				if (isset($options['condition'])) {
+					if ($options['condition'] === false) {
+						continue;
+					}
+					unset($options['condition']);
+				}
+
+				if (!isset($options['class'])) {
+					$options['class'] = 'btn';
+				}
+
+				if (isset($options['type'])) {
+					if ($options['type'] == 'submit') {
+						$options['class'] .= ' btn-primary';
+					}
+				}
+
+				if (!isset($options['url'])) {
+					$out .= $this->button(h($label), $options) . PHP_EOL;
+				} else {
+					$url = $options['url'];
+					unset($options['url']);
+					$out .= $this->Html->link($label, $url, $options) . PHP_EOL;
+				}
+			}
+
+			if (!empty($out)) {
+				$out = $this->Html->tag('div', $out, array('class' => 'form-actions'));
+			}
+		}
+
+		if ($close) {
+			$out .= $this->end();
+		}
+		return $out;
+	}
 }
