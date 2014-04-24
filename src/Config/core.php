@@ -32,7 +32,7 @@ Configure::write('Error', array(
 Configure::write('Exception', array(
 	'handler' => 'ErrorHandler::handleException',
 	'log' => true,
-	'renderer' => 'ExceptionRenderer'
+	'renderer' => 'AppExceptionRenderer'
 ));
 
 /**
