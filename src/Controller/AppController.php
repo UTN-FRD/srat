@@ -55,7 +55,7 @@ class AppController extends Controller {
  * @var array
  */
 	public $helpers = array(
-		'Form',
+		'Form' => array('className' => 'MyForm'),
 		'Html' => array('className' => 'MyHtml'),
 		'Session'
 	);
