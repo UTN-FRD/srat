@@ -1,22 +1,21 @@
 <?php
 /**
+ * Página no encontrada
  *
+ * Sistema de Registro de Asistenca y Temas
  *
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.View.Errors
- * @since         CakePHP(tm) v 0.10.0.1076
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
+ *
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo licencia.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
 ?>
-<h2><?php echo $name; ?></h2>
-<p class="error">
-	<strong><?php echo __d('cake', 'Error'); ?>: </strong>
-	<?php printf(
-		__d('cake', 'The requested address %s was not found on this server.'),
-		"<strong>'{$url}'</strong>"
-	); ?>
+<p>
+	Lo sentimos pero la página <?= (!empty($this->request->here) ? sprintf('<strong>%s</strong>', h($this->request->here)) : 'solicitado') ?> no existe.
+	<br />
+	Si ha seguido un vínculo hasta este lugar, es probable que el vínculo esté desactualizado o sea incorrecto.
 </p>
-<?php
-if (Configure::read('debug') > 0):
-	echo $this->element('exception_stack_trace');
-endif;
-?>
+<p>Por favor, compruebe que la dirección ingresada sea correcta e intente nuevamente.</p>
+<p><a href="javascript:history.go(-1);">Volver a la página anterior</a></p>
