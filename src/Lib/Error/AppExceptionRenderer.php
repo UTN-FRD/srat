@@ -53,4 +53,19 @@ class AppExceptionRenderer extends ExceptionRenderer {
 
 		parent::error500($e);
 	}
+
+/**
+ * Genera la respuesta utilizando el objeto controlador
+ *
+ * @param string $template Plantilla
+ *
+ * @return void
+ */
+	protected function _outputMessage($template) {
+		if (ob_get_level() > 1) {
+			ob_end_clean();
+		}
+
+		parent::_outputMessage($template);
+	}
 }
