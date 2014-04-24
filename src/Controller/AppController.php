@@ -72,6 +72,17 @@ class AppController extends Controller {
 	}
 
 /**
+ * beforeRender
+ *
+ * @return void
+ */
+	public function beforeRender() {
+		parent::beforeRender();
+
+		$this->_generateTitle();
+	}
+
+/**
  * Comprueba si un usuario tiene acceso a las acciones de un controlador
  *
  * @param array $user Datos del usuario
@@ -102,5 +113,37 @@ class AppController extends Controller {
 			$action = str_replace($this->request->prefix . '_', '', $action);
 		}
 		$this->redirect(compact('action'));
+	}
+
+/**
+ * Establece el título para el diseño y/o la vista en caso que no se haya definido
+ *
+ * @return void
+ */
+	protected function _generateTitle() {
+		$action = strtolower($this->request->action);
+		if (isset($this->request->prefix)) {
+			$action = str_replace($this->request->prefix . '_', '', $action);
+		}
+
+		foreach (array('title_for_layout', 'title_for_view') as $key) {
+			if (!isset($this->viewVars[$key])) {
+				if ($action == 'index') {
+					$this->viewVars[$key] = Inflector::humanize($this->request->controller);
+				} else {
+					if ($key == 'title_for_layout') {
+						$this->viewVars[$key] = sprintf('%s - %s',
+							Inflector::humanize($action),
+							Inflector::humanize($this->request->controller)
+						);
+					} else {
+						$this->viewVars[$key] = sprintf('%s %s',
+							Inflector::humanize($action),
+							mb_strtolower(Inflector::singularize($this->request->controller))
+						);
+					}
+				}
+			}
+		}
 	}
 }
