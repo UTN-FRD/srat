@@ -42,4 +42,13 @@ class Usuario extends AppModel {
 	public $hasMany = array(
 		'Cargo'
 	);
+
+/**
+ * Campos virtuales
+ *
+ * @var array
+ */
+	public $virtualFields = array(
+		'nombre_completo' => 'CONCAT(Usuario.nombre, " ", Usuario.apellido)'
+	);
 }
