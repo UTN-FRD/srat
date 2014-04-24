@@ -31,7 +31,7 @@ class MyFormHelper extends FormHelper {
  *
  * @return string Mensaje de error o `null` si no hay error
  */
-	public function error($field, $text = null, $options = []) {
+	public function error($field, $text = null, $options = array()) {
 		return parent::error($field, $text, array_merge(
 			array('class' => 'help-inline', 'escape' => true, 'wrap' => 'span'),
 			$options
@@ -46,7 +46,7 @@ class MyFormHelper extends FormHelper {
  *
  * @return string Elemento
  */
-	public function input($fieldName, $options = []) {
+	public function input($fieldName, $options = array()) {
 		if (isset($options['after'])) {
 			$options['after'] = '<p class="help-block">' . $options['after'] . '</p></div>';
 		} else {
@@ -85,7 +85,7 @@ class MyFormHelper extends FormHelper {
  *
  * @return string Elemento label
  */
-	public function label($fieldName = null, $text = null, $options = []) {
+	public function label($fieldName = null, $text = null, $options = array()) {
 		if (is_string($options)) {
 			$options = array('class' => $options);
 		}
