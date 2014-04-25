@@ -42,6 +42,11 @@ class AppController extends Controller {
 			),
 			'authError' => 'La operación solicitada ha sido rechazada debido a que no cuenta con suficientes privilegios.',
 			'authorize' => 'Controller',
+			'flash' => array(
+				'element' => 'notify',
+				'key' => 'auth',
+				'params' => array('level' => 'error')
+			),
 			'loginAction' => array('controller' => 'usuarios', 'action' => 'login', 'admin' => false, 'plugin' => false),
 			'loginRedirect' => array('controller' => 'usuarios', 'action' => 'dashboard', 'admin' => false, 'plugin' => false),
 			'logoutRedirect' => array('controller' => 'usuarios', 'action' => 'login', 'admin' => false, 'plugin' => false)
