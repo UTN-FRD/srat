@@ -18,6 +18,7 @@
 		}
 	],
 	"require": {
+		"cakedc/search": "2.2.*",
 		"cakephp/debug_kit": "2.2.*",
 		"cakephp/localized": "2.1.*",
 		"pear-pear.cakephp.org/CakePHP": "~2.4.0"
@@ -25,7 +26,8 @@
 	"extra": {
 		"installer-paths": {
 			"src/Plugin/DebugKit": ["cakephp/debug_kit"],
-			"src/Plugin/Localized": ["cakephp/localized"]
+			"src/Plugin/Localized": ["cakephp/localized"],
+			"src/Plugin/Search": ["cakedc/search"]
 		}
 	}
 }

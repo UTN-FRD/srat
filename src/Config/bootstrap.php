@@ -83,5 +83,6 @@ Cache::config('default', array(
  * Plugins
  */
 CakePlugin::load(array(
-	'DebugKit'
+	'DebugKit',
+	'Search'
 ));
