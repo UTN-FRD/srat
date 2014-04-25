@@ -31,14 +31,16 @@
 			'bootstrap.min',
 			'layout',
 			'notify',
-			'form'
+			'form',
+			'table'
 		));
 
 		echo $this->Html->script(array(
 			'jquery.min',
 			'bootstrap.min',
 			'notify',
-			'form'
+			'form',
+			'table'
 		));
 
 		echo $this->fetch('css');

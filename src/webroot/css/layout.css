@@ -170,6 +170,7 @@ body {
 	background: #fff;
 	border: 1px solid #d0d5cb;
 	box-shadow: 0 2px 6px rgba(100, 100, 100, 0.3);
+	margin: 1px 0;
 	min-height: 550px;
 	padding: 0 15px 15px
 }
