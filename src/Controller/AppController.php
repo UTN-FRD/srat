@@ -61,6 +61,13 @@ class AppController extends Controller {
 	);
 
 /**
+ * Configuración de notificaciones
+ *
+ * @var array
+ */
+	protected $_notify = array();
+
+/**
  * beforeFilter
  *
  * @return void
@@ -144,6 +151,70 @@ class AppController extends Controller {
 					}
 				}
 			}
+		}
+	}
+
+/**
+ * Genera una notificación
+ *
+ * Las configuraciones se definen en la propiedad `AppController::$_notify` o bien,
+ * puede especificarse en el segundo parámetro de este método.
+ *
+ * ### Opciones
+ *
+ * (string) `level`
+ * Nivel de notificación, `error`, `info`, `success` o `warning`.
+ *
+ * (string) `message`
+ * Mensaje de la notificación.
+ *
+ * (boolean|array|string) `redirect`
+ * El valor `true` realiza una redirección a la URL actual (actualizar URL). Una matriz o cadena
+ * especifica la dirección URL a redireccionar.
+ *
+ * @param string|Exception $name Nombre de la configuración o instancia de una excepción
+ * @param array $config Opciones de configuración en caso de no tener una configuración
+ * definida o para modificar una existente
+ *
+ * @return void
+ */
+	protected function _notify($name = null, array $config = array()) {
+		$default = array(
+			'level' => 'error',
+			'message' => 'No hay descripción del error.',
+			'redirect' => false
+		);
+
+		if ($name instanceof Exception) {
+			$default['message'] = $name->getMessage();
+			$name = Inflector::underscore(str_replace('Exception', '', get_class($name)));
+		}
+
+		$options = array();
+		if (isset($this->_notify[$name])) {
+			$options = array_merge($this->_notify[$name], $config);
+		} else {
+			$options = array_merge($default, $config);
+		}
+
+		foreach (array_keys($default) as $key) {
+			if (!isset($options[$key])) {
+				$options[$key] = $default[$key];
+			}
+		}
+
+		extract($options);
+		$this->Session->setFlash($message, 'notify', compact('level'));
+
+		if (!empty($redirect)) {
+			if ($redirect === true) {
+				$action = strtolower($this->request->action);
+				if (isset($this->request->prefix)) {
+					$action = str_replace($this->request->prefix . '_', '', $action);
+				}
+				$redirect = compact('action');
+			}
+			$this->redirect($redirect);
 		}
 	}
 }
