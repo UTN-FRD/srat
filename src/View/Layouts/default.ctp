@@ -29,12 +29,14 @@
 
 		echo $this->Html->css(array(
 			'bootstrap.min',
-			'layout'
+			'layout',
+			'notify'
 		));
 
 		echo $this->Html->script(array(
 			'jquery.min',
-			'bootstrap.min'
+			'bootstrap.min',
+			'notify'
 		));
 
 		echo $this->fetch('css');
