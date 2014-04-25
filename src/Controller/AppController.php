@@ -70,7 +70,13 @@ class AppController extends Controller {
  *
  * @var array
  */
-	protected $_notify = array();
+	protected $_notify = array(
+		'blackHole' => array(
+			'level' => 'error',
+			'message' => 'Se ha rechazado la solicitud debido a que los datos recibidos no son válidos.',
+			'redirect' => true
+		)
+	);
 
 /**
  * beforeFilter
@@ -118,13 +124,7 @@ class AppController extends Controller {
  * @return void
  */
 	public function blackHole($type = null) {
-		$this->Session->setFlash('Se ha rechazado la solicitud debido a que los datos recibidos no son válidos.');
-
-		$action = $this->request->action;
-		if (isset($this->request->prefix)) {
-			$action = str_replace($this->request->prefix . '_', '', $action);
-		}
-		$this->redirect(compact('action'));
+		$this->_notify(__FUNCTION__);
 	}
 
 /**
