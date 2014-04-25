@@ -185,6 +185,50 @@ body {
 	padding-bottom: 2px
 }
 
+.page-tasks {
+	float: right;
+	margin-bottom: 0;
+	margin-top: 17px
+}
+
+.page-tasks > li > a {
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	border-radius: 0
+}
+
+.page-tasks .dropdown-menu {
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	border-radius: 0;
+	left: auto;
+	margin-top: 1px;
+	right: 0
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+	background-color: #eef2ea;
+	color: #75796f
+}
+
+.nav-tabs .open .dropdown-toggle,
+.nav-pills .open .dropdown-toggle,
+.nav > li.dropdown.open.active > a:hover,
+.nav > li.dropdown.open.active > a:focus {
+	background-color: #eef2ea;
+	color: #75796f
+}
+
+.nav li.dropdown.open .caret,
+.nav li.dropdown.open.active .caret,
+.nav li.dropdown.open a:hover .caret,
+.nav li.dropdown.open a:focus .caret,
+.nav .dropdown-toggle:hover .caret,
+.nav .dropdown-toggle:focus .caret {
+	border-bottom-color: #75796f;
+	border-top-color: #75796f
+}
+
 #view {
 	color: #202020;
 	padding: 0 5px

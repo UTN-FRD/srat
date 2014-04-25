@@ -81,6 +81,12 @@
 				</div>
 
 				<div id="content">
+					<?php
+					if (isset($tasks)):
+						echo $this->Html->generateLinkList($tasks, array('class' => 'nav nav-pills page-tasks'));
+					endif
+					?>
+
 					<h3 class="page-header">
 						<?php echo (!empty($title_for_view) ? h($title_for_view) : h($title_for_layout)) ?>
 					</h3>
