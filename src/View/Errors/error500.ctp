@@ -13,7 +13,7 @@
  */
 ?>
 <p>
-	Lo sentimos pero la página <?= (!empty($this->request->here) ? sprintf('<strong>%s</strong>', h($this->request->here)) : 'solicitado') ?> no está disponible debido a un error interno.
+	Lo sentimos pero la página <?php echo (!empty($this->request->here) ? sprintf('<strong>%s</strong>', h($this->request->here)) : 'solicitado') ?> no está disponible debido a un error interno.
 	<br />
 	Por favor, aguarde unos segundos y vuelva a intentarlo.
 </p>

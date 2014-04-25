@@ -13,7 +13,7 @@
  */
 ?>
 <p>
-	Lo sentimos pero la página <?= (!empty($this->request->here) ? sprintf('<strong>%s</strong>', h($this->request->here)) : 'solicitado') ?> no existe.
+	Lo sentimos pero la página <?php echo (!empty($this->request->here) ? sprintf('<strong>%s</strong>', h($this->request->here)) : 'solicitado') ?> no existe.
 	<br />
 	Si ha seguido un vínculo hasta este lugar, es probable que el vínculo esté desactualizado o sea incorrecto.
 </p>
