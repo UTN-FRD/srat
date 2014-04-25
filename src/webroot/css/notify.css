@@ -54,3 +54,16 @@
 	background-color: #eaaf51;
 	border-bottom: 1px solid #d99a36
 }
+
+.noscript {
+	background: #eeecdf;
+	border-top: 2px solid #e6e1cf;
+	bottom: 0;
+	color: #8b0000;
+	font-size: 1.3em;
+	padding: 10px 0;
+	position: fixed;
+	text-align: center;
+	width: 100%;
+	z-index: 99999
+}

@@ -91,5 +91,8 @@
 				</div>
 			</div>
 		</div>
+		<noscript class="noscript">
+			La experiencia con esta aplicación puede verse afectada debido a que JavaScript está deshabilitado.
+		</noscript>
 	</body>
 </html>
