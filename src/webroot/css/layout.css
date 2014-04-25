@@ -1,0 +1,197 @@
+/*!
+ * Diseño
+ *
+ * Sistema de Registro de Asistenca y Temas
+ *
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
+ *
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo licencia.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
+ */
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../fonts/OpenSans.eot');
+	src: url('../fonts/OpenSans.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/OpenSans.woff') format('woff'),
+	url('../fonts/OpenSans.ttf') format('truetype'),
+	url('../fonts/OpenSans.svg#OpenSans') format('svg');
+}
+
+@font-face {
+	font-family: 'Raleway';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../fonts/Raleway.eot');
+	src: url('../fonts/Raleway.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/Raleway.woff') format('woff'),
+	url('../fonts/Raleway.ttf') format('truetype'),
+	url('../fonts/Raleway.svg#Raleway') format('svg');
+}
+
+body {
+	background: #eef2ea
+}
+
+@media (max-width: 979px) {
+	body .navbar .navbar-inner .brand {
+		margin-left: -20px
+	}
+}
+
+@media (max-width: 1322px) {
+	.navbar {
+		width: 1342px;
+	}
+
+	#page {
+		width: 1322px
+	}
+}
+
+#wrapper {
+	z-index: 1
+}
+
+.navbar {
+	background: #fff;
+	border-bottom: 1px solid #d0d5cb;
+	box-shadow: 0 1px 4px rgba(0,0,0,0.065);
+	margin-bottom: 0
+}
+
+.navbar-inner {
+	-moz-border-radius: 0;
+	-moz-box-shadow: none;
+	-webkit-border-radius: 0;
+	-webkit-box-shadow: none;
+	background-color: #fff;
+	background-image: none;
+	border-radius: 0;
+	border: none;
+	box-shadow: none;
+	filter: none;
+	margin: 0 auto;
+	min-height: 50px;
+	width: 1302px
+}
+
+.navbar .navbar-inner .brand {
+	font-family: 'Raleway';
+	padding: 15px 5px 10px 20px
+}
+
+.navbar .navbar-inner .nav > li > a {
+	color: #0096BB;
+	padding: 15px
+}
+
+.navbar .nav > li > a:focus,
+.navbar .nav > li > a:hover {
+	background-color: #eef2ea;
+	color: #75796f
+}
+
+.navbar .nav li.dropdown.open > .dropdown-toggle .caret,
+.navbar .nav li.dropdown.active > .dropdown-toggle .caret,
+.navbar .nav li.dropdown.open.active > .dropdown-toggle .caret,
+.navbar .nav li.dropdown > a:hover .caret,
+.navbar .nav li.dropdown > a:focus .caret {
+	border-bottom-color: #75796f;
+	border-top-color: #75796f
+}
+
+.navbar .nav li.dropdown > .dropdown-toggle .caret {
+	border-bottom-color: #0096BB;
+	border-top-color: #0096BB
+}
+
+.navbar .navbar-inner .pull-right > li.divider-vertical {
+	border-left: 1px dotted #d0d5cb;
+	margin-top: 3px;
+	padding-top: 4px
+}
+
+.navbar .nav li.dropdown.open > .dropdown-toggle,
+.navbar .nav li.dropdown.active > .dropdown-toggle,
+.navbar .nav li.dropdown.open.active > .dropdown-toggle {
+	background-color: #eef2ea;
+	color: #75796f
+}
+
+.navbar .navbar-inner .dropdown-menu {
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	border-radius: 0;
+	margin-top: 0
+}
+
+.navbar .navbar-inner .pull-right > li > .dropdown-menu {
+	right: 3px
+}
+
+#page {
+	margin: 45px auto 30px;
+	padding: 15px;
+	width: 1302px
+}
+
+.crumbs {
+	font-size: 1.1em;
+	padding-top: 0
+}
+
+.breadcrumb {
+	background: none;
+	border-radius: 0;
+	float: left;
+	margin: 0;
+	padding: 0
+}
+
+.breadcrumb > li > .divider {
+	color: #75796f
+}
+
+.breadcrumb > .active {
+	color: #0b1902
+}
+
+.date {
+	float: right;
+	text-shadow: 0 1px 0 #fff
+}
+
+#content {
+	background: #fff;
+	border: 1px solid #d0d5cb;
+	box-shadow: 0 2px 6px rgba(100, 100, 100, 0.3);
+	margin: 2px 0;
+	min-height: 550px;
+	padding: 0 15px 15px
+}
+
+.page-header {
+	border-bottom: 1px dotted #d8d8d8;
+	font-family: 'Open Sans';
+	font-weight: normal;
+	line-height: 35px;
+	margin-bottom: 20px;
+	margin-top: 15px;
+	padding-bottom: 2px
+}
+
+#view {
+	color: #202020;
+	padding-left: 10px
+}
+
+#footer {
+	font-size: .9em;
+	text-align: right;
+	text-shadow: 0 1px 0 #fff
+}
