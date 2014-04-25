@@ -44,7 +44,10 @@ class UsuariosController extends AppController {
  * @return void
  */
 	public function dashboard() {
-		$this->set('title_for_layout', 'Dashboard');
+		$this->set(array(
+			'title_for_layout' => 'Dashboard',
+			'title_for_view' => 'Dashboard'
+		));
 	}
 
 /**
