@@ -37,7 +37,8 @@
 		echo $this->Html->script(array(
 			'jquery.min',
 			'bootstrap.min',
-			'notify'
+			'notify',
+			'form'
 		));
 
 		echo $this->fetch('css');
