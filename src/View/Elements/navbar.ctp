@@ -23,6 +23,15 @@ $loggedIn = !empty($user);
  */
 $links = array(
 	array(
+		'text' => 'Docentes',
+		'url' => array(
+			'controller' => 'usuarios',
+			'action' => 'docentes',
+			'admin' => false,
+			'plugin' => false
+		)
+	),
+	array(
 		'condition' => !$loggedIn,
 		'text' => 'Inicio de sesión',
 		'url' => array(

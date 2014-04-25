@@ -23,6 +23,21 @@ App::uses('AppController', 'Controller');
 class UsuariosController extends AppController {
 
 /**
+ * Componentes
+ *
+ * @var array
+ */
+	public $components = array(
+		'Search.Prg',
+		'Paginator' => array(
+			'limit' => 15,
+			'maxLimit' => 15,
+			'order' => array('legajo' => 'asc'),
+			'recursive' => 0
+		)
+	);
+
+/**
  * beforeFilter
  *
  * @return void
@@ -34,7 +49,7 @@ class UsuariosController extends AppController {
 			if (in_array(strtolower($this->request->action), array('dashboard', 'logout'))) {
 				$this->Auth->authError = false;
 			}
-			$this->Auth->allow('login');
+			$this->Auth->allow('docentes', 'login');
 		}
 	}
 
@@ -79,5 +94,27 @@ class UsuariosController extends AppController {
  */
 	public function logout() {
 		$this->redirect($this->Auth->logout());
+	}
+
+/**
+ * Docentes
+ *
+ * @return void
+ */
+	public function docentes() {
+		$settings = array(
+			'conditions' => array('rol_id' => 2),
+			'fields' => array('apellido', 'legajo', 'nombre'),
+			'recursive' => -1
+		);
+		$this->Prg->commonProcess();
+		$settings['conditions'] += $this->Usuario->parseCriteria($this->Prg->parsedParams());
+		$this->Paginator->settings += $settings;
+
+		$this->set(array(
+			'rows' => $this->Paginator->paginate(),
+			'title_for_layout' => 'Docentes',
+			'title_for_view' => 'Docentes'
+		));
 	}
 }

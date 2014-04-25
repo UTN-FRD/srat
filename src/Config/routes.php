@@ -37,6 +37,14 @@ Router::connect('/logout', array(
 ));
 
 /**
+ * Docentes
+ */
+Router::connect('/docentes/*', array(
+	'controller' => 'usuarios',
+	'action' => 'docentes'
+));
+
+/**
  * Rutas de los plugins
  */
 CakePlugin::routes();

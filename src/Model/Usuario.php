@@ -23,6 +23,15 @@ App::uses('AppModel', 'Model');
 class Usuario extends AppModel {
 
 /**
+ * Comportamientos
+ *
+ * @var array
+ */
+	public $actsAs = array(
+		'Search.Searchable'
+	);
+
+/**
  * belongsTo
  *
  * @var array
@@ -31,6 +40,18 @@ class Usuario extends AppModel {
 		'Rol' => array(
 			'className' => 'UsuariosRol',
 			'foreignKey' => 'rol_id'
+		)
+	);
+
+/**
+ * Campos de búsqueda
+ *
+ * @var array
+ */
+	public $filterArgs = array(
+		'buscar' => array(
+			'field' => array('legajo', 'apellido', 'nombre'),
+			'type' => 'like'
 		)
 	);
 
