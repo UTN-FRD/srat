@@ -30,7 +30,8 @@
 		echo $this->Html->css(array(
 			'bootstrap.min',
 			'layout',
-			'notify'
+			'notify',
+			'form'
 		));
 
 		echo $this->Html->script(array(
