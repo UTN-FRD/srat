@@ -11,7 +11,23 @@
  *
  * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
+
+/**
+ * CSS
+ */
+$this->Html->css('login', array('inline' => false));
+
 echo $this->Form->create('Usuario');
-echo $this->Form->input('legajo');
-echo $this->Form->input('password');
-echo $this->Form->end('Enviar');
+echo $this->Form->input('legajo', array(
+	'autofocus',
+	'class' => 'error',
+	'label' => 'Número de legajo'
+));
+echo $this->Form->input('password', array(
+	'label' => 'Contraseña'
+));
+echo $this->Form->button('Iniciar sesión', array(
+	'class' => 'btn',
+	'type' => 'submit'
+));
+echo $this->Form->end();
