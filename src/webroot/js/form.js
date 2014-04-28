@@ -31,4 +31,16 @@ $(function() {
 			.submit();
 		});
 	});
+
+	$('a.delete').each(function() {
+		$(this)
+		.removeAttr('onclick')
+		.off()
+		.on('click', function(e) {
+			if (confirm('¿Está seguro que desea eliminar este registro?\n\n¡Esta acción no se puede deshacer!')) {
+				$(this).prev().submit();
+			}
+			return false;
+		});
+	});
 });
