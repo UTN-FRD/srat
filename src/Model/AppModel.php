@@ -51,4 +51,18 @@ class AppModel extends Model {
 		}
 		return false;
 	}
+
+/**
+ * Valida que todos los valores de los campos pasados sean únicos
+ *
+ * @param array $check Nombre del campo y su valor
+ * @param array $fields Campos adicionales
+ *
+ * @return boolean `true` en caso exitoso o `false` en caso contrario
+ */
+	public function validateUnique($check, $fields = array()) {
+		$fields = array_flip($fields);
+		$check = array_merge($check, $fields);
+		return $this->isUnique(array_keys($check), false);
+	}
 }
