@@ -18,6 +18,13 @@ $(function() {
 		$('div.required > .control-label, div.required > fieldset > legend', self)
 		.append('&nbsp;<span class="required">*</span>');
 
+		$('.checkbox-control p.help-inline', self).on('click', function() {
+			var prev = $(this).prev();
+			if (prev.is(':visible') && !prev.prop('disabled')) {
+				prev.click();
+			}
+		});
+
 		$('button.refresh', self).on('click', function() {
 			$(self)
 			.append('<input class="form-refresh" type="hidden" name="refresh" value="1" />')

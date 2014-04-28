@@ -48,7 +48,11 @@ class MyFormHelper extends FormHelper {
  */
 	public function input($fieldName, $options = array()) {
 		if (isset($options['after'])) {
-			$options['after'] = '<p class="help-block">' . $options['after'] . '</p></div>';
+			$helpClass = 'help-block';
+			if (isset($options['type']) && $options['type'] === 'checkbox') {
+				$helpClass = 'help-inline';
+			}
+			$options['after'] = '<p class="' . $helpClass . '">' . $options['after'] . '</p></div>';
 		} else {
 			$options['after'] = '</div>';
 		}
@@ -66,6 +70,10 @@ class MyFormHelper extends FormHelper {
 				$options['div']['class'] = implode(' ', $options['div']['class']);
 			}
 			$options['div']['class'] .= ' control-group';
+		}
+
+		if (isset($options['type']) && $options['type'] === 'checkbox') {
+			$options['div']['class'] .= ' checkbox-control';
 		}
 
 		if (!isset($options['format'])) {

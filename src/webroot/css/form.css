@@ -109,7 +109,7 @@ label span.required {
 }
 
 .form-vertical .checkbox-control > .controls > input {
-	margin-top: 2px
+	margin-top: 0
 }
 
 .form-vertical .checkbox-control p.help-inline {
