@@ -36,4 +36,19 @@ class AppModel extends Model {
  * @var integer
  */
 	public $recursive = -1;
+
+/**
+ * Valida que un registro existe en un modelo asociado
+ *
+ * @param array $check Nombre del campo y su valor
+ * @param string $model Modelo asociado
+ *
+ * @return boolean `true` en caso exitoso o `false` en caso contrario
+ */
+	public function validateExists($check, $model) {
+		if (!empty($check) && isset($this->{$model})) {
+			return $this->{$model}->exists(current($check));
+		}
+		return false;
+	}
 }
