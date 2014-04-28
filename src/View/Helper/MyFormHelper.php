@@ -72,7 +72,17 @@ class MyFormHelper extends FormHelper {
 			$options['format'] = array('before', 'label', 'between', 'input', 'error', 'after');
 		}
 
-		return parent::input($fieldName, $options);
+		$output = '';
+		if (!empty($options['locked'])) {
+			unset($options['locked']);
+			$options += array(
+				'disabled' => true,
+				'secure' => self::SECURE_SKIP
+			);
+			$output = $this->hidden($fieldName, array('id' => false));
+		}
+
+		return $output . parent::input($fieldName, $options);
 	}
 
 /**
