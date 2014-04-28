@@ -75,6 +75,36 @@ class AppController extends Controller {
 			'level' => 'error',
 			'message' => 'Se ha rechazado la solicitud debido a que los datos recibidos no son válidos.',
 			'redirect' => true
+		),
+		'record_created' => array(
+			'level' => 'success',
+			'message' => 'La operación solicitada se ha completado exitosamente.',
+			'redirect' => true
+		),
+		'record_modified' => array(
+			'level' => 'success',
+			'message' => 'La operación solicitada se ha completado exitosamente.',
+			'redirect' => array('action' => 'index')
+		),
+		'record_not_saved' => array(
+			'level' => 'warning',
+			'message' => 'La operación solicitada no se ha completado debido a un error inesperado.',
+			'redirect' => false
+		),
+		'record_deleted' => array(
+			'level' => 'success',
+			'message' => 'La operación solicitada se ha completado exitosamente.',
+			'redirect' => array('action' => 'index')
+		),
+		'record_not_deleted' => array(
+			'level' => 'warning',
+			'message' => 'La operación solicitada no se ha completado debido a un error inesperado.',
+			'redirect' => array('action' => 'index')
+		),
+		'record_delete_associated' => array(
+			'level' => 'warning',
+			'message' => 'La operación solicitada no se ha completado debido a que el registro se encuentra asociado.',
+			'redirect' => array('action' => 'index')
 		)
 	);
 
