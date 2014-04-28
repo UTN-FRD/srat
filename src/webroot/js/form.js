@@ -13,7 +13,15 @@
 
 $(function() {
 	$('form:visible').each(function() {
-		$('div.required > .control-label, div.required > fieldset > legend', this)
+		var self = this;
+
+		$('div.required > .control-label, div.required > fieldset > legend', self)
 		.append('&nbsp;<span class="required">*</span>');
+
+		$('button.refresh', self).on('click', function() {
+			$(self)
+			.append('<input class="form-refresh" type="hidden" name="refresh" value="1" />')
+			.submit();
+		});
 	});
 });
