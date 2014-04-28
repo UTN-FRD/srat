@@ -65,4 +65,35 @@ class AppModel extends Model {
 		$check = array_merge($check, $fields);
 		return $this->isUnique(array_keys($check), false);
 	}
+
+/**
+ * Comprueba si un registro se encuentra asociado examinando las asociaciones del modelo
+ *
+ * @param integer|string|array $id Identificador del registro
+ *
+ * @return boolean `true` en caso exitoso o `false` en caso contrario
+ */
+	public function hasAssociations($id = null) {
+		if (!empty($id)) {
+			if (is_array($id)) {
+				$id = $id[0];
+			}
+			$this->id = $id;
+		}
+		$id = $this->id;
+
+		if (!empty($id)) {
+			foreach ($this->getAssociated() as $model => $type) {
+				if (in_array($type, array('hasOne', 'hasMany'))) {
+					$foreignKey = $this->{$type}[$model]['foreignKey'];
+					if (!empty($foreignKey)) {
+						return $this->{$model}->hasAny(array(
+							$foreignKey => $id
+						));
+					}
+				}
+			}
+		}
+		return false;
+	}
 }
