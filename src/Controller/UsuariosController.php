@@ -45,7 +45,7 @@ class UsuariosController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
-		if (!$this->Auth->loggedIn()) {
+		if (!$this->Auth->user()) {
 			if (in_array(strtolower($this->request->action), array('dashboard', 'logout'))) {
 				$this->Auth->authError = false;
 			}
@@ -71,7 +71,7 @@ class UsuariosController extends AppController {
  * @return void
  */
 	public function login() {
-		if ($this->Auth->loggedIn()) {
+		if ($this->Auth->user()) {
 			$this->redirect($this->Auth->loginRedirect);
 		}
 
