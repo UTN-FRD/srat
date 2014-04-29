@@ -157,8 +157,12 @@ class MyFormHelper extends FormHelper {
 				}
 
 				if (isset($options['type'])) {
-					if ($options['type'] == 'submit') {
+					if ($options['type'] === 'submit') {
 						$options['class'] .= ' btn-primary';
+					} elseif ($options['type'] === 'refresh') {
+						$options['class'] .= ' refresh';
+						$options['type'] = 'button';
+						$this->unlockField('refresh');
 					}
 				}
 
