@@ -87,9 +87,9 @@ class AppModel extends Model {
 				if (in_array($type, array('hasOne', 'hasMany'))) {
 					$foreignKey = $this->{$type}[$model]['foreignKey'];
 					if (!empty($foreignKey)) {
-						return $this->{$model}->hasAny(array(
-							$foreignKey => $id
-						));
+						if ($this->{$model}->hasAny(array($foreignKey => $id))) {
+							return true;
+						}
 					}
 				}
 			}
