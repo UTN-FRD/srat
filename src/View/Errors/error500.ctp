@@ -11,6 +11,11 @@
  *
  * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
+
+/**
+ * Breadcrumbs
+ */
+$this->Html->addCrumb('Página no disponible');
 ?>
 <p>
 	Lo sentimos pero la página <?php echo (!empty($this->request->here) ? sprintf('<strong>%s</strong>', h($this->request->here)) : 'solicitado') ?> no está disponible debido a un error interno.

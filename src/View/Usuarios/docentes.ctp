@@ -18,7 +18,7 @@
 $this->Html->css('usuarios', array('inline' => false));
 
 /**
- * Breadcrumb
+ * Breadcrumbs
  */
 $this->Html->addCrumb('Docentes');
 
