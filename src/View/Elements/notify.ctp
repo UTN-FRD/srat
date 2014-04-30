@@ -12,7 +12,7 @@
  * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
 ?>
-<div class="notify-<?php echo (!empty($level) ? $level : 'error') ?>">
+<div class="notify-<?php echo (isset($level) ? $level : 'error') ?>">
 	<button class="close">&times;</button>
 	<?php echo h($message) ?>
 </div>

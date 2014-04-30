@@ -163,17 +163,17 @@ class AppController extends Controller {
  * @return void
  */
 	protected function _generateTitle() {
-		$action = strtolower($this->request->action);
-		if (isset($this->request->prefix)) {
+		$action = $this->request->action;
+		if ($this->request->prefix) {
 			$action = str_replace($this->request->prefix . '_', '', $action);
 		}
 
 		foreach (array('title_for_layout', 'title_for_view') as $key) {
 			if (!isset($this->viewVars[$key])) {
-				if ($action == 'index') {
+				if ($action === 'index') {
 					$this->viewVars[$key] = Inflector::humanize($this->request->controller);
 				} else {
-					if ($key == 'title_for_layout') {
+					if ($key === 'title_for_layout') {
 						$this->viewVars[$key] = sprintf('%s - %s',
 							Inflector::humanize($action),
 							Inflector::humanize($this->request->controller)
@@ -238,18 +238,17 @@ class AppController extends Controller {
 			}
 		}
 
-		extract($options);
-		$this->Session->setFlash($message, 'notify', compact('level'));
+		$this->Session->setFlash($options['message'], 'notify', array('level' => $options['level']));
 
-		if (!empty($redirect)) {
-			if ($redirect === true) {
-				$action = strtolower($this->request->action);
-				if (isset($this->request->prefix)) {
+		if ($options['redirect']) {
+			if ($options['redirect'] === true) {
+				$action = $this->request->action;
+				if ($this->request->prefix) {
 					$action = str_replace($this->request->prefix . '_', '', $action);
 				}
-				$redirect = compact('action');
+				$options['redirect'] = compact('action');
 			}
-			$this->redirect($redirect);
+			$this->redirect($options['redirect']);
 		}
 	}
 }

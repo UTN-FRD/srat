@@ -16,7 +16,7 @@
  * Usuario
  */
 $user = AuthComponent::user();
-$loggedIn = !empty($user);
+$loggedIn = (bool)$user;
 
 /**
  * Enlaces

@@ -60,82 +60,84 @@ class MyHtmlHelper extends HtmlHelper {
 		$depth++;
 
 		$out = '';
-		foreach ($links as $link) {
-			if (!is_array($link)) {
-				continue;
-			}
-
-			$link += array(
-				'attribs' => array(),
-				'condition' => true,
-				'divider' => false,
-				'dropdown' => array(),
-				'header' => false,
-				'options' => array(),
-				'text' => null,
-				'url' => '#'
-			);
-
-			if (!$link['condition']) {
-				continue;
-			} elseif ($link['divider']) {
-				$link['divider'] = 'divider';
-				if ($depth <= 1) {
-					$link['divider'] .= '-vertical';
-				}
-				$out .= $this->tag('li', '', array('class' => $link['divider']));
-			} elseif ($link['header'] && !empty($link['text'])) {
-				$out .= $this->tag('li', h($link['text']), array('class' => 'nav-header'));
-			} else {
-				if (empty($link['text']) ||	(empty($link['url']) && empty($link['dropdown']))) {
+		if (!empty($links)) {
+			foreach ($links as $link) {
+				if (!is_array($link)) {
 					continue;
 				}
 
-				if ($depth > 1 || empty($link['dropdown'])) {
-					$link['dropdown'] = false;
+				$link += array(
+					'attribs' => array(),
+					'condition' => true,
+					'divider' => false,
+					'dropdown' => array(),
+					'header' => false,
+					'options' => array(),
+					'text' => null,
+					'url' => '#'
+				);
+
+				if (!$link['condition']) {
+					continue;
+				} elseif ($link['divider'] === true) {
+					$link['divider'] = 'divider';
+					if ($depth <= 1) {
+						$link['divider'] .= '-vertical';
+					}
+					$out .= $this->tag('li', '', array('class' => $link['divider']));
+				} elseif ($link['header'] === true && $link['text']) {
+					$out .= $this->tag('li', h($link['text']), array('class' => 'nav-header'));
 				} else {
-					$link['dropdown'] = $this->parseLinkList($link['dropdown']);
-					if ($link['dropdown']) {
-						$link['dropdown'] = $this->tag('ul', $link['dropdown'], array('class' => 'dropdown-menu'));
+					if (!$link['text'] || (!$link['url'] && !$link['dropdown'])) {
+						continue;
+					}
 
-						if (!isset($link['attribs']['class'])) {
-							$link['attribs']['class'] = 'dropdown';
-						} else {
-							$link['attribs']['class'] .= ' dropdown';
+					if ($depth > 1 || !$link['dropdown']) {
+						$link['dropdown'] = false;
+					} else {
+						$link['dropdown'] = $this->parseLinkList($link['dropdown']);
+						if ($link['dropdown']) {
+							$link['dropdown'] = $this->tag('ul', $link['dropdown'], array('class' => 'dropdown-menu'));
+
+							if (!isset($link['attribs']['class'])) {
+								$link['attribs']['class'] = 'dropdown';
+							} else {
+								$link['attribs']['class'] .= ' dropdown';
+							}
+
+							if (!isset($link['options']['class'])) {
+								$link['options']['class'] = 'dropdown-toggle';
+							} else {
+								$link['options']['class'] .= ' dropdown-toggle';
+							}
+
+							$link['options']['data-toggle'] = 'dropdown';
+							$link['url'] = '#';
 						}
-
-						if (!isset($link['options']['class'])) {
-							$link['options']['class'] = 'dropdown-toggle';
-						} else {
-							$link['options']['class'] .= ' dropdown-toggle';
-						}
-
-						$link['options']['data-toggle'] = 'dropdown';
-						$link['url'] = '#';
 					}
-				}
-
-				if ($link['dropdown']) {
-					if (!isset($link['options']['escape'])) {
-						$link['options']['escape'] = true;
-					}
-
-					if ($link['options']['escape']) {
-						$link['text'] = h($link['text']);
-					}
-					$link['options']['escape'] = false;
 
 					if ($link['dropdown']) {
-						$link['text'] .= ' ' . $this->tag('b', '', array('class' => 'caret'));
+						if (!isset($link['options']['escape'])) {
+							$link['options']['escape'] = true;
+						}
+
+						if ($link['options']['escape']) {
+							$link['text'] = h($link['text']);
+						}
+						$link['options']['escape'] = false;
+
+						if ($link['dropdown']) {
+							$link['text'] .= ' ' . $this->tag('b', '', array('class' => 'caret'));
+						}
 					}
-				}
 
-				$link['text'] = $this->link($link['text'], $link['url'], $link['options']);
-				if ($link['dropdown']) {
-					$link['text'] .= $link['dropdown'];
-				}
+					$link['text'] = $this->link($link['text'], $link['url'], $link['options']);
+					if ($link['dropdown']) {
+						$link['text'] .= $link['dropdown'];
+					}
 
-				$out .= $this->tag('li', $link['text'], $link['attribs']);
+					$out .= $this->tag('li', $link['text'], $link['attribs']);
+				}
 			}
 		}
 

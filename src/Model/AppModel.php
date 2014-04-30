@@ -46,8 +46,10 @@ class AppModel extends Model {
  * @return boolean `true` en caso exitoso o `false` en caso contrario
  */
 	public function validateExists($check, $model) {
-		if (!empty($check) && isset($this->{$model})) {
-			return $this->{$model}->exists(current($check));
+		if (!empty($check) && !empty($model)) {
+			if (isset($this->{$model})) {
+				return $this->{$model}->exists(current($check));
+			}
 		}
 		return false;
 	}
@@ -61,9 +63,14 @@ class AppModel extends Model {
  * @return boolean `true` en caso exitoso o `false` en caso contrario
  */
 	public function validateUnique($check, $fields = array()) {
-		$fields = array_flip($fields);
-		$check = array_merge($check, $fields);
-		return $this->isUnique(array_keys($check), false);
+		if (!empty($check)) {
+			if ($fields) {
+				$fields = array_flip((array)$fields);
+				$check = array_merge((array)$check, $fields);
+			}
+			return $this->isUnique(array_keys($check), false);
+		}
+		return false;
 	}
 
 /**
@@ -74,7 +81,7 @@ class AppModel extends Model {
  * @return boolean `true` en caso exitoso o `false` en caso contrario
  */
 	public function hasAssociations($id = null) {
-		if (!empty($id)) {
+		if ($id) {
 			if (is_array($id)) {
 				$id = $id[0];
 			}
@@ -82,11 +89,11 @@ class AppModel extends Model {
 		}
 		$id = $this->id;
 
-		if (!empty($id)) {
+		if ($id) {
 			foreach ($this->getAssociated() as $model => $type) {
 				if (in_array($type, array('hasOne', 'hasMany'))) {
 					$foreignKey = $this->{$type}[$model]['foreignKey'];
-					if (!empty($foreignKey)) {
+					if ($foreignKey) {
 						if ($this->{$model}->hasAny(array($foreignKey => $id))) {
 							return true;
 						}

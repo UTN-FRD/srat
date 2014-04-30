@@ -38,7 +38,7 @@ $params = $this->Paginator->params();
 				if ($params['page'] < $params['pageCount']):
 					echo $this->Paginator->next('Siguiente »');
 					echo $this->Paginator->last('Última »»');
-				endif
+				endif;
 				?>
 			</span>
 		<?php endif ?>

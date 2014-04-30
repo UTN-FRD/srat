@@ -46,7 +46,7 @@ class UsuariosController extends AppController {
 		parent::beforeFilter();
 
 		if (!$this->Auth->user()) {
-			if (in_array(strtolower($this->request->action), array('dashboard', 'logout'))) {
+			if (in_array($this->request->action, array('dashboard', 'logout'))) {
 				$this->Auth->authError = false;
 			}
 			$this->Auth->allow('docentes', 'login');

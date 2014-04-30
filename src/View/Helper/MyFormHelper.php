@@ -175,7 +175,7 @@ class MyFormHelper extends FormHelper {
 				}
 			}
 
-			if (!empty($out)) {
+			if ($out) {
 				$out = $this->Html->tag('div', $out, array('class' => 'form-actions'));
 			}
 		}
