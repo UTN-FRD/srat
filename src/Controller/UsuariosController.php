@@ -32,8 +32,7 @@ class UsuariosController extends AppController {
 		'Paginator' => array(
 			'limit' => 15,
 			'maxLimit' => 15,
-			'order' => array('legajo' => 'asc'),
-			'recursive' => 0
+			'order' => array('legajo' => 'asc')
 		)
 	);
 
@@ -116,5 +115,21 @@ class UsuariosController extends AppController {
 			'title_for_layout' => 'Docentes',
 			'title_for_view' => 'Docentes'
 		));
+	}
+
+/**
+ * Índice
+ *
+ * @return void
+ */
+	public function admin_index() {
+		$this->Prg->commonProcess();
+		$this->Paginator->settings += array(
+			'conditions' => $this->Usuario->parseCriteria($this->Prg->parsedParams()),
+			'fields' => array('id', 'apellido', 'estado', 'legajo', 'nombre', 'Rol.nombre'),
+			'recursive' => 0
+		);
+
+		$this->set('rows', $this->Paginator->paginate());
 	}
 }

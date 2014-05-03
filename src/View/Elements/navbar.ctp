@@ -17,11 +17,31 @@
  */
 $user = AuthComponent::user();
 $loggedIn = (bool)$user;
+$isAdmin = ($user['rol_id'] == 1);
 
 /**
  * Enlaces
  */
 $links = array(
+	array(
+		'condition' => $isAdmin,
+		'text' => 'Sistema',
+		'dropdown' => array(
+			array(
+				'text' => 'Usuarios',
+				'url' => array(
+					'controller' => 'usuarios',
+					'action' => 'index',
+					'admin' => true,
+					'plugin' => false
+				)
+			)
+		)
+	),
+	array(
+		'condition' => $isAdmin,
+		'divider' => true
+	),
 	array(
 		'text' => 'Docentes',
 		'url' => array(
