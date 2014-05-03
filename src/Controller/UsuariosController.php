@@ -153,4 +153,40 @@ class UsuariosController extends AppController {
 
 		$this->set('roles', $this->Usuario->Rol->find('list'));
 	}
+
+/**
+ * Editar
+ *
+ * @param integer|null $id Identificador
+ *
+ * @return void
+ *
+ * @throws NotFoundException Si el registro no existe
+ */
+	public function admin_editar($id = null) {
+		$this->Usuario->id = $id;
+		if (!filter_var($id, FILTER_VALIDATE_INT) || !$this->Usuario->exists()) {
+			throw new NotFoundException;
+		}
+
+		if ($this->request->is('put')) {
+			if (empty($this->request->data['refresh'])) {
+				if ($this->Usuario->save($this->request->data)) {
+					$this->_notify('record_modified');
+				} elseif (empty($this->Usuario->validationErrors)) {
+					$this->_notify('record_not_saved');
+				}
+			} else {
+				unset($this->request->data['Usuario']['password']);
+			}
+		}
+
+		if (!$this->request->data) {
+			$this->request->data = $this->Usuario->read(array(
+				'id', 'reset', 'rol_id', 'apellido', 'estado', 'legajo', 'nombre'
+			));
+		}
+
+		$this->set('roles', $this->Usuario->Rol->find('list'));
+	}
 }

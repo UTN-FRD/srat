@@ -179,6 +179,12 @@ class Usuario extends AppModel {
  * @return boolean `true` para continuar la operación de validación o `false` para cancelarla
  */
 	public function beforeValidate($options = array()) {
+		if ($this->id) {
+			if (empty($this->data[$this->alias]['password'])) {
+				$this->validator()->getField('password')->getRule('notEmpty')->allowEmpty = true;
+			}
+		}
+
 		if (!empty($this->data[$this->alias]['reset'])) {
 			$this->data[$this->alias]['password'] = 'abc12345';
 		}
