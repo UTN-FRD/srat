@@ -47,12 +47,14 @@ Inflector::rules('singular', array(
 		'/(ll)es$/i' => '\1e',
 		'/([r|d|j|n|l|m|y|z])es$/i' => '\1',
 		'/as$/i' => 'a',
-		'/([ti])a$/i' => '\1a'
+		'/([ti])a$/i' => '\1a',
+		'/is$/i' => '\1is',
 	)
 ));
 Inflector::rules('plural', array(
 	'rules' => array(
 		'/([r|d|j|n|l|m|y|z])$/i' => '\1es',
+		'/is$/i' => '\1is',
 		'/a$/i' => '\1as'
 	)
 ));
