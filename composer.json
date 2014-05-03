@@ -24,7 +24,8 @@
 	},
 	"require-dev": {
 		"cakephp/debug_kit" : "2.2.*",
-		"cakephp/localized": "2.1.*"
+		"cakephp/localized": "2.1.*",
+		"phpunit/phpunit": "3.7.*"
 	},
 	"extra": {
 		"installer-paths": {
