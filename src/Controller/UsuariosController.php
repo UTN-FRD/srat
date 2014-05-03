@@ -132,4 +132,25 @@ class UsuariosController extends AppController {
 
 		$this->set('rows', $this->Paginator->paginate());
 	}
+
+/**
+ * Agregar
+ *
+ * @return void
+ */
+	public function admin_agregar() {
+		if ($this->request->is('post')) {
+			if (empty($this->request->data['refresh'])) {
+				if ($this->Usuario->save($this->request->data)) {
+					$this->_notify('record_created');
+				} elseif (empty($this->Usuario->validationErrors)) {
+					$this->_notify('record_not_saved');
+				}
+			} else {
+				unset($this->request->data['Usuario']['password']);
+			}
+		}
+
+		$this->set('roles', $this->Usuario->Rol->find('list'));
+	}
 }

@@ -23,6 +23,18 @@ $this->Html->css('usuarios', array('inline' => false));
 $this->Html->addCrumb('Usuarios');
 
 /**
+ * Tareas
+ */
+$this->set('tasks', array(
+	array(
+		'text' => 'Agregar',
+		'url' => array(
+			'action' => 'agregar'
+		)
+	)
+));
+
+/**
  * Cabeceras
  */
 $headers = array(
