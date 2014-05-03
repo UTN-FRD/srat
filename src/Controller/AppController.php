@@ -242,11 +242,7 @@ class AppController extends Controller {
 
 		if ($options['redirect']) {
 			if ($options['redirect'] === true) {
-				$action = $this->request->action;
-				if ($this->request->prefix) {
-					$action = str_replace($this->request->prefix . '_', '', $action);
-				}
-				$options['redirect'] = compact('action');
+				$options['redirect'] = '';
 			}
 			$this->redirect($options['redirect']);
 		}
