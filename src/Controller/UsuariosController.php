@@ -189,4 +189,35 @@ class UsuariosController extends AppController {
 
 		$this->set('roles', $this->Usuario->Rol->find('list'));
 	}
+
+/**
+ * Eliminar
+ *
+ * @param integer|null $id Identificador
+ *
+ * @return void
+ *
+ * @throws MethodNotAllowedException Si el método es diferente de DELETE
+ * @throws NotFoundException Si el registro no existe o corresponde al primer usuario
+ */
+	public function admin_eliminar($id = null) {
+		if (!$this->request->is('delete')) {
+			throw new MethodNotAllowedException;
+		}
+
+		$this->Usuario->id = $id;
+		if ($id == 1 || !filter_var($id, FILTER_VALIDATE_INT) || !$this->Usuario->exists()) {
+			throw new NotFoundException;
+		}
+
+		$notify = 'record_not_deleted';
+		if ($this->Usuario->hasAssociations()) {
+			$notify = 'record_delete_associated';
+		} else {
+			if ($this->Usuario->delete()) {
+				$notify = 'record_deleted';
+			}
+		}
+		$this->_notify($notify);
+	}
 }

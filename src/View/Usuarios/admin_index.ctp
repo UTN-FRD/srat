@@ -57,6 +57,13 @@ if (!empty($rows)):
 		$tasks = array(
 			$this->Html->link('editar', array('action' => 'editar', $row['Usuario']['id']))
 		);
+		if ($row['Usuario']['id'] > 1):
+			$tasks[] = $this->Form->postLink(
+				'eliminar',
+				array('action' => 'eliminar', $row['Usuario']['id']),
+				array('class' => 'delete', 'method' => 'delete')
+			);
+		endif;
 
 		$rows[$rid] = array(
 			$start++,
