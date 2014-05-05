@@ -113,6 +113,19 @@ Router::connect('/admin/asignaturas/horarios/:action/*', [
 ]);
 
 /**
+ * Cargos
+ */
+Router::connect('/admin/asignaturas/usuarios', [
+	'controller' => 'cargos',
+	'action' => 'index',
+	'admin' => true
+]);
+Router::connect('/admin/asignaturas/usuarios/:action/*', [
+	'controller' => 'cargos',
+	'admin' => true
+]);
+
+/**
  * Rutas de los plugins
  */
 CakePlugin::routes();

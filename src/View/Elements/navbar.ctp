@@ -91,6 +91,15 @@ $links = array(
 					'admin' => true,
 					'plugin' => false
 				)
+			),
+			array(
+				'text' => 'Usuarios',
+				'url' => array(
+					'controller' => 'cargos',
+					'action' => 'index',
+					'admin' => true,
+					'plugin' => false
+				)
 			)
 		)
 	),
