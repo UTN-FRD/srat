@@ -45,6 +45,22 @@ Router::connect('/docentes/*', array(
 ));
 
 /**
+ * Perfil
+ */
+Router::connect('/perfil', array(
+	'controller' => 'usuarios',
+	'action' => 'perfil'
+));
+
+/**
+ * Restablecer contraseña
+ */
+Router::connect('/restablecer', array(
+	'controller' => 'usuarios',
+	'action' => 'restablecer'
+));
+
+/**
  * Rutas de los plugins
  */
 CakePlugin::routes();

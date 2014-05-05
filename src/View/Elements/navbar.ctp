@@ -17,12 +17,34 @@
  */
 $user = AuthComponent::user();
 $loggedIn = (bool)$user;
+$isAdmin = ($user['rol_id'] == 1);
+$reset = (bool)$user['reset'];
 
 /**
  * Enlaces
  */
 $links = array(
 	array(
+		'condition' => $isAdmin,
+		'text' => 'Sistema',
+		'dropdown' => array(
+			array(
+				'text' => 'Usuarios',
+				'url' => array(
+					'controller' => 'usuarios',
+					'action' => 'index',
+					'admin' => true,
+					'plugin' => false
+				)
+			)
+		)
+	),
+	array(
+		'condition' => $isAdmin,
+		'divider' => true
+	),
+	array(
+		'condition' => !$reset,
 		'text' => 'Docentes',
 		'url' => array(
 			'controller' => 'usuarios',
@@ -45,6 +67,16 @@ $links = array(
 		'condition' => $loggedIn,
 		'text' => $user['nombre_completo'],
 		'dropdown' => array(
+			array(
+				'condition' => !$reset,
+				'text' => 'Perfil',
+				'url' => array(
+					'controller' => 'usuarios',
+					'action' => 'perfil',
+					'admin' => false,
+					'plugin' => false
+				)
+			),
 			array(
 				'text' => 'Cerrar sesión',
 				'url' => array(
