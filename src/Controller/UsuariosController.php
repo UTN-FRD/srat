@@ -49,6 +49,12 @@ class UsuariosController extends AppController {
 				$this->Auth->authError = false;
 			}
 			$this->Auth->allow('docentes', 'login');
+		} else {
+			if ($this->Auth->user('reset')) {
+				if (!in_array($this->request->action, array('login', 'logout', 'restablecer'))) {
+					$this->redirect(array('action' => 'restablecer'));
+				}
+			}
 		}
 	}
 

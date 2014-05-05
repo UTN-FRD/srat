@@ -117,6 +117,14 @@ class AppController extends Controller {
 		parent::beforeFilter();
 
 		$this->response->disableCache();
+
+		if ($this->Auth->user()) {
+			if ($this->Auth->user('reset') && $this->request->controller !== 'usuarios') {
+				$this->redirect(array(
+					'controller' => 'usuarios', 'action' => 'restablecer', 'admin' => false, 'plugin' => false
+				));
+			}
+		}
 	}
 
 /**

@@ -18,6 +18,7 @@
 $user = AuthComponent::user();
 $loggedIn = (bool)$user;
 $isAdmin = ($user['rol_id'] == 1);
+$reset = (bool)$user['reset'];
 
 /**
  * Enlaces
@@ -43,6 +44,7 @@ $links = array(
 		'divider' => true
 	),
 	array(
+		'condition' => !$reset,
 		'text' => 'Docentes',
 		'url' => array(
 			'controller' => 'usuarios',
@@ -66,6 +68,7 @@ $links = array(
 		'text' => $user['nombre_completo'],
 		'dropdown' => array(
 			array(
+				'condition' => !$reset,
 				'text' => 'Perfil',
 				'url' => array(
 					'controller' => 'usuarios',
