@@ -23,6 +23,15 @@ App::uses('AppModel', 'Model');
 class Asignatura extends AppModel {
 
 /**
+ * Comportamientos
+ *
+ * @var array
+ */
+	public $actsAs = array(
+		'Search.Searchable'
+	);
+
+/**
  * belongsTo
  *
  * @var array
@@ -51,6 +60,26 @@ class Asignatura extends AppModel {
 	);
 
 /**
+ * Nombre del campo utilizado
+ * por el tipo de búsqueda `list`
+ *
+ * @var string
+ */
+	public $displayField = 'asignatura';
+
+/**
+ * Campos de búsqueda
+ *
+ * @var array
+ */
+	public $filterArgs = array(
+		'buscar' => array(
+			'field' => array('Carrera.nombre', 'Materia.nombre'),
+			'type' => 'like'
+		)
+	);
+
+/**
  * hasMany
  *
  * @var array
@@ -58,5 +87,92 @@ class Asignatura extends AppModel {
 	public $hasMany = array(
 		'Cargo',
 		'Horario'
+	);
+
+/**
+ * Reglas de validación
+ *
+ * @var array
+ */
+	public $validate = array(
+		'carrera_id' => array(
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
+				'required' => true,
+				'allowEmpty' => false,
+				'last' => true,
+				'message' => 'Este campo no puede estar vacío'
+			),
+			'exists' => array(
+				'rule' => array('validateExists', 'Carrera'),
+				'message' => 'El valor seleccionado no existe'
+			)
+		),
+		'materia_id' => array(
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
+				'required' => true,
+				'allowEmpty' => false,
+				'last' => true,
+				'message' => 'Este campo no puede estar vacío'
+			),
+			'exists' => array(
+				'rule' => array('validateExists', 'Materia'),
+				'last' => true,
+				'message' => 'El valor seleccionado no existe'
+			),
+			'isUnique' => array(
+				'rule' => array('validateUnique', array('carrera_id')),
+				'message' => 'La materia seleccionada ya se encuentra asociada a la carrera seleccionada'
+			)
+		),
+		'area_id' => array(
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
+				'required' => true,
+				'allowEmpty' => false,
+				'last' => true,
+				'message' => 'Este campo no puede estar vacío'
+			),
+			'exists' => array(
+				'rule' => array('validateExists', 'Area'),
+				'message' => 'El valor seleccionado no existe'
+			)
+		),
+		'nivel_id' => array(
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
+				'required' => true,
+				'allowEmpty' => false,
+				'last' => true,
+				'message' => 'Este campo no puede estar vacío'
+			),
+			'exists' => array(
+				'rule' => array('validateExists', 'Nivel'),
+				'message' => 'El valor seleccionado no existe'
+			)
+		),
+		'tipo_id' => array(
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
+				'required' => true,
+				'allowEmpty' => false,
+				'last' => true,
+				'message' => 'Este campo no puede estar vacío'
+			),
+			'exists' => array(
+				'rule' => array('validateExists', 'Tipo'),
+				'message' => 'El valor seleccionado no existe'
+			)
+		)
+	);
+
+/**
+ * Campos virtuales
+ *
+ * @var array
+ */
+	public $virtualFields = array(
+		'asignatura' => 'CONCAT(Carrera.nombre, ": ", Materia.nombre)'
 	);
 }

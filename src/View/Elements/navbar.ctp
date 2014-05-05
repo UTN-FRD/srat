@@ -44,6 +44,25 @@ $links = array(
 		'divider' => true
 	),
 	array(
+		'condition' => $isAdmin,
+		'text' => 'Asignaturas',
+		'dropdown' => array(
+			array(
+				'text' => 'Asignaturas',
+				'url' => array(
+					'controller' => 'asignaturas',
+					'action' => 'index',
+					'admin' => true,
+					'plugin' => false
+				)
+			)
+		)
+	),
+	array(
+		'condition' => $isAdmin,
+		'divider' => true
+	),
+	array(
 		'condition' => !$reset,
 		'text' => 'Docentes',
 		'url' => array(
