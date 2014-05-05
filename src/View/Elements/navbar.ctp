@@ -48,6 +48,15 @@ $links = array(
 		'text' => 'Asignaturas',
 		'dropdown' => array(
 			array(
+				'text' => 'Áreas',
+				'url' => array(
+					'controller' => 'asignaturas_areas',
+					'action' => 'index',
+					'admin' => true,
+					'plugin' => false
+				)
+			),
+			array(
 				'text' => 'Asignaturas',
 				'url' => array(
 					'controller' => 'asignaturas',

@@ -61,6 +61,19 @@ Router::connect('/restablecer', array(
 ));
 
 /**
+ * AsignaturasAreas
+ */
+Router::connect('/admin/asignaturas/areas', array(
+	'controller' => 'asignaturas_areas',
+	'action' => 'index',
+	'admin' => true
+));
+Router::connect('/admin/asignaturas/areas/:action/*', array(
+	'controller' => 'asignaturas_areas',
+	'admin' => true
+));
+
+/**
  * Rutas de los plugins
  */
 CakePlugin::routes();
