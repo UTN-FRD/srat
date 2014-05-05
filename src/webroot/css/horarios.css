@@ -1,0 +1,33 @@
+/*!
+ * Horarios
+ *
+ * Sistema de Registro de Asistenca y Temas
+ *
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
+ *
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo licencia.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
+ */
+
+table.horarios thead th:nth-child(3),
+table.horarios thead th:nth-child(4),
+table.horarios thead th:nth-child(5) {
+	width: 70px
+}
+
+table.horarios thead th:nth-child(4),
+table.horarios thead th:nth-child(5),
+table.horarios tbody td:nth-child(4),
+table.horarios tbody td:nth-child(5) {
+	text-align: right
+}
+
+form.horarios .time select:first-child {
+	margin-right: 2px
+}
+
+form.horarios .time select:last-child {
+	margin-left: 2px
+}

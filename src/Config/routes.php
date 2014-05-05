@@ -100,6 +100,19 @@ Router::connect('/admin/asignaturas/materias/:action/*', array(
 ));
 
 /**
+ * Horarios
+ */
+Router::connect('/admin/asignaturas/horarios', [
+	'controller' => 'horarios',
+	'action' => 'index',
+	'admin' => true
+]);
+Router::connect('/admin/asignaturas/horarios/:action/*', [
+	'controller' => 'horarios',
+	'admin' => true
+]);
+
+/**
  * Rutas de los plugins
  */
 CakePlugin::routes();

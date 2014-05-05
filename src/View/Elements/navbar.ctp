@@ -75,6 +75,15 @@ $links = array(
 				)
 			),
 			array(
+				'text' => 'Horarios',
+				'url' => array(
+					'controller' => 'horarios',
+					'action' => 'index',
+					'admin' => true,
+					'plugin' => false
+				)
+			),
+			array(
 				'text' => 'Materias',
 				'url' => array(
 					'controller' => 'asignaturas_materias',
