@@ -118,6 +118,32 @@ class UsuariosController extends AppController {
 	}
 
 /**
+ * Perfil
+ *
+ * @return void
+ */
+	public function perfil() {
+		if ($this->request->is('put')) {
+			$this->Usuario->whitelist = array('apellido', 'nombre', 'old_password', 'password');
+			if ($this->Usuario->save($this->request->data)) {
+				$this->_notify('record_modified', array('redirect' => true));
+			} elseif (empty($this->Usuario->validationErrors)) {
+				$this->_notify('record_not_saved');
+			}
+		}
+
+		if (!$this->request->data) {
+			$this->Usuario->id = $this->Auth->user('id');
+			$this->request->data = $this->Usuario->read(array('id', 'apellido', 'legajo', 'nombre'));
+		}
+
+		$this->set(array(
+			'title_for_layout' => 'Perfil',
+			'title_for_view' => 'Perfil'
+		));
+	}
+
+/**
  * Índice
  *
  * @return void

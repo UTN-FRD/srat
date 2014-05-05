@@ -89,6 +89,19 @@ class Usuario extends AppModel {
 				'message' => 'El valor ingresado ya se encuentra en uso'
 			)
 		),
+		'old_password' => array(
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
+				'required' => true,
+				'allowEmpty' => false,
+				'last' => true,
+				'message' => 'Este campo no puede estar vacío'
+			),
+			'validatePassword' => array(
+				'rule' => 'validatePassword',
+				'message' => 'El valor ingresado no es correcto'
+			)
+		),
 		'password' => array(
 			'notEmpty' => array(
 				'rule' => 'notEmpty',
@@ -179,9 +192,20 @@ class Usuario extends AppModel {
  * @return boolean `true` para continuar la operación de validación o `false` para cancelarla
  */
 	public function beforeValidate($options = array()) {
-		if ($this->id) {
-			if (empty($this->data[$this->alias]['password'])) {
-				$this->validator()->getField('password')->getRule('notEmpty')->allowEmpty = true;
+		if (!$this->id) {
+			$this->validator()->getField('old_password')->getRule('notEmpty')->required = false;
+		} else {
+			if (!isset($this->data[$this->alias]['old_password'])) {
+				$this->validator()->getField('old_password')->getRule('notEmpty')->required = false;
+
+				if (empty($this->data[$this->alias]['password'])) {
+					$this->validator()->getField('password')->getRule('notEmpty')->allowEmpty = true;
+				}
+			} else {
+				if (empty($this->data[$this->alias]['old_password']) && empty($this->data[$this->alias]['password'])) {
+					$this->validator()->getField('old_password')->getRule('notEmpty')->allowEmpty = true;
+					$this->validator()->getField('password')->getRule('notEmpty')->allowEmpty = true;
+				}
 			}
 		}
 
@@ -209,5 +233,22 @@ class Usuario extends AppModel {
 		}
 
 		return true;
+	}
+
+/**
+ * Valida que un valor coincide con la contraseña actual de un usuario
+ *
+ * @param array $check Nombre del campo y su valor
+ *
+ * @return boolean `true` en caso exitoso o `false` en caso contrario
+ */
+	public function validatePassword($check) {
+		if (!empty($check)) {
+			return (new BlowfishPasswordHasher())->check(
+				current($check),
+				$this->field('password')
+			);
+		}
+		return false;
 	}
 }

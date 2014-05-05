@@ -45,6 +45,14 @@ Router::connect('/docentes/*', array(
 ));
 
 /**
+ * Perfil
+ */
+Router::connect('/perfil', array(
+	'controller' => 'usuarios',
+	'action' => 'perfil'
+));
+
+/**
  * Rutas de los plugins
  */
 CakePlugin::routes();

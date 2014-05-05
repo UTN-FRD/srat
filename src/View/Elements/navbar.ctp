@@ -66,6 +66,15 @@ $links = array(
 		'text' => $user['nombre_completo'],
 		'dropdown' => array(
 			array(
+				'text' => 'Perfil',
+				'url' => array(
+					'controller' => 'usuarios',
+					'action' => 'perfil',
+					'admin' => false,
+					'plugin' => false
+				)
+			),
+			array(
 				'text' => 'Cerrar sesión',
 				'url' => array(
 					'controller' => 'usuarios',
