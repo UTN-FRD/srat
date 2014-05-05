@@ -11,23 +11,23 @@
  * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
 
-table.horarios thead th:nth-child(3),
-table.horarios thead th:nth-child(4),
-table.horarios thead th:nth-child(5) {
+#view .table thead th:nth-child(3),
+#view .table thead th:nth-child(4),
+#view .table thead th:nth-child(5) {
 	width: 70px
 }
 
-table.horarios thead th:nth-child(4),
-table.horarios thead th:nth-child(5),
-table.horarios tbody td:nth-child(4),
-table.horarios tbody td:nth-child(5) {
+#view .table thead th:nth-child(4),
+#view .table thead th:nth-child(5),
+#view .table tbody td:nth-child(4),
+#view .table tbody td:nth-child(5) {
 	text-align: right
 }
 
-form.horarios .time select:first-child {
+form .time select:first-child {
 	margin-right: 2px
 }
 
-form.horarios .time select:last-child {
+form .time select:last-child {
 	margin-left: 2px
 }

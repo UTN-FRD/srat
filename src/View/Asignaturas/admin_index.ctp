@@ -75,8 +75,4 @@ endif;
 /**
  * Tabla
  */
-echo $this->element('table', array(
-	'class' => 'asignaturas',
-	'headers' => $headers,
-	'rows' => $rows
-));
+echo $this->element('table', compact('headers', 'rows'));

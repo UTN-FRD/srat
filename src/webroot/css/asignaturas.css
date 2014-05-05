@@ -11,11 +11,11 @@
  * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
 
-table.asignaturas thead tr th:nth-child(3) {
+#view .table thead tr th:nth-child(3) {
 	width: 180px
 }
 
-table.asignaturas thead tr th:nth-child(4),
-table.asignaturas thead tr th:nth-child(5) {
+#view .table thead tr th:nth-child(4),
+#view .table thead tr th:nth-child(5) {
 	width: 90px
 }

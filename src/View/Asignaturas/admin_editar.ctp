@@ -47,12 +47,12 @@ $this->Html->addCrumb('Editar');
 	));
 
 	echo $this->Form->input('nivel_id', array(
-		'class' => 'span3',
+		'class' => 'span2',
 		'label' => 'Nivel'
 	));
 
 	echo $this->Form->input('tipo_id', array(
-		'class' => 'span3',
+		'class' => 'span2',
 		'label' => 'Tipo'
 	));
 	?>

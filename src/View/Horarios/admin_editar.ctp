@@ -24,7 +24,7 @@ $this->Html->addCrumb('Asignaturas', array('controller' => 'asignaturas'));
 $this->Html->addCrumb('Horarios', array('action' => 'index'));
 $this->Html->addCrumb('Editar');
 ?>
-<?php echo $this->Form->create('Horario', array('class' => 'form-vertical horarios')) ?>
+<?php echo $this->Form->create('Horario', array('class' => 'form-vertical')) ?>
 <ul>
 	<li>Los campos indicados con <span class="required">*</span>son obligatorios.</li>
 </ul>
