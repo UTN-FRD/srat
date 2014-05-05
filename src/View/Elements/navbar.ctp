@@ -44,6 +44,70 @@ $links = array(
 		'divider' => true
 	),
 	array(
+		'condition' => $isAdmin,
+		'text' => 'Asignaturas',
+		'dropdown' => array(
+			array(
+				'text' => 'Áreas',
+				'url' => array(
+					'controller' => 'asignaturas_areas',
+					'action' => 'index',
+					'admin' => true,
+					'plugin' => false
+				)
+			),
+			array(
+				'text' => 'Asignaturas',
+				'url' => array(
+					'controller' => 'asignaturas',
+					'action' => 'index',
+					'admin' => true,
+					'plugin' => false
+				)
+			),
+			array(
+				'text' => 'Carreras',
+				'url' => array(
+					'controller' => 'asignaturas_carreras',
+					'action' => 'index',
+					'admin' => true,
+					'plugin' => false
+				)
+			),
+			array(
+				'text' => 'Horarios',
+				'url' => array(
+					'controller' => 'horarios',
+					'action' => 'index',
+					'admin' => true,
+					'plugin' => false
+				)
+			),
+			array(
+				'text' => 'Materias',
+				'url' => array(
+					'controller' => 'asignaturas_materias',
+					'action' => 'index',
+					'admin' => true,
+					'plugin' => false
+				)
+			),
+			array(
+				'text' => 'Usuarios',
+				'url' => array(
+					'controller' => 'cargos',
+					'action' => 'index',
+					'admin' => true,
+					'plugin' => false
+				)
+			)
+		)
+	),
+	array(
+		'condition' => $isAdmin,
+		'divider' => true
+	),
+	array(
 		'condition' => !$reset,
 		'text' => 'Docentes',
 		'url' => array(

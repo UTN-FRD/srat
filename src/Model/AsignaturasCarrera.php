@@ -23,6 +23,27 @@ App::uses('AppModel', 'Model');
 class AsignaturasCarrera extends AppModel {
 
 /**
+ * Comportamientos
+ *
+ * @var array
+ */
+	public $actsAs = array(
+		'Search.Searchable'
+	);
+
+/**
+ * Campos de búsqueda
+ *
+ * @var array
+ */
+	public $filterArgs = array(
+		'buscar' => array(
+			'field' => array('nombre', 'obs'),
+			'type' => 'like'
+		)
+	);
+
+/**
  * hasMany
  *
  * @var array
@@ -30,6 +51,38 @@ class AsignaturasCarrera extends AppModel {
 	public $hasMany = array(
 		'Asignatura' => array(
 			'foreignKey' => 'carrera_id'
+		)
+	);
+
+/**
+ * Reglas de validación
+ *
+ * @var array
+ */
+	public $validate = array(
+		'nombre' => array(
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
+				'required' => true,
+				'allowEmpty' => false,
+				'last' => true,
+				'message' => 'Este campo no puede estar vacío'
+			),
+			'maxLength' => array(
+				'rule' => array('maxLength', 50),
+				'last' => true,
+				'message' => 'El valor de este campo no debe superar los 50 caracteres'
+			),
+			'unique' => array(
+				'rule' => 'isUnique',
+				'message' => 'El valor ingresado ya se encuentra en uso'
+			)
+		),
+		'obs' => array(
+			'rule' => array('maxLength', 255),
+			'required' => true,
+			'allowEmpty' => true,
+			'message' => 'El valor de este campo no debe superar los 255 caracteres'
 		)
 	);
 }

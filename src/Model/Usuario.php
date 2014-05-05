@@ -47,6 +47,14 @@ class Usuario extends AppModel {
 	);
 
 /**
+ * Nombre del campo utilizado
+ * por el tipo de búsqueda `list`
+ *
+ * @var string
+ */
+	public $displayField = 'nombre_completo';
+
+/**
  * Campos de búsqueda
  *
  * @var array
