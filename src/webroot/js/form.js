@@ -18,6 +18,14 @@ $(function() {
 		$('div.required > .control-label, div.required > fieldset > legend', self)
 		.append('&nbsp;<span class="required">*</span>');
 
+		$('select.combobox', self).each(function() {
+			var firstOption = $('option:first', this).val();
+			$(this).parents('.control-group').addClass('clearfix');
+			$(this).select2({
+				'allowClear': (firstOption !== undefined && firstOption.length == 0)
+			});
+		});
+
 		$('.checkbox-control p.help-inline', self).on('click', function() {
 			var prev = $(this).prev();
 			if (prev.is(':visible') && !prev.prop('disabled')) {
