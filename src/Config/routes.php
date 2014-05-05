@@ -87,6 +87,19 @@ Router::connect('/admin/asignaturas/carreras/:action/*', array(
 ));
 
 /**
+ * AsignaturasMaterias
+ */
+Router::connect('/admin/asignaturas/materias', array(
+	'controller' => 'asignaturas_materias',
+	'action' => 'index',
+	'admin' => true
+));
+Router::connect('/admin/asignaturas/materias/:action/*', array(
+	'controller' => 'asignaturas_materias',
+	'admin' => true
+));
+
+/**
  * Rutas de los plugins
  */
 CakePlugin::routes();

@@ -73,6 +73,15 @@ $links = array(
 					'admin' => true,
 					'plugin' => false
 				)
+			),
+			array(
+				'text' => 'Materias',
+				'url' => array(
+					'controller' => 'asignaturas_materias',
+					'action' => 'index',
+					'admin' => true,
+					'plugin' => false
+				)
 			)
 		)
 	),
