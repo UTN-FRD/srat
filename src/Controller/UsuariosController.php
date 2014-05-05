@@ -144,6 +144,38 @@ class UsuariosController extends AppController {
 	}
 
 /**
+ * Restablecer contraseña
+ *
+ * @return void
+ */
+	public function restablecer() {
+		if (!$this->Auth->user('reset')) {
+			$this->redirect($this->Auth->loginRedirect);
+		}
+
+		if ($this->request->is('put')) {
+			$this->Usuario->whitelist = array('password', 'reset');
+			if ($this->Usuario->save($this->request->data)) {
+				$this->_notify('record_modified', array('redirect' => array('action' => 'dashboard')));
+			} elseif (empty($this->Usuario->validationErrors)) {
+				$this->_notify('record_not_saved');
+			}
+		}
+
+		if (!$this->request->data) {
+			$this->request->data['Usuario'] = array(
+				'id' => $this->Auth->user('id'),
+				'reset' => 0
+			);
+		}
+
+		$this->set(array(
+			'title_for_layout' => 'Restablecer contraseña',
+			'title_for_view' => 'Restablecer contraseña'
+		));
+	}
+
+/**
  * Índice
  *
  * @return void

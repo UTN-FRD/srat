@@ -53,6 +53,14 @@ Router::connect('/perfil', array(
 ));
 
 /**
+ * Restablecer contraseña
+ */
+Router::connect('/restablecer', array(
+	'controller' => 'usuarios',
+	'action' => 'restablecer'
+));
+
+/**
  * Rutas de los plugins
  */
 CakePlugin::routes();

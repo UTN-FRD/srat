@@ -117,6 +117,19 @@ class Usuario extends AppModel {
 				'message' => 'El valor ingresado no es válido'
 			)
 		),
+		'new_password' => array(
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
+				'required' => true,
+				'allowEmpty' => false,
+				'last' => true,
+				'message' => 'Este campo no puede estar vacío'
+			),
+			'format' => array(
+				'rule' => '/^.*(?=.{6,})(?=.*\d)(?=.*[ÁÉÍÓÚÑáéíóúñA-Za-z]).*$/u',
+				'message' => 'El valor ingresado no es válido'
+			)
+		),
 		'reset' => array(
 			'rule' => array('inList', array('0', '1')),
 			'required' => true,
@@ -195,19 +208,26 @@ class Usuario extends AppModel {
  */
 	public function beforeValidate($options = array()) {
 		if (!$this->id) {
+			$this->validator()->getField('new_password')->getRule('notEmpty')->required = false;
 			$this->validator()->getField('old_password')->getRule('notEmpty')->required = false;
 		} else {
-			if (!isset($this->data[$this->alias]['old_password'])) {
+			if (!isset($this->data[$this->alias]['old_password']) && !isset($this->data[$this->alias]['new_password'])) {
+				$this->validator()->getField('new_password')->getRule('notEmpty')->required = false;
 				$this->validator()->getField('old_password')->getRule('notEmpty')->required = false;
 
 				if (empty($this->data[$this->alias]['password'])) {
 					$this->validator()->getField('password')->getRule('notEmpty')->allowEmpty = true;
 				}
-			} else {
+			} elseif (isset($this->data[$this->alias]['old_password'])) {
+				$this->validator()->getField('new_password')->getRule('notEmpty')->required = false;
+
 				if (empty($this->data[$this->alias]['old_password']) && empty($this->data[$this->alias]['password'])) {
 					$this->validator()->getField('old_password')->getRule('notEmpty')->allowEmpty = true;
 					$this->validator()->getField('password')->getRule('notEmpty')->allowEmpty = true;
 				}
+			} else {
+				$this->validator()->getField('old_password')->getRule('notEmpty')->required = false;
+				$this->validator()->getField('password')->getRule('notEmpty')->required = false;
 			}
 		}
 
@@ -226,6 +246,11 @@ class Usuario extends AppModel {
  * @return boolean `true` para continuar la operación de guardado o `false` para cancelarla
  */
 	public function beforeSave($options = array()) {
+		if (!empty($this->data[$this->alias]['new_password'])) {
+			$this->data[$this->alias]['password'] = $this->data[$this->alias]['new_password'];
+			unset($this->data[$this->alias]['new_password']);
+		}
+
 		if (!empty($this->data[$this->alias]['password'])) {
 			$this->data[$this->alias]['password'] = (new BlowfishPasswordHasher())->hash(
 				$this->data[$this->alias]['password']
