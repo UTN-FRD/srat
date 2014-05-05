@@ -29,6 +29,7 @@
 
 		echo $this->Html->css(array(
 			'bootstrap.min',
+			'select2.min',
 			'layout',
 			'notify',
 			'form',
@@ -38,6 +39,8 @@
 		echo $this->Html->script(array(
 			'jquery.min',
 			'bootstrap.min',
+			'select2.min',
+			'select2_locale_es.min',
 			'notify',
 			'form',
 			'table'
