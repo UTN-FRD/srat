@@ -14,7 +14,9 @@
  * Dependencias
  */
 App::uses('AppModel', 'Model');
+App::uses('AuthComponent', 'Controller/Component');
 App::uses('BlowfishPasswordHasher', 'Controller/Component/Auth');
+App::uses('CakeSession', 'Model/Datasource');
 
 /**
  * Usuario
@@ -233,6 +235,22 @@ class Usuario extends AppModel {
 		}
 
 		return true;
+	}
+
+/**
+ * afterSave
+ *
+ * @param boolean $created Indica si se ha creado un registro
+ * @param array $options Opciones
+ *
+ * @return void
+ */
+	public function afterSave($created, $options = array()) {
+		if (!$created && $this->id == AuthComponent::user('id')) {
+			$user = $this->read();
+			unset($user[$this->alias]['password']);
+			CakeSession::write(AuthComponent::$sessionKey, $user[$this->alias]);
+		}
 	}
 
 /**
