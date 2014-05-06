@@ -1,0 +1,80 @@
+/*!
+ * Dashboard
+ *
+ * Sistema de Registro de Asistenca y Temas
+ *
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
+ *
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo licencia.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
+ */
+
+#page {
+	width: 822px
+}
+
+.breadcrumb {
+	display: none
+}
+
+.alert {
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	border-radius: 0;
+	text-align: center
+}
+
+table.asignaturas {
+	margin: 0 auto 30px;
+	width: 768px
+}
+
+table.asignaturas th {
+	background-color: #efefef;
+	width: 400px
+}
+
+table.asignaturas td {
+	padding: 10px 8px
+}
+
+table.asignaturas .control-group,
+table.asignaturas select,
+table.asignaturas textarea {
+	margin: 0
+}
+
+table.asignaturas select,
+table.asignaturas textarea {
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	border-radius: 0
+}
+
+table.asignaturas .time select:first-child {
+	margin-right: 3px
+}
+
+table.asignaturas .time select:last-child {
+	margin-left: 3px
+}
+
+table.asignaturas textarea {
+	width: 738px
+}
+
+table.asignaturas .help-inline {
+	display: block;
+	padding-left: 0;
+	padding-top: 3px
+}
+
+.form-actions {
+	text-align: right
+}
+
+.form-actions button {
+	margin-right: 0
+}

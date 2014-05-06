@@ -302,4 +302,84 @@ class Usuario extends AppModel {
 		}
 		return false;
 	}
+
+/**
+ * Obtiene todos los cargos asociados a un usuario en el día de la fecha
+ *
+ * @param mixed $id Identificador
+ *
+ * @return array Cargos
+ */
+	public function getCargos($id = null) {
+		$out = array();
+
+		if ($id) {
+			if (is_array($id)) {
+				$id = $id[0];
+			}
+			$this->id = $id;
+		}
+		$id = $this->id;
+
+		if ($id && $this->exists()) {
+			$this->Cargo->unbindModel(array('belongsTo' => array('Dedicacion', 'Usuario')));
+			$this->Cargo->bindModel(array(
+				'hasOne' => array(
+					'Asistencia' => array(
+						'conditions' => array(
+							'Asistencia.fecha = CURDATE()',
+							'Asistencia.cargo_id = Cargo.id'
+						),
+						'foreignKey' => false
+					),
+					'Carrera' => array(
+						'className' => 'AsignaturasCarrera',
+						'conditions' => 'Carrera.id = Asignatura.carrera_id',
+						'foreignKey' => false
+					),
+					'Horario' => array(
+						'conditions' => 'Horario.asignatura_id = Asignatura.id',
+						'foreignKey' => false
+					),
+					'Materia' => array(
+						'className' => 'AsignaturasMateria',
+						'conditions' => 'Materia.id = Asignatura.materia_id',
+						'foreignKey' => false
+					)
+				)
+			));
+
+			$this->Cargo->virtualFields = array(
+				'asignatura' => $this->Cargo->Asignatura->virtualFields['asignatura']
+			);
+
+			$rows = $this->Cargo->find('all', array(
+				'fields' => array(
+					'Asistencia.*',
+					'Cargo.asignatura',
+					'Grado.nombre',
+					'Tipo.nombre'
+				),
+				'conditions' => array(
+					'Cargo.usuario_id' => $id,
+					'Horario.dia' => date('w')
+				),
+				'recursive' => 0
+			));
+
+			foreach ($rows as $rid => $row) {
+				if (empty($row['Asistencia']['cargo_id'])) {
+					$row['Asistencia']['fecha'] = date('Y-m-d');
+					$row['Asistencia']['cargo_id'] = $row['Cargo']['id'];
+				}
+
+				$out['Asistencia'][$rid] = $row['Asistencia'];
+				$out['Cargo'][$rid]['asignatura'] = $row['Cargo']['asignatura'];
+				$out['Grado'][$rid]['nombre'] = $row['Grado']['nombre'];
+				$out['Tipo'][$rid]['nombre'] = $row['Tipo']['nombre'];
+			}
+		}
+
+		return $out;
+	}
 }
