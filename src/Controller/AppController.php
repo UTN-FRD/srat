@@ -76,6 +76,11 @@ class AppController extends Controller {
 			'message' => 'Se ha rechazado la solicitud debido a que los datos recibidos no son válidos.',
 			'redirect' => true
 		),
+		'operation_no_changes' => array(
+			'level' => 'info',
+			'message' => 'La operación solicitada se ha completado exitosamente pero no se han realizado cambios.',
+			'redirect' => false
+		),
 		'record_created' => array(
 			'level' => 'success',
 			'message' => 'La operación solicitada se ha completado exitosamente.',
