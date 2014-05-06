@@ -105,6 +105,16 @@ $links = array(
 	),
 	array(
 		'condition' => $isAdmin,
+		'text' => 'Asistencias',
+		'url' => array(
+			'controller' => 'asistencias',
+			'action' => 'index',
+			'admin' => true,
+			'plugin' => false
+		)
+	),
+	array(
+		'condition' => $isAdmin,
 		'divider' => true
 	),
 	array(

@@ -23,11 +23,35 @@ App::uses('AppModel', 'Model');
 class Asistencia extends AppModel {
 
 /**
+ * Comportamientos
+ *
+ * @var array
+ */
+	public $actsAs = array(
+		'Search.Searchable'
+	);
+
+/**
  * belongsTo
  *
  * @var array
  */
 	public $belongsTo = array(
 		'Cargo'
+	);
+
+/**
+ * Campos de búsqueda
+ *
+ * @var array
+ */
+	public $filterArgs = array(
+		'buscar' => array(
+			'field' => array(
+				'Asistencia.obs', 'Carrera.nombre', 'Materia.nombre', 'Usuario.apellido', 'Usuario.nombre',
+				'CONCAT(Usuario.nombre, " ", Usuario.apellido)'
+			),
+			'type' => 'like'
+		)
 	);
 }
