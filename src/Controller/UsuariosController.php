@@ -64,9 +64,29 @@ class UsuariosController extends AppController {
  * @return void
  */
 	public function dashboard() {
+		if ($this->request->is('post')) {
+			$data = current($this->request->data);
+			if ($this->Usuario->Cargo->Asistencia->validateMany($data)) {
+				$data = array_filter($data);
+				if (!empty($data)) {
+					if ($this->Usuario->Cargo->Asistencia->saveMany($data, array('validate' => false))) {
+						$this->_notify('record_created');
+					} else {
+						$this->_notify('record_not_saved');
+					}
+				} else {
+					$this->_notify('operation_no_changes', array('redirect' => true));
+				}
+			}
+		}
+
+		if (!$this->request->data) {
+			$this->request->data = $this->Usuario->getCargos($this->Auth->user('id'));
+		}
+
 		$this->set(array(
-			'title_for_layout' => 'Dashboard',
-			'title_for_view' => 'Dashboard'
+			'title_for_layout' => 'Asignaturas',
+			'title_for_view' => 'Asignaturas'
 		));
 	}
 
