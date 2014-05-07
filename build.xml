@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project name="srat" default="clean" description="Sistema de Registro de Asistenca y Temas" phingVersion="2.5.0">
+<project name="srat" default="build" description="Sistema de Registro de Asistenca y Temas" phingVersion="2.5.0">
 	<!--
 		Generador de la aplicación
 
