@@ -157,4 +157,36 @@
 		<exec command="cat ${cat.source}/${cat.file} >> ${cat.dest}" />
 		<delete file="${cat.source}/${cat.file}" />
 	</target>
+
+	<!--
+		Genera la aplicación
+	-->
+	<target name="build" depends="clean, copy-app, asset-optimize" description="Genera la aplicación">
+		<copy todir="${app.lib}" overwrite="true">
+			<fileset dir="vendor/pear-pear.cakephp.org/CakePHP">
+				<include name="Cake/**" />
+				<exclude name="Cake/Console/**" />
+				<exclude name="Cake/TestSuite/**" />
+			</fileset>
+		</copy>
+
+		<copy todir="${package.dir}/${app.name}" overwrite="true">
+			<fileset dir="${skel.dir}">
+				<include name="**" />
+				<exclude name="**/.empty" />
+			</fileset>
+		</copy>
+
+		<copy file="./licencia.txt" tofile="${app.path}/licencia.txt" />
+
+		<delete file="${app.path}/webroot/favicon.ico" />
+		<touch file="${app.path}/webroot/favicon.ico" />
+
+		<zip destfile="${package.dir}/${app.name}.zip">
+			<fileset dir="${package.dir}">
+				<include name="**" />
+				<exclude name="**/.empty" />
+			</fileset>
+		</zip>
+	</target>
 </project>
