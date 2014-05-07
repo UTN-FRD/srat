@@ -35,4 +35,57 @@
 			</fileset>
 		</delete>
 	</target>
+
+	<!--
+		Prepara la copia inicial de la aplicación
+	-->
+	<target name="copy-app" depends="clean" description="Prepara la copia inicial de la aplicación">
+		<copy todir="${app.path}">
+			<fileset dir="${src.dir}">
+				<include name="**" />
+				<exclude name="**/.empty" />
+				<exclude name=".htaccess" />
+				<exclude name="Config/acl.ini.php" />
+				<exclude name="Config/acl.php" />
+				<exclude name="Config/database.php.default" />
+				<exclude name="Config/email.php.default" />
+				<exclude name="Config/Schema/db_*" />
+				<exclude name="Config/Schema/i18n.*" />
+				<exclude name="Config/Schema/sessions.*" />
+				<exclude name="Console/**" />
+				<exclude name="Locale/eng/**" />
+				<exclude name="Plugin/DebugKit/**" />
+				<exclude name="Plugin/Localized/**" />
+				<exclude name="Plugin/Search/*" />
+				<exclude name="Plugin/Search/Locale/*" />
+				<exclude name="Plugin/Search/Locale/deu/**" />
+				<exclude name="Plugin/Search/Locale/fre/**" />
+				<exclude name="Plugin/Search/Locale/por/**" />
+				<exclude name="Plugin/Search/Locale/rus/**" />
+				<exclude name="Plugin/Search/Test/**" />
+				<exclude name="Test/**" />
+				<exclude name="View/Emails/**" />
+				<exclude name="View/Layouts/ajax.ctp" />
+				<exclude name="View/Layouts/Emails/**" />
+				<exclude name="View/Layouts/error.ctp" />
+				<exclude name="View/Layouts/flash.ctp" />
+				<exclude name="View/Layouts/js/**" />
+				<exclude name="View/Layouts/rss/**" />
+				<exclude name="View/Layouts/xml/**" />
+				<exclude name="View/Scaffolds/**" />
+				<exclude name="tmp/cache/*_*" />
+				<exclude name="tmp/cache/models/*" />
+				<exclude name="tmp/cache/persistent/*" />
+				<exclude name="tmp/cache/views/*" />
+				<exclude name="tmp/logs/*" />
+				<exclude name="tmp/sessions/*" />
+				<exclude name="tmp/tests/**" />
+				<exclude name="webroot/files/**" />
+				<exclude name="webroot/img/*.gif" />
+				<exclude name="webroot/img/*.png" />
+				<exclude name="webroot/test.php" />
+				<exclude name="index.php" />
+			</fileset>
+		</copy>
+	</target>
 </project>
