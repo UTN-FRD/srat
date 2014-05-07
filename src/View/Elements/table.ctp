@@ -41,6 +41,9 @@
 	endif;
 
 	if (!empty($class)):
+		if (is_array($class)):
+			$class = implode(' ', $class);
+		endif;
 		$classes .= " $class";
 	endif;
 	?>
