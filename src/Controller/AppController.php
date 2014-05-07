@@ -226,7 +226,7 @@ class AppController extends Controller {
  *
  * @return void
  */
-	protected function _notify($name = null, array $config = array()) {
+	protected function _notify($name = null, $config = array()) {
 		$default = array(
 			'level' => 'error',
 			'message' => 'No hay descripción del error.',
