@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 5.5.35, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.5.37, for debian-linux-gnu (i686)
 -- ------------------------------------------------------
--- Server version	5.5.35-0ubuntu0.13.10.2
+-- Server version	5.5.37-0ubuntu0.13.10.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -137,7 +137,7 @@ CREATE TABLE `asignaturas_niveles` (
   `obs` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_NOMBRE` (`nombre`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -146,6 +146,7 @@ CREATE TABLE `asignaturas_niveles` (
 
 LOCK TABLES `asignaturas_niveles` WRITE;
 /*!40000 ALTER TABLE `asignaturas_niveles` DISABLE KEYS */;
+INSERT INTO `asignaturas_niveles` VALUES (1,'Primero',NULL),(2,'Segundo',NULL),(3,'Tercero',NULL),(4,'Cuarto',NULL),(5,'Quinto',NULL),(6,'General',NULL);
 /*!40000 ALTER TABLE `asignaturas_niveles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,7 +162,7 @@ CREATE TABLE `asignaturas_tipos` (
   `obs` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_NOMBRE` (`nombre`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -170,6 +171,7 @@ CREATE TABLE `asignaturas_tipos` (
 
 LOCK TABLES `asignaturas_tipos` WRITE;
 /*!40000 ALTER TABLE `asignaturas_tipos` DISABLE KEYS */;
+INSERT INTO `asignaturas_tipos` VALUES (1,'Curricular',NULL),(2,'Integradora',NULL),(3,'Electiva',NULL);
 /*!40000 ALTER TABLE `asignaturas_tipos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -253,7 +255,7 @@ CREATE TABLE `cargos_dedicaciones` (
   `obs` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_NOMBRE` (`nombre`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -262,6 +264,7 @@ CREATE TABLE `cargos_dedicaciones` (
 
 LOCK TABLES `cargos_dedicaciones` WRITE;
 /*!40000 ALTER TABLE `cargos_dedicaciones` DISABLE KEYS */;
+INSERT INTO `cargos_dedicaciones` VALUES (1,'Simple',NULL),(2,'Semiexclusiva',NULL),(3,'Exclusiva',NULL);
 /*!40000 ALTER TABLE `cargos_dedicaciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -277,7 +280,7 @@ CREATE TABLE `cargos_grados` (
   `obs` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_NOMBRE` (`nombre`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -286,6 +289,7 @@ CREATE TABLE `cargos_grados` (
 
 LOCK TABLES `cargos_grados` WRITE;
 /*!40000 ALTER TABLE `cargos_grados` DISABLE KEYS */;
+INSERT INTO `cargos_grados` VALUES (1,'Profesor Titular',NULL),(2,'Profesor Asociado',NULL),(3,'Profesor Adjunto',NULL),(4,'Jefe de Trabajos Prácticos',NULL),(5,'Ayudante Primera',NULL),(6,'Ayudante Segunda',NULL);
 /*!40000 ALTER TABLE `cargos_grados` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -301,7 +305,7 @@ CREATE TABLE `cargos_tipos` (
   `obs` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_NOMBRE` (`nombre`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -310,6 +314,7 @@ CREATE TABLE `cargos_tipos` (
 
 LOCK TABLES `cargos_tipos` WRITE;
 /*!40000 ALTER TABLE `cargos_tipos` DISABLE KEYS */;
+INSERT INTO `cargos_tipos` VALUES (1,'Ordinario',NULL),(2,'Interino',NULL);
 /*!40000 ALTER TABLE `cargos_tipos` ENABLE KEYS */;
 UNLOCK TABLES;
 
