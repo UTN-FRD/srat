@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="srat" default="clean" description="Sistema de Registro de Asistenca y Temas" phingVersion="2.5.0">
+	<!--
+		Generador de la aplicación
+
+		Sistema de Registro de Asistenca y Temas
+		(c) Universidad Tecnológica Nacional - Facultad Regional Delta
+
+		Phing 2.5.0
+		http://www.phing.info/
+	-->
+
+	<!--
+		Propiedades
+	-->
+	<property name="build.dir" value="build" override="false" />
+	<property name="src.dir" value="src" override="false" />
+
+	<property name="package.dir" value="${build.dir}/package" override="false" />
+	<property name="skel.dir" value="${build.dir}/skel" override="false" />
+
+	<property name="app.name" value="${phing.project.name}" override="false" />
+	<property name="app.path" value="${package.dir}/${app.name}/app" override="false" />
+	<property name="app.lib" value="${package.dir}/${app.name}/lib" override="false" />
+
+	<!--
+		Elimina archivos y directorios generados por esta herramienta
+	-->
+	<target name="clean" description="Elimina archivos y directorios generados por esta herramienta">
+		<delete includeemptydirs="true">
+			<fileset dir="${build.dir}">
+				<include name="**" />
+				<exclude name="**/package/.empty" />
+				<exclude name="**/skel/**" />
+			</fileset>
+		</delete>
+	</target>
+</project>
