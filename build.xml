@@ -88,4 +88,73 @@
 			</fileset>
 		</copy>
 	</target>
+
+	<!--
+		Optimiza hojas de estilos en cascada y librerías javascript
+	-->
+	<target name="asset-optimize" depends="copy-app" description="Optimiza hojas de estilos en cascada y librerías javascript">
+		<delete file="${app.path}/webroot/css/cake.generic.css" />
+
+		<foreach param="filename" absparam="absfilename" target="-asset-minify-css">
+			<fileset dir="${app.path}/webroot/css">
+				<exclude name="/" />
+				<exclude name="**/*.min.css" />
+			</fileset>
+		</foreach>
+
+		<property name="cat.source" value="${app.path}/webroot/css" override="true" />
+		<property name="cat.dest" value="${cat.source}/style.css" override="true" />
+		<property name="cat.files" override="true" value="
+			bootstrap.min.css,
+			select2.min.css,
+			layout.css,
+			notify.css,
+			form.css,
+			table.css"
+		/>
+		<foreach list="${cat.files}" param="cat.file" target="-asset.concatenate" />
+
+
+		<foreach param="filename" absparam="absfilename" target="-asset-minify-js">
+			<fileset dir="${app.path}/webroot/js">
+				<exclude name="/" />
+				<exclude name="**/*.min.js" />
+			</fileset>
+		</foreach>
+
+		<property name="cat.source" value="${app.path}/webroot/js" override="true" />
+		<property name="cat.dest" value="${cat.source}/script.js" override="true" />
+		<property name="cat.files" override="true" value="
+			jquery.min.js,
+			bootstrap.min.js,
+			select2.min.js,
+			select2_locale_es.min.js,
+			notify.js,
+			form.js,
+			table.js"
+		/>
+		<foreach list="${cat.files}" param="cat.file" target="-asset.concatenate" />
+	</target>
+
+	<!--
+		Minifica hojas de estilos en cascada
+	-->
+	<target name="-asset-minify-css" hidden="true" description="Minifica hojas de estilos en cascada">
+		<exec command="cat ${absfilename} | yuglify --terminal --type css --output ${absfilename}" />
+	</target>
+
+	<!--
+		Minifica librerías javascript
+	-->
+	<target name="-asset-minify-js" hidden="true" description="Minifica librerías javascript">
+		<exec command="cat ${absfilename} | yuglify --terminal --type js --output ${absfilename}" />
+	</target>
+
+	<!--
+		Tarea auxiliar para concatenar archivos
+	-->
+	<target name="-asset.concatenate" hidden="true" description="Tarea auxiliar para concatenar archivos">
+		<exec command="cat ${cat.source}/${cat.file} >> ${cat.dest}" />
+		<delete file="${cat.source}/${cat.file}" />
+	</target>
 </project>
