@@ -44,6 +44,22 @@ class AsistenciasController extends AppController {
  * @return void
  */
 	public function admin_index() {
+		$this->__setupModelAssociations();
+
+		$this->Prg->commonProcess();
+		$this->Paginator->settings += array(
+			'conditions' => $this->Asistencia->parseCriteria($this->Prg->parsedParams())
+		);
+
+		$this->set('rows', $this->Paginator->paginate());
+	}
+
+/**
+ * Establece asociaciones entre modelos necesarias para realizar búsquedas
+ *
+ * @return void
+ */
+	private function __setupModelAssociations() {
 		$this->Asistencia->virtualFields = array(
 			'asignatura' => $this->Asistencia->Cargo->Asignatura->virtualFields['asignatura'],
 			'usuario' => $this->Asistencia->Cargo->Usuario->virtualFields['nombre_completo']
@@ -73,12 +89,5 @@ class AsistenciasController extends AppController {
 				)
 			)
 		), false);
-
-		$this->Prg->commonProcess();
-		$this->Paginator->settings += array(
-			'conditions' => $this->Asistencia->parseCriteria($this->Prg->parsedParams())
-		);
-
-		$this->set('rows', $this->Paginator->paginate());
 	}
 }
