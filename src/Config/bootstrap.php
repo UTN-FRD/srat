@@ -97,6 +97,7 @@ Cache::config('default', array(
  * Plugins
  */
 CakePlugin::load(array(
+	'CakePdf' => array('bootstrap' => true, 'routes' => true),
 	'DebugKit',
 	'Search'
 ));

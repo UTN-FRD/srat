@@ -4,6 +4,7 @@
 
 # Composer
 /composer.lock
+/src/Plugin/CakePdf
 /src/Plugin/DebugKit
 /src/Plugin/Localized
 /src/Plugin/Search

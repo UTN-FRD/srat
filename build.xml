@@ -56,6 +56,9 @@
 				<exclude name="Locale/eng/**" />
 				<exclude name="Plugin/DebugKit/**" />
 				<exclude name="Plugin/Localized/**" />
+				<exclude name="Plugin/CakePdf/*" />
+				<exclude name="Plugin/CakePdf/Test/**" />
+				<exclude name="Plugin/CakePdf/Vendor/**" />
 				<exclude name="Plugin/Search/*" />
 				<exclude name="Plugin/Search/Locale/*" />
 				<exclude name="Plugin/Search/Locale/deu/**" />
