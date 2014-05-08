@@ -45,7 +45,7 @@ if (!empty($rows)):
 			$start++,
 			h($row['Asistencia']['asignatura']),
 			h($row['Asistencia']['usuario']),
-			date('d-m-Y', strtotime($row['Asistencia']['fecha'])),
+			date('d/m/Y', strtotime($row['Asistencia']['fecha'])),
 			date('H:i', strtotime($row['Asistencia']['entrada'])),
 			date('H:i', strtotime($row['Asistencia']['salida'])),
 			nl2br(h($row['Asistencia']['obs']))
