@@ -1,0 +1,16 @@
+# Aplicación
+/src/Config/database.php
+/src/tmp
+
+# Composer
+/composer.lock
+/src/Plugin/DebugKit
+/src/Plugin/Localized
+/src/Plugin/Search
+/vendor
+
+# Editores
+*.sublime-*
+
+# Phing
+/build/package
