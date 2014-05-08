@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project name="srat" default="build" description="Sistema de Registro de Asistenca y Temas" phingVersion="2.5.0">
+<project name="srat" default="build" description="Sistema de Registro de Asistencia y Temas" phingVersion="2.5.0">
 	<!--
 		Generador de la aplicación
 
-		Sistema de Registro de Asistenca y Temas
+		Sistema de Registro de Asistencia y Temas
 		(c) Universidad Tecnológica Nacional - Facultad Regional Delta
 
 		Phing 2.5.0

@@ -2,7 +2,7 @@
 /**
  * Barra de navegación
  *
- * Sistema de Registro de Asistenca y Temas
+ * Sistema de Registro de Asistencia y Temas
  *
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
@@ -177,7 +177,7 @@ $links = array(
 <div class="navbar">
 	<div class="navbar-inner">
 		<?php
-		echo $this->Html->link('Sistema de Registro de Asistenca y Temas', '/', array('class' => 'brand'));
+		echo $this->Html->link('Sistema de Registro de Asistencia y Temas', '/', array('class' => 'brand'));
 		echo $this->Html->generateLinkList($links, array('class' => 'nav pull-right'));
 		?>
 	</div>

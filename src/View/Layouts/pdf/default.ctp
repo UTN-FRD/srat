@@ -2,7 +2,7 @@
 /**
  * PDF
  *
- * Sistema de Registro de Asistenca y Temas
+ * Sistema de Registro de Asistencia y Temas
  *
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
@@ -17,9 +17,9 @@
 	<head>
 		<meta charset="utf-8" />
 
-		<title><?php echo h($title_for_layout) ?> :: Sistema de Registro de Asistenca y Temas</title>
+		<title><?php echo h($title_for_layout) ?> :: Sistema de Registro de Asistencia y Temas</title>
 
-		<meta name="application-name" content="Sistema de Registro de Asistenca y Temas" />
+		<meta name="application-name" content="Sistema de Registro de Asistencia y Temas" />
 		<meta name="author" content="Facultad Regional Delta" />
 
 		<?php

@@ -1,7 +1,7 @@
 #
 # Traducción al español
 #
-# Sistema de Registro de Asistenca y Temas
+# Sistema de Registro de Asistencia y Temas
 #
 # (c) Universidad Tecnológica Nacional - Facultad Regional Delta
 #
@@ -13,7 +13,7 @@
 
 msgid ""
 msgstr ""
-"Project-Id-Version: Sistema de Registro de Asistenca y Temas v1.0\n"
+"Project-Id-Version: Sistema de Registro de Asistencia y Temas v1.0\n"
 "POT-Creation-Date: 2012-10-22 10:52+0200\n"
 "PO-Revision-Date: 2014-01-13 08:27-0300\n"
 "Last-Translator: Jorge Alberto Cricelli <jalberto.cr@live.com>\n"

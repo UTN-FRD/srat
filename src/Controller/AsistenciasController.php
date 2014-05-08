@@ -1,6 +1,6 @@
 <?php
 /**
- * Sistema de Registro de Asistenca y Temas
+ * Sistema de Registro de Asistencia y Temas
  *
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
@@ -234,7 +234,7 @@ class AsistenciasController extends AppController {
 				'header-center' => 'Reporte de Asistencia',
 				'header-font-name' => 'Arial',
 				'header-font-size' => '9',
-				'header-left' => 'Sistema de Registro de Asistenca y Temas',
+				'header-left' => 'Sistema de Registro de Asistencia y Temas',
 				'header-line' => true,
 				'header-right' => iconv("UTF-8", "ASCII//TRANSLIT", $date),
 				'outline' => true,
