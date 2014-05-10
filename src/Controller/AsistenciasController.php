@@ -1,6 +1,6 @@
 <?php
 /**
- * Sistema de Registro de Asistenca y Temas
+ * Sistema de Registro de Asistencia y Temas
  *
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
@@ -28,6 +28,7 @@ class AsistenciasController extends AppController {
  * @var array
  */
 	public $components = array(
+		'RequestHandler',
 		'Search.Prg',
 		'Paginator' => array(
 			'fields' => array('asignatura', 'usuario', 'fecha', 'entrada', 'salida', 'obs'),
@@ -44,6 +45,96 @@ class AsistenciasController extends AppController {
  * @return void
  */
 	public function admin_index() {
+		$this->__setupModelAssociations();
+
+		$this->Prg->commonProcess();
+		$this->Paginator->settings += array(
+			'conditions' => $this->Asistencia->parseCriteria($this->Prg->parsedParams())
+		);
+
+		$this->set('rows', $this->Paginator->paginate());
+	}
+
+/**
+ * Reporte
+ *
+ * @return void
+ */
+	public function admin_reporte() {
+		$this->loadModel('Reporte');
+
+		if (!empty($this->request->named['reset'])) {
+			$this->Session->delete('Reporte');
+			$this->redirect(array('action' => 'reporte'));
+		}
+
+		$options = (array)$this->Session->read('Reporte');
+		if (!$options) {
+			$options = array(
+				'data' => array(),
+				'paging' => array()
+			);
+		}
+
+		if ($this->request->ext === 'pdf') {
+			return $this->__generateReport($options);
+		}
+
+		if ($this->request->is('post')) {
+			$this->Reporte->create($this->request->data);
+			if ($this->Reporte->validates()) {
+				$options['data'] = $this->Reporte->data['Reporte'];
+			} else {
+				$options['data'] = array();
+			}
+		}
+
+		if (!$this->request->data) {
+			if ($options['data']) {
+				$this->request->data['Reporte'] = $options['data'];
+			} else {
+				$this->request->data = array(
+					'Reporte' => array(
+						'asignatura_id' => null,
+						'usuario_id' => null,
+						'desde' => null,
+						'hasta' => null
+					)
+				);
+			}
+		}
+
+		$this->Paginator->settings = array_merge(
+			$this->Paginator->settings,
+			$this->__getFindOptions($options),
+			array('limit' => 10, 'maxLimit' => 10)
+		);
+
+		$asignaturas = $this->Reporte->getAsignaturas();
+		$usuarios = $this->Reporte->getUsuarios($this->request->data['Reporte']['asignatura_id']);
+
+		$this->__setupModelAssociations();
+		$this->set(array(
+			'asignaturas' => $asignaturas,
+			'usuarios' => $usuarios,
+			'rows' => $this->Paginator->paginate(),
+			'title_for_layout' => 'Reportes - Asistencias',
+			'title_for_view' => 'Reportes'
+		));
+
+		if (isset($this->params['paging']['Asistencia']['order'])) {
+			$options['paging']['order'] = $this->params['paging']['Asistencia']['order'];
+		}
+
+		$this->Session->write('Reporte', $options);
+	}
+
+/**
+ * Establece asociaciones entre modelos necesarias para realizar búsquedas
+ *
+ * @return void
+ */
+	private function __setupModelAssociations() {
 		$this->Asistencia->virtualFields = array(
 			'asignatura' => $this->Asistencia->Cargo->Asignatura->virtualFields['asignatura'],
 			'usuario' => $this->Asistencia->Cargo->Usuario->virtualFields['nombre_completo']
@@ -73,12 +164,128 @@ class AsistenciasController extends AppController {
 				)
 			)
 		), false);
+	}
 
-		$this->Prg->commonProcess();
-		$this->Paginator->settings += array(
-			'conditions' => $this->Asistencia->parseCriteria($this->Prg->parsedParams())
+/**
+ * Obtiene las opciones de búsqueda para el reporte de asistencia
+ *
+ * @return array
+ */
+	private function __getFindOptions($options) {
+		$result = array(
+			'conditions' => array(),
+			'fields' => array(
+				'asignatura', 'Usuario.legajo', 'Usuario.apellido',
+				'Usuario.nombre', 'fecha', 'entrada', 'salida', 'obs'
+			),
+			'order' => array('Asistencia.fecha' => 'desc'),
+			'recursive' => 0
 		);
 
-		$this->set('rows', $this->Paginator->paginate());
+		if (!empty($options['data']['asignatura_id'])) {
+			$result['conditions']['Cargo.asignatura_id'] = $options['data']['asignatura_id'];
+		}
+
+		if (!empty($options['data']['usuario_id'])) {
+			$result['conditions']['Cargo.usuario_id'] = $options['data']['usuario_id'];
+		}
+
+		if (!empty($options['data']['desde'])) {
+			$result['conditions']['Asistencia.fecha >='] = $options['data']['desde'];
+		}
+
+		if (!empty($options['data']['hasta'])) {
+			$result['conditions']['Asistencia.fecha <='] = $options['data']['hasta'];
+		}
+
+		if (!empty($options['paging']['order'])) {
+			$result['order'] = $options['paging']['order'];
+		}
+
+		return $result;
+	}
+
+/**
+ * Genera un reporte de asistencia en formato PDF
+ *
+ * @param array $options Condiciones de búsqueda y opciones de ordenamiento
+ *
+ * @return void
+ */
+	private function __generateReport($options) {
+		$this->autoRender = false;
+
+		$date = preg_replace_callback(
+			"/[a-zA-Záéíóú]{3,}/u",
+			function($m) {
+				return ucfirst($m[0]);
+			},
+			strftime('%A %d de %B de %Y')
+		);
+
+		$this->pdfConfig = array(
+			'engine' => 'CakePdf.WkHtmlToPdf',
+			'options' => array(
+				'dpi' => 96,
+				'footer-center' => iconv("UTF-8", "ASCII//TRANSLIT", 'Página [frompage] de [topage]'),
+				'footer-font-name' => 'Arial',
+				'footer-font-size' => '9',
+				'footer-line' => false,
+				'header-center' => 'Reporte de Asistencia',
+				'header-font-name' => 'Arial',
+				'header-font-size' => '9',
+				'header-left' => 'Sistema de Registro de Asistencia y Temas',
+				'header-line' => true,
+				'header-right' => iconv("UTF-8", "ASCII//TRANSLIT", $date),
+				'outline' => true,
+				'print-media-type' => false
+			),
+			'margin' => array(
+				'bottom' => 5,
+				'left' => 3,
+				'right' => 3,
+				'top' => 5
+			),
+			'orientation' => 'landscape',
+			'page-size' => 'A4'
+		);
+
+		$data = $options['data'];
+		$settings = $this->__getFindOptions($options);
+		$this->__setupModelAssociations();
+
+		if (!empty($data['asignatura_id'])) {
+			$row = $this->Asistencia->Cargo->Asignatura->find('first', array(
+				'conditions' => array('Asignatura.id' => $data['asignatura_id']),
+				'fields' => array('asignatura'),
+				'recursive' => 0
+			));
+			$data['asignatura'] = $row['Asignatura']['asignatura'];
+		}
+
+		if (!empty($data['usuario_id'])) {
+			$this->Asistencia->Cargo->Usuario->virtualFields = array(
+				'nombre_completo' => 'CONCAT("(", Usuario.legajo, ")", " ", Usuario.apellido, ", ", Usuario.nombre)'
+			);
+			$row = $this->Asistencia->Cargo->Usuario->find('first', array(
+				'conditions' => array('Usuario.id' => $data['usuario_id']),
+				'fields' => array('nombre_completo')
+			));
+			$data['usuario'] = $row['Usuario']['nombre_completo'];
+		}
+
+		$this->set(array(
+			'data' => $data,
+			'rows' => $this->Asistencia->find('all', $settings)
+		));
+
+		try {
+			$this->render();
+		} catch (Exception $e) {
+			$this->_notify(null, array(
+				'message' => "No fue posible exportar el resultado debido a un error interno.",
+				'redirect' => array('action' => 'reporte')
+			));
+		}
 	}
 }

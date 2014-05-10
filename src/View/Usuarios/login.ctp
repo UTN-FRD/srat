@@ -2,7 +2,7 @@
 /**
  * Inicio de sesión
  *
- * Sistema de Registro de Asistenca y Temas
+ * Sistema de Registro de Asistencia y Temas
  *
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
@@ -20,8 +20,8 @@ $this->Html->css('login', array('inline' => false));
 echo $this->Form->create('Usuario');
 echo $this->Form->input('legajo', array(
 	'autofocus',
-	'class' => 'error',
-	'label' => 'Número de legajo'
+	'label' => 'Número de legajo',
+	'min' => 1
 ));
 echo $this->Form->input('password', array(
 	'label' => 'Contraseña'

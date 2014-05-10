@@ -1,5 +1,5 @@
 /*!
- * Usuarios
+ * PDF
  *
  * Sistema de Registro de Asistencia y Temas
  *
@@ -11,18 +11,6 @@
  * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
 
-table.usuarios thead tr th:nth-child(2),
-table.usuarios thead tr th:nth-child(5),
-table.usuarios thead tr th:nth-child(6) {
-	width: 85px
-}
-
-table.usuarios thead tr th:nth-child(2),
-table.usuarios tbody tr td:nth-child(2) {
-	text-align: center
-}
-
-input#UsuarioLegajo {
-	text-align: center;
-	width: 85px
+#wrapper {
+	padding: 10px 5px
 }

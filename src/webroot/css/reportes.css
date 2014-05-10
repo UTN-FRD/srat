@@ -1,0 +1,160 @@
+/*!
+ * Reportes
+ *
+ * Sistema de Registro de Asistencia y Temas
+ *
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
+ *
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo licencia.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
+ */
+
+.form-horizontal {
+	margin-top: 10px
+}
+
+.form-horizontal .control-label {
+	text-align: left;
+	width: 125px
+}
+
+.form-horizontal .controls {
+	margin-left: 50px
+}
+
+.form-horizontal .datefield:nth-child(1) {
+	margin-right: 3px;
+	width: 60px
+}
+
+.form-horizontal .datefield:nth-child(2) {
+	margin-left: 3px;
+	margin-right: 3px;
+	width: 115px
+}
+
+.form-horizontal .datefield:nth-child(3) {
+	margin-left: 3px;
+	width: 75px
+}
+
+.help-box {
+	float: right;
+	font-size: .9em;
+	position: relative;
+	top: -27px;
+	width: 512px
+}
+
+.form-horizontal .form-actions {
+	margin-top: 20px;
+	padding-left: 145px
+}
+
+#view .table thead th:nth-child(3),
+#view .table tbody td:nth-child(3) {
+	text-align: center;
+	width: 85px
+}
+
+#view .table thead th:nth-child(4) {
+	width: 175px
+}
+
+#view .table thead th:nth-child(5),
+#view .table thead th:nth-child(6),
+#view .table thead th:nth-child(7) {
+	width: 75px
+}
+
+#view .table thead th:nth-child(6),
+#view .table thead th:nth-child(7),
+#view .table tbody td:nth-child(6),
+#view .table tbody td:nth-child(7) {
+	text-align: right
+}
+
+#view .table thead th:nth-child(8) {
+	text-align: center
+}
+
+.table-details {
+	width: 786px
+}
+
+.table-details th,
+.table-details td {
+	border: none
+}
+
+.table-details tbody tr td:first-child {
+	font-weight: bold;
+	width: 85px
+}
+
+.table-bordered {
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	border-left: 1px solid #ddd;
+	border-radius: 0
+}
+
+.table-bordered th:first-child,
+.table-bordered td:first-child {
+	border-left: none
+}
+
+.table-bordered thead:first-child tr:first-child > th:first-child,
+.table-bordered tbody:first-child tr:first-child > td:first-child,
+.table-bordered tbody:first-child tr:first-child > th:first-child {
+	-moz-border-radius-topleft: 0;
+	-webkit-border-top-left-radius: 0;
+	border-top-left-radius: 0
+}
+
+.table-bordered thead:last-child tr:last-child > th:first-child,
+.table-bordered tbody:last-child tr:last-child > td:first-child,
+.table-bordered tbody:last-child tr:last-child > th:first-child,
+.table-bordered tfoot:last-child tr:last-child > td:first-child,
+.table-bordered tfoot:last-child tr:last-child > th:first-child {
+	-moz-border-radius-bottomleft: 0;
+	-webkit-border-bottom-left-radius: 0;
+	border-bottom-left-radius: 0
+}
+
+.table-bordered thead:first-child tr:first-child > th:last-child,
+.table-bordered tbody:first-child tr:first-child > td:last-child,
+.table-bordered tbody:first-child tr:first-child > th:last-child {
+	-moz-border-radius-topright: 0;
+	-webkit-border-top-right-radius: 0;
+	border-top-right-radius: 0
+}
+
+tr.empty td {
+	text-align: center
+}
+
+th.row2, td.row2 {
+	text-align: center;
+	width: 45px
+}
+
+th.row3, td.row3 {
+	width: 150px
+}
+
+th.row4, td.row4 {
+	width: 75px
+}
+
+th.row5, td.row5 {
+	text-align: right;
+	width: 55px
+}
+
+th.row6, td.row6 {
+	text-align: right;
+	width: 45px
+}

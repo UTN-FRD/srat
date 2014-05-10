@@ -1,6 +1,6 @@
 {
 	"name": "utn/srat",
-	"description": "Sistema de Registro de Asistenca y Temas",
+	"description": "Sistema de Registro de Asistencia y Temas",
 	"license": "proprietary",
 	"authors": [
 		{
@@ -20,6 +20,7 @@
 	"require": {
 		"php": ">=5.4.0",
 		"cakedc/search": "2.2.*",
+		"ceeram/cakepdf": "1.0.*",
 		"pear-pear.cakephp.org/CakePHP": "~2.4.9"
 	},
 	"require-dev": {
@@ -30,6 +31,7 @@
 	},
 	"extra": {
 		"installer-paths": {
+			"src/Plugin/CakePdf": ["ceeram/cakepdf"],
 			"src/Plugin/DebugKit": ["cakephp/debug_kit"],
 			"src/Plugin/Localized": ["cakephp/localized"],
 			"src/Plugin/Search": ["cakedc/search"]

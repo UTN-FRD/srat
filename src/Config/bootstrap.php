@@ -2,7 +2,7 @@
 /**
  * Configuración del arranque de la aplicación
  *
- * Sistema de Registro de Asistenca y Temas
+ * Sistema de Registro de Asistencia y Temas
  *
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
@@ -97,6 +97,7 @@ Cache::config('default', array(
  * Plugins
  */
 CakePlugin::load(array(
+	'CakePdf' => array('bootstrap' => true, 'routes' => true),
 	'DebugKit',
 	'Search'
 ));

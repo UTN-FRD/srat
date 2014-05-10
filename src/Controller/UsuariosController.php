@@ -1,6 +1,6 @@
 <?php
 /**
- * Sistema de Registro de Asistenca y Temas
+ * Sistema de Registro de Asistencia y Temas
  *
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
@@ -118,7 +118,9 @@ class UsuariosController extends AppController {
  * @return void
  */
 	public function logout() {
-		$this->redirect($this->Auth->logout());
+		$logoutRedirect = $this->Auth->logout();
+		$this->Session->destroy();
+		$this->redirect($logoutRedirect);
 	}
 
 /**
