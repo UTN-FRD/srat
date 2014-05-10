@@ -16,6 +16,11 @@
  * CSS
  */
 $this->Html->css('dashboard', array('inline' => false));
+
+/**
+ * JavaScript
+ */
+$this->Html->script('dashboard', array('inline' => false));
 ?>
 <?php if (empty($this->request->data['Asistencia'])): ?>
 	<div class="alert alert-info">
