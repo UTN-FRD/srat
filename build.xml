@@ -180,7 +180,7 @@
 			</fileset>
 		</copy>
 
-		<copy file="./licencia.txt" tofile="${app.path}/licencia.txt" />
+		<copy file="./licencia.txt" tofile="${package.dir}/${app.name}/licencia.txt" />
 
 		<delete file="${app.path}/webroot/favicon.ico" />
 		<touch file="${app.path}/webroot/favicon.ico" />
