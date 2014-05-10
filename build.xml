@@ -169,6 +169,7 @@
 			<fileset dir="vendor/pear-pear.cakephp.org/CakePHP">
 				<include name="Cake/**" />
 				<exclude name="Cake/Console/**" />
+				<exclude name="Cake/Test/**" />
 				<exclude name="Cake/TestSuite/**" />
 			</fileset>
 		</copy>
