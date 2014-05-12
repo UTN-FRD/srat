@@ -101,3 +101,8 @@ CakePlugin::load(array(
 	'DebugKit',
 	'Search'
 ));
+
+/**
+ * Ruta de acceso a wkhtmltopdf
+ */
+Configure::write('CakePdf.binary', '/usr/bin/wkhtmltopdf');
