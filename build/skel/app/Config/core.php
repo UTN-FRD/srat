@@ -38,7 +38,7 @@ Configure::write('Exception', array(
 /**
  * Ruta base en caso que la aplicación se encuentre en un subdirectorio
  */
-Configure::write('App.base', DS . basename(dirname(dirname(__DIR__))));
+Configure::write('App.base', '/' . basename(dirname(dirname(__DIR__))));
 
 /**
  * Codificación de caracteres
