@@ -61,7 +61,7 @@
 							function($m) {
 								return ucfirst($m[0]);
 							},
-							strftime('%A %d de %B de %Y, %H:%M')
+							CakeTime::format(time(), '%A %d de %B de %Y, %H:%M')
 						);
 						?>
 					</div>

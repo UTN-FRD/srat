@@ -38,7 +38,7 @@ Configure::write('Exception', array(
 /**
  * Ruta base en caso que la aplicación se encuentre en un subdirectorio
  */
-Configure::write('App.base', DS . basename(dirname(dirname(__DIR__))));
+Configure::write('App.base', '/' . basename(dirname(dirname(__DIR__))));
 
 /**
  * Codificación de caracteres
@@ -75,7 +75,7 @@ Configure::write('Cache.check', true);
  */
 Configure::write('Session', array(
 	'cookie' => 'utn_srat',
-	'defaults' => 'cache',
+	'defaults' => 'cake',
 	'timeout' => 720
 ));
 
@@ -94,7 +94,7 @@ Configure::write('Security.cipherSeed', '376138663337353532663361366338');
  */
 Cache::config('_cake_core_', array(
 	'duration' => '+12 months',
-	'engine' => 'Apc',
+	'engine' => 'File',
 	'path' => CACHE . 'persistent' . DS,
 	'prefix' => APP_DIR . '_cake_core_'
 ));
@@ -104,7 +104,7 @@ Cache::config('_cake_core_', array(
  */
 Cache::config('_cake_model_', array(
 	'duration' => '+12 months',
-	'engine' => 'Apc',
+	'engine' => 'File',
 	'path' => CACHE . 'models' . DS,
 	'prefix' => APP_DIR . '_cake_model_'
 ));

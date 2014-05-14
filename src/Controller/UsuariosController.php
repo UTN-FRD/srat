@@ -102,7 +102,7 @@ class UsuariosController extends AppController {
 
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
-				$this->redirect($this->Auth->redirectUrl());
+				return $this->redirect($this->Auth->redirectUrl());
 			}
 
 			$this->request->data['Usuario']['password'] = null;

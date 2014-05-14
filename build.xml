@@ -37,9 +37,16 @@
 	</target>
 
 	<!--
+		Ejecuta la suite de pruebas de la aplicación
+	-->
+	<target name="tests" description="Ejecuta la suite de pruebas de la aplicación">
+		<exec command="${src.dir}/Console/cake test app AllApp --stderr" checkreturn="true" logoutput="true"></exec>
+	</target>
+
+	<!--
 		Prepara la copia inicial de la aplicación
 	-->
-	<target name="copy-app" depends="clean" description="Prepara la copia inicial de la aplicación">
+	<target name="copy-app" depends="clean, tests" description="Prepara la copia inicial de la aplicación">
 		<copy todir="${app.path}">
 			<fileset dir="${src.dir}">
 				<include name="**" />
@@ -169,6 +176,7 @@
 			<fileset dir="vendor/pear-pear.cakephp.org/CakePHP">
 				<include name="Cake/**" />
 				<exclude name="Cake/Console/**" />
+				<exclude name="Cake/Test/**" />
 				<exclude name="Cake/TestSuite/**" />
 			</fileset>
 		</copy>
@@ -180,7 +188,7 @@
 			</fileset>
 		</copy>
 
-		<copy file="./licencia.txt" tofile="${app.path}/licencia.txt" />
+		<copy file="./licencia.txt" tofile="${package.dir}/${app.name}/licencia.txt" />
 
 		<delete file="${app.path}/webroot/favicon.ico" />
 		<touch file="${app.path}/webroot/favicon.ico" />

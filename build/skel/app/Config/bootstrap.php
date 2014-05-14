@@ -16,6 +16,7 @@
  * Dependencias
  */
 App::uses('CakeLog', 'Log');
+App::uses('CakeTime', 'Utility');
 
 /**
  * Localidad
@@ -77,7 +78,7 @@ Configure::write('Dispatcher.filters', array(
  */
 Cache::config('default', array(
 	'duration' => '+12 months',
-	'engine' => 'Apc',
+	'engine' => 'File',
 	'prefix' => APP_DIR . '_default_'
 ));
 
@@ -88,3 +89,8 @@ CakePlugin::load(array(
 	'CakePdf' => array('bootstrap' => true, 'routes' => true),
 	'Search'
 ));
+
+/**
+ * Ruta de acceso a wkhtmltopdf
+ */
+Configure::write('CakePdf.binary', '/usr/bin/wkhtmltopdf');
