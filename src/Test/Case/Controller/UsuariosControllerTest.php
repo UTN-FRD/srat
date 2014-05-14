@@ -137,4 +137,91 @@ class UsuariosControllerTest extends ControllerTestCase {
 		$this->assertEquals('Restablecer contraseña', $this->vars['title_for_layout']);
 		$this->assertContains('id="UsuarioRestablecerForm"', $result);
 	}
+
+/**
+ * testLoginAdmin
+ *
+ * @return void
+ */
+	public function testLoginAdmin() {
+		$Usuarios = $this->generate('Usuarios');
+
+		$data['Usuario'] = array(
+			'legajo' => '1',
+			'password' => 'demo'
+		);
+
+		$this->testAction('usuarios/login', compact('data'));
+		$this->assertNotEmpty($Usuarios->Auth->user());
+		$this->assertEquals(1, $Usuarios->Auth->user('id'));
+	}
+
+/**
+ * testLoginTeacher
+ *
+ * @return void
+ */
+	public function testLoginTeacher() {
+		$Usuarios = $this->generate('Usuarios');
+
+		$data['Usuario'] = array(
+			'legajo' => '22540',
+			'password' => 'abc567890'
+		);
+
+		$this->testAction('usuarios/login', compact('data'));
+		$this->assertNotEmpty($Usuarios->Auth->user());
+		$this->assertEquals(2, $Usuarios->Auth->user('id'));
+	}
+
+/**
+ * testLoginWrongPassword
+ *
+ * @return void
+ */
+	public function testLoginWrongPassword() {
+		$Usuarios = $this->generate('Usuarios');
+
+		$data['Usuario'] = array(
+			'legajo' => '1',
+			'password' => 'abc567890'
+		);
+
+		$this->testAction('usuarios/login', compact('data'));
+		$this->assertEmpty($Usuarios->Auth->user());
+		$this->assertNotEmpty($Usuarios->Session->read('Message.auth'));
+	}
+
+/**
+ * testLoginUserDisabled
+ *
+ * @return void
+ */
+	public function testLoginUserDisabled() {
+		$Usuarios = $this->generate('Usuarios');
+
+		$data['Usuario'] = array(
+			'legajo' => '65811',
+			'password' => 'abc12345'
+		);
+
+		$this->testAction('usuarios/login', compact('data'));
+		$this->assertEmpty($Usuarios->Auth->user());
+		$this->assertNotEmpty($Usuarios->Session->read('Message.auth'));
+	}
+
+/**
+ * testAlreadyLoggedIn
+ *
+ * @return void
+ */
+	public function testAlreadyLoggedIn() {
+		$Usuarios = $this->generate('Usuarios');
+
+		$Usuarios->Session->write('Auth.User', current(
+			$Usuarios->Usuario->read(null, 1)
+		));
+		$this->testAction('usuarios/login', array('method' => 'GET'));
+		$this->assertNotEmpty($this->headers['Location']);
+	}
 }
