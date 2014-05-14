@@ -188,4 +188,60 @@ class AppControllerTest extends ControllerTestCase {
 
 		$Tests->Session->delete('Auth');
 	}
+
+/**
+ * testGenerateTitleForIndex
+ *
+ * @return void
+ */
+	public function testGenerateTitleForIndex() {
+		$this->testAction('tests', array('method' => 'GET'));
+
+		$this->assertEquals($this->_Tests->viewVars, array(
+			'title_for_layout' => 'Tests',
+			'title_for_view' => 'Tests'
+		));
+	}
+
+/**
+ * testGenerateTitleForIndexWithPrefix
+ *
+ * @return void
+ */
+	public function testGenerateTitleForIndexWithPrefix() {
+		$this->testAction('admin/tests/index', array('method' => 'GET'));
+
+		$this->assertEquals($this->_Tests->viewVars, array(
+			'title_for_layout' => 'Tests',
+			'title_for_view' => 'Tests'
+		));
+	}
+
+/**
+ * testGenerateTitleForNonIndex
+ *
+ * @return void
+ */
+	public function testGenerateTitleForNonIndex() {
+		$this->testAction('tests/add', array('method' => 'GET'));
+
+		$this->assertEquals($this->_Tests->viewVars, array(
+			'title_for_layout' => 'Add - Tests',
+			'title_for_view' => 'Add test'
+		));
+	}
+
+/**
+ * testGenerateTitleForNonIndexWithPrefix
+ *
+ * @return void
+ */
+	public function testGenerateTitleForNonIndexWithPrefix() {
+		$this->testAction('admin/tests/edit', array('method' => 'GET'));
+
+		$this->assertEquals($this->_Tests->viewVars, array(
+			'title_for_layout' => 'Edit - Tests',
+			'title_for_view' => 'Edit test'
+		));
+	}
 }
