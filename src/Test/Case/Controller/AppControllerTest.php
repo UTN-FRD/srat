@@ -156,4 +156,16 @@ class AppControllerTest extends ControllerTestCase {
 			$this->_Tests->Components->disable('Toolbar');
 		}
 	}
+
+/**
+ * testCacheHeaders
+ *
+ * @return void
+ */
+	public function testCacheHeaders() {
+		$this->testAction('tests', array('method' => 'GET'));
+
+		$this->assertNotEmpty($this->headers);
+		$this->assertTrue(in_array('no-store, no-cache, must-revalidate, post-check=0, pre-check=0', $this->headers));
+	}
 }
