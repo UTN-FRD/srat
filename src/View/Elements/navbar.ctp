@@ -15,10 +15,13 @@
 /**
  * Usuario
  */
+$isAdmin = $loggedIn = $reset = false;
 $user = AuthComponent::user();
-$loggedIn = (bool)$user;
-$isAdmin = ($user['rol_id'] == 1);
-$reset = (bool)$user['reset'];
+if ($user):
+	$isAdmin = ($user['rol_id'] == 1);
+	$loggedIn = true;
+	$reset = (bool)$user['reset'];
+endif;
 
 /**
  * Enlaces
