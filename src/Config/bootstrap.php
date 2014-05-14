@@ -28,6 +28,7 @@ spl_autoload_register(array('App', 'load'), true, true);
  * Dependencias
  */
 App::uses('CakeLog', 'Log');
+App::uses('CakeTime', 'Utility');
 
 /**
  * Localidad

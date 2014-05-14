@@ -16,6 +16,7 @@
  * Dependencias
  */
 App::uses('CakeLog', 'Log');
+App::uses('CakeTime', 'Utility');
 
 /**
  * Localidad
