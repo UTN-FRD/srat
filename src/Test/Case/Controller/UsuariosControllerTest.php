@@ -224,4 +224,54 @@ class UsuariosControllerTest extends ControllerTestCase {
 		$this->testAction('usuarios/login', array('method' => 'GET'));
 		$this->assertNotEmpty($this->headers['Location']);
 	}
+
+/**
+ * testLogout
+ *
+ * @return void
+ */
+	public function testLogout() {
+		$Usuarios = $this->generate('Usuarios', array(
+			'components' => array(
+				'Session' => array(
+					'delete', 'destroy', 'renew'
+				)
+			),
+			'methods' => array(
+				'redirect'
+			)
+		));
+
+		$Usuarios->Session->write('Auth.User', current(
+			$Usuarios->Usuario->read(null, 1)
+		));
+
+		$Usuarios->Session->expects($this->any())
+			->method('delete');
+
+		$Usuarios->Session->expects($this->once())
+			->method('renew');
+
+		$Usuarios->Session->expects($this->once())
+			->method('destroy');
+
+		$Usuarios->expects($this->once())
+			->method('redirect');
+
+		$this->testAction('usuarios/logout', array('method' => 'GET'));
+	}
+
+/**
+ * testAlreadyLoggedOut
+ *
+ * @return void
+ */
+	public function testAlreadyLoggedOut() {
+		$Usuarios = $this->generate('Usuarios');
+
+		$this->testAction('usuarios/logout', array('method' => 'GET'));
+		$this->assertEmpty($Usuarios->Session->read('Message.auth'));
+		$this->assertEmpty($Usuarios->Session->read('Auth.redirect'));
+		$this->assertNotEmpty($this->headers['Location']);
+	}
 }
