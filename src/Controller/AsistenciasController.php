@@ -223,11 +223,16 @@ class AsistenciasController extends AppController {
 			CakeTime::format(time(), '%A %d de %B de %Y')
 		);
 
+		$charset = 'ASCII';
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+			$charset = 'ISO-8859-1';
+		}
+
 		$this->pdfConfig = array(
 			'engine' => 'CakePdf.WkHtmlToPdf',
 			'options' => array(
 				'dpi' => 96,
-				'footer-center' => iconv("UTF-8", "ASCII//TRANSLIT", 'Página [frompage] de [topage]'),
+				'footer-center' => iconv('UTF-8', $charset . '//TRANSLIT', 'Página [frompage] de [topage]'),
 				'footer-font-name' => 'Arial',
 				'footer-font-size' => '9',
 				'footer-line' => false,
@@ -236,7 +241,7 @@ class AsistenciasController extends AppController {
 				'header-font-size' => '9',
 				'header-left' => 'Sistema de Registro de Asistencia y Temas',
 				'header-line' => true,
-				'header-right' => iconv("UTF-8", "ASCII//TRANSLIT", $date),
+				'header-right' => iconv('UTF-8', $charset . '//TRANSLIT', $date),
 				'outline' => true,
 				'print-media-type' => false
 			),
