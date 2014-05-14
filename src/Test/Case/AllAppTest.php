@@ -26,6 +26,7 @@ class AllAppTest extends PHPUnit_Framework_TestSuite {
 		$suite = new CakeTestSuite('All App tests');
 
 		$path = dirname(__FILE__);
+		$suite->addTestDirectory($path . DS . 'Controller');
 		$suite->addTestDirectory($path . DS . 'I18n');
 
 		return $suite;
