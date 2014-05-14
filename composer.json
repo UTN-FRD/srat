@@ -21,7 +21,7 @@
 		"php": ">=5.4.0",
 		"cakedc/search": "2.2.*",
 		"ceeram/cakepdf": "1.0.*",
-		"pear-pear.cakephp.org/CakePHP": "~2.4.9"
+		"pear-pear.cakephp.org/CakePHP": "~2.5.0"
 	},
 	"require-dev": {
 		"cakephp/debug_kit" : "2.2.*",
