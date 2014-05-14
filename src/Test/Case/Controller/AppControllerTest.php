@@ -168,4 +168,24 @@ class AppControllerTest extends ControllerTestCase {
 		$this->assertNotEmpty($this->headers);
 		$this->assertTrue(in_array('no-store, no-cache, must-revalidate, post-check=0, pre-check=0', $this->headers));
 	}
+
+/**
+ * testRedirectToPasswordReset
+ *
+ * @return void
+ */
+	public function testRedirectToPasswordReset() {
+		$Tests = $this->generate('Tests');
+		$Tests->Session->write('Auth.User', array(
+			'id' => '1024',
+			'rol_id' => '2',
+			'legajo' => '1024',
+			'reset' => 1
+		));
+
+		$this->testAction('tests/index', array('method' => 'GET'));
+		$this->assertContains('restablecer', $this->headers['Location']);
+
+		$Tests->Session->delete('Auth');
+	}
 }
