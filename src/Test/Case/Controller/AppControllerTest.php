@@ -306,4 +306,215 @@ class AppControllerTest extends ControllerTestCase {
 
 		$this->_Tests->blackHole();
 	}
+
+/**
+ * testNotifyDefault
+ *
+ * @return void
+ */
+	public function testNotifyDefault() {
+		$this->_Tests->Session->expects($this->once())
+			->method('setFlash')
+			->with('No hay descripción del error.', 'notify', array('level' => 'error'));
+
+		$this->_Tests->notify();
+	}
+
+/**
+ * testNotifyMessage
+ *
+ * @return void
+ */
+	public function testNotifyMessage() {
+		$this->_Tests->setNotify(array(
+			'test' => array(
+				'message' => 'The quick brown fox jumps over the lazy dog'
+			)
+		));
+
+		$this->_Tests->Session->expects($this->once())
+			->method('setFlash')
+			->with('The quick brown fox jumps over the lazy dog', 'notify', $this->anything());
+
+		$this->_Tests->notify('test');
+	}
+
+/**
+ * testNotifyOverrideMessage
+ *
+ * @return void
+ */
+	public function testNotifyOverrideMessage() {
+		$this->_Tests->setNotify(array(
+			'test' => array(
+				'message' => 'The quick brown fox jumps over the lazy dog'
+			)
+		));
+
+		$this->_Tests->Session->expects($this->once())
+			->method('setFlash')
+			->with('The quick brown dog jumps over the lazy cat', 'notify', $this->anything());
+
+		$this->_Tests->notify('test', array('message' => 'The quick brown dog jumps over the lazy cat'));
+	}
+
+/**
+ * testNotifyLevel
+ *
+ * @return void
+ */
+	public function testNotifyLevel() {
+		$this->_Tests->setNotify(array(
+			'test' => array(
+				'level' => 'warning'
+			)
+		));
+
+		$this->_Tests->Session->expects($this->once())
+			->method('setFlash')
+			->with($this->anything(), 'notify', array('level' => 'warning'));
+
+		$this->_Tests->notify('test');
+	}
+
+/**
+ * testNotifyOverrideLevel
+ *
+ * @return void
+ */
+	public function testNotifyOverrideLevel() {
+		$this->_Tests->setNotify(array(
+			'test' => array(
+				'level' => 'success'
+			)
+		));
+
+		$this->_Tests->Session->expects($this->once())
+			->method('setFlash')
+			->with($this->anything(), 'notify', array('level' => 'info'));
+
+		$this->_Tests->notify('test', array('level' => 'info'));
+	}
+
+/**
+ * testNotifyRedirect
+ *
+ * @return void
+ */
+	public function testNotifyRedirect() {
+		$this->_Tests->setNotify(array(
+			'test' => array(
+				'redirect' => array('controller' => 'tests', 'action' => 'index')
+			)
+		));
+
+		$this->_Tests->Session->expects($this->once())
+			->method('setFlash')
+			->with($this->anything(), 'notify', $this->anything());
+
+		$this->_Tests->expects($this->once())
+			->method('redirect')
+			->with(array('controller' => 'tests', 'action' => 'index'));
+
+		$this->_Tests->notify('test');
+	}
+
+/**
+ * testNotifyRedirectRefresh
+ *
+ * @return void
+ */
+	public function testNotifyRedirectRefresh() {
+		$this->_Tests->setNotify(array(
+			'test' => array(
+				'redirect' => true
+			)
+		));
+
+		$this->_Tests->Session->expects($this->once())
+			->method('setFlash')
+			->with($this->anything(), 'notify', $this->anything());
+
+		$this->_Tests->expects($this->once())
+			->method('redirect')
+			->with('');
+
+		$this->_Tests->notify('test');
+	}
+
+/**
+ * testNotifyOverrideRedirect
+ *
+ * @return void
+ */
+	public function testNotifyOverrideRedirect() {
+		$this->_Tests->setNotify(array(
+			'test' => array(
+				'redirect' => true
+			)
+		));
+
+		$this->_Tests->Session->expects($this->once())
+			->method('setFlash')
+			->with($this->anything(), 'notify', $this->anything());
+
+		$this->_Tests->expects($this->never())
+			->method('redirect');
+
+		$this->_Tests->notify('test', array('redirect' => false));
+	}
+
+/**
+ * testNotifyException
+ *
+ * @return void
+ *
+ * @throws NotFoundException
+ */
+	public function testNotifyException() {
+		$this->_Tests->setNotify(array(
+			'not_found' => array(
+				'level' => 'warning',
+				'message' => null,
+				'redirect' => false
+			)
+		));
+
+		$this->_Tests->Session->expects($this->once())
+			->method('setFlash')
+			->with('Not Found', 'notify', array('level' => 'warning'));
+
+		try {
+			throw new NotFoundException;
+		} catch (NotFoundException $e) {
+			$this->_Tests->notify($e);
+		}
+	}
+
+/**
+ * testNotifyExceptionCustomMessage
+ *
+ * @return void
+ *
+ * @throws NotFoundException
+ */
+	public function testNotifyExceptionCustomMessage() {
+		$this->_Tests->setNotify(array(
+			'not_found' => array(
+				'level' => 'error',
+				'message' => 'File not found',
+				'redirect' => false
+			)
+		));
+
+		$this->_Tests->Session->expects($this->once())
+			->method('setFlash')
+			->with('File not found', 'notify', array('level' => 'error'));
+
+		try {
+			throw new NotFoundException;
+		} catch (NotFoundException $e) {
+			$this->_Tests->notify($e);
+		}
+	}
 }
