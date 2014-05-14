@@ -281,4 +281,29 @@ class AppControllerTest extends ControllerTestCase {
 			$this->_Tests->isAuthorized(array('rol_id' => 2))
 		);
 	}
+
+/**
+ * testBlackHoleCallBack
+ *
+ * @return void
+ */
+	public function testBlackHoleCallBack() {
+		$this->_Tests->setNotify(array(
+			'blackHole' => array(
+				'level' => 'error',
+				'message' => 'The request has been black-holed',
+				'redirect' => true
+			)
+		));
+
+		$this->_Tests->Session->expects($this->once())
+			->method('setFlash')
+			->with('The request has been black-holed', 'notify', array('level' => 'error'));
+
+		$this->_Tests->expects($this->once())
+			->method('redirect')
+			->with('');
+
+		$this->_Tests->blackHole();
+	}
 }
