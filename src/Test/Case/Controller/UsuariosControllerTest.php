@@ -87,4 +87,28 @@ class UsuariosControllerTest extends ControllerTestCase {
 		$this->assertEquals($this->vars['title_for_layout'], 'Docentes');
 		$this->assertNotEmpty($this->vars['rows']);
 	}
+
+/**
+ * testAccessToRestrictedAction
+ *
+ * @return void
+ */
+	public function testAccessToRestrictedAction() {
+		$Usuarios = $this->generate('Usuarios');
+
+		$this->testAction('usuarios/dashboard', array('method' => 'GET'));
+		$this->assertEmpty($Usuarios->Session->read('Message.auth'));
+		$this->assertNotEmpty($Usuarios->Session->read('Auth.redirect'));
+
+		$this->testAction('usuarios/perfil', array('method' => 'GET'));
+		$this->assertNotEmpty($Usuarios->Session->read('Message.auth'));
+		$this->assertNotEmpty($Usuarios->Session->read('Auth.redirect'));
+
+		$Usuarios->Session->write('Auth.User', current(
+			$Usuarios->Usuario->read(null, 1)
+		));
+		$result = $this->testAction('usuarios/perfil', array('method' => 'GET', 'return' => 'contents'));
+		$this->assertEquals($this->vars['title_for_layout'], 'Perfil');
+		$this->assertContains('id="UsuarioPerfilForm"', $result);
+	}
 }
