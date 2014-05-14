@@ -244,4 +244,41 @@ class AppControllerTest extends ControllerTestCase {
 			'title_for_view' => 'Edit test'
 		));
 	}
+
+/**
+ * testIsAuthorized
+ *
+ * @return void
+ */
+	public function testIsAuthorized() {
+		$this->assertTrue(
+			$this->_Tests->isAuthorized()
+		);
+	}
+
+/**
+ * testIsAuthorizedAdmin
+ *
+ * @return void
+ */
+	public function testIsAuthorizedAdmin() {
+		$this->testAction('admin/tests/index', array('method' => 'GET'));
+
+		$this->assertTrue(
+			$this->_Tests->isAuthorized(array('rol_id' => 1))
+		);
+	}
+
+/**
+ * testIsNotAuthorizedNonAdmin
+ *
+ * @return void
+ */
+	public function testIsNotAuthorizedNonAdmin() {
+		$this->testAction('admin/tests/index', array('method' => 'GET'));
+
+		$this->assertFalse(
+			$this->_Tests->isAuthorized(array('rol_id' => 2))
+		);
+	}
 }
