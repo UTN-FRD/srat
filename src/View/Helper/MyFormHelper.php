@@ -16,7 +16,8 @@
 App::uses('FormHelper', 'View/Helper');
 
 /**
- * Simplifica la construcción de elementos HTML
+ * Generación automática de formularios HTML a partir de datos dados
+ * compatible con la librería Bootstrap
  *
  * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
@@ -41,7 +42,7 @@ class MyFormHelper extends FormHelper {
 /**
  * Genera un elemento para un formulario
  *
- * @param string $field Nombre del campo
+ * @param string $fieldName Nombre del campo
  * @param array $options Opciones
  *
  * @return string Elemento
@@ -96,7 +97,7 @@ class MyFormHelper extends FormHelper {
 /**
  * Genera un elemento label
  *
- * @param string $field Nombre del campo
+ * @param string $fieldName Nombre del campo
  * @param string $text Texto a mostrar en el campo
  * @param array|string $options Un `array` con atributos HTML, o `string`,
  * para ser usada como clase del elemento
@@ -128,7 +129,7 @@ class MyFormHelper extends FormHelper {
  * Un valor verdadero determina si se procesa el botón.
  *
  * - (string) `type`
- * Tipo de bótón.
+ * Tipo de botón.
  *
  * - (string|array) `url`
  * Convierte el botón en un enlace.

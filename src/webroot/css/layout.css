@@ -130,10 +130,6 @@ body {
 	margin-top: 0
 }
 
-.navbar .navbar-inner .pull-right > li > .dropdown-menu {
-	right: 3px
-}
-
 #page {
 	margin: 45px auto 30px;
 	padding: 15px;
