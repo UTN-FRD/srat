@@ -30,4 +30,22 @@ class BackupShell extends AppShell {
  */
 	public function main() {
 	}
+
+/**
+ * Comprime un archivo
+ *
+ * @param string $filename Ruta de acceso al archivo
+ *
+ * @return boolean `true` en caso exitoso o `false` en caso contrario
+ */
+	private function __gzipFile($filename) {
+		if (!empty($filename)) {
+			$zip = new ZipArchive;
+			if ($zip->open($filename . '.zip', ZipArchive::OVERWRITE) === true) {
+				$zip->addFile($filename, basename($filename));
+				return $zip->close();
+			}
+		}
+		return false;
+	}
 }
