@@ -50,7 +50,7 @@ mv wkhtmltox-*/bin/wkhtmltopdf /usr/bin
 
 #### Configuración
 
-**Nota:** No hay necesidad de configurar nada si wkhtmltopdf ya se encuentra instalado `/usr/bin`.
+**Nota:** No hay necesidad de configurar nada si wkhtmltopdf ya se encuentra instalado en `/usr/bin`.
 
 * Abrir `srat/app/Config/bootstrap.php` con un editor de textos
 * Ir al final del archivo donde se encuentra `Ruta de acceso a wkhtmltopdf`
@@ -65,3 +65,43 @@ Configure::write('CakePdf.binary', '/home/usuario/Downloads/wkhtmltopdf');
 # Windows
 Configure::write('CakePdf.binary', 'C:\wkhtmltopdf\bin\wkhtmltopdf.exe');
 ```
+
+## Desarrollo
+
+### Requerimientos
+
+* [Composer](https://getcomposer.org/)
+* [yUglify](https://github.com/yui/yuglify) (necesario para generar la aplicación)
+
+### Instalación
+
+* Clonar el repositorio en la raíz del directorio público del servidor web
+
+```bash
+git clone git@github.com:jalbertocr/srat.git srat
+```
+* Ingresar en el directorio `srat` y ejecutar
+
+```bash
+composer update
+```
+**Nota:** Ignorar la advertencia relacionada con la resolución ambigua de clases
+
+* Importar el esquema de la base de datos ubicado en `srat/src/Config/Schema/srat.sql` utilizando MySQL
+desde la línea de comandos, phpMyAdmin o similar
+* Abrir `srat/src/Config/database.php` y definir los parámetros de la conexión predeterminada y pruebas
+* Verificar que el usuario bajo el que corre el servidor web tiene permisos de escritura dentro del directorio
+`srat/src/tmp` y subdirectorios
+* Ingresar al sistema en http://127.0.0.1/srat con el usuario predeterminado:
+  * Legajo: 1
+  * Contraseña: demo
+
+### Generar aplicación
+
+* Ingresar en el directorio `srat` y ejecutar
+
+```bash
+vendor/bin/phing build
+```
+
+* La aplicación generada se encuentra en `srat/build/package`
