@@ -59,7 +59,6 @@
 				<exclude name="Config/Schema/db_*" />
 				<exclude name="Config/Schema/i18n.*" />
 				<exclude name="Config/Schema/sessions.*" />
-				<exclude name="Console/**" />
 				<exclude name="Locale/eng/**" />
 				<exclude name="Plugin/DebugKit/**" />
 				<exclude name="Plugin/Localized/**" />
@@ -175,7 +174,6 @@
 		<copy todir="${app.lib}" overwrite="true">
 			<fileset dir="vendor/pear-pear.cakephp.org/CakePHP">
 				<include name="Cake/**" />
-				<exclude name="Cake/Console/**" />
 				<exclude name="Cake/Test/**" />
 				<exclude name="Cake/TestSuite/**" />
 			</fileset>
