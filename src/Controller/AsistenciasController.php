@@ -169,6 +169,8 @@ class AsistenciasController extends AppController {
 /**
  * Obtiene las opciones de búsqueda para el reporte de asistencia
  *
+ * @param array $options Opciones
+ *
  * @return array
  */
 	private function __getFindOptions($options) {
