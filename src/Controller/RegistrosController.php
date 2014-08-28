@@ -39,6 +39,18 @@ class RegistrosController extends AppController {
 	);
 
 /**
+ * Responde a solicitudes invalidadas por el componente Security
+ *
+ * @param null|string $type Tipo de error
+ *
+ * @return void
+ */
+	public function blackHole($type = null) {
+		$this->Session->delete('Reporte');
+		parent::blackHole($type);
+	}
+
+/**
  * Reporte
  *
  * @return void
