@@ -175,7 +175,9 @@ class RegistrosController extends AppController {
  */
 	private function __getFindOptions($options) {
 		$result = array(
-			'conditions' => array(),
+			'conditions' => array(
+				'Registro.tipo' => 1
+			),
 			'fields' => array(
 				'asignatura', 'Usuario.legajo', 'Usuario.apellido',
 				'Usuario.nombre', 'fecha', 'entrada', 'salida', 'obs'
@@ -198,6 +200,14 @@ class RegistrosController extends AppController {
 
 		if (!empty($options['data']['hasta'])) {
 			$result['conditions']['Registro.fecha <='] = $options['data']['hasta'];
+		}
+
+		if (isset($options['data']['tipo'])) {
+			if ($options['data']['tipo'] === '0') {
+				$result['conditions']['Registro.tipo'] = 0;
+			} elseif ($options['data']['tipo'] === '2') {
+				unset($result['conditions']['Registro.tipo']);
+			}
 		}
 
 		if (!empty($options['paging']['order'])) {
@@ -230,6 +240,15 @@ class RegistrosController extends AppController {
 			$charset = 'ISO-8859-1';
 		}
 
+		$title = 'Asistencia';
+		if (isset($options['data']['tipo'])) {
+			if ($options['data']['tipo'] === '0') {
+				$title = 'Inasistencia';
+			} elseif ($options['data']['tipo'] === '2') {
+				$title .= ' e Inasistencia';
+			}
+		}
+
 		$this->pdfConfig = array(
 			'engine' => 'CakePdf.WkHtmlToPdf',
 			'options' => array(
@@ -238,7 +257,7 @@ class RegistrosController extends AppController {
 				'footer-font-name' => 'Arial',
 				'footer-font-size' => '9',
 				'footer-line' => false,
-				'header-center' => 'Reporte de Asistencia',
+				'header-center' => 'Reporte de ' . $title,
 				'header-font-name' => 'Arial',
 				'header-font-size' => '9',
 				'header-left' => 'Sistema de Registro de Asistencia y Temas',

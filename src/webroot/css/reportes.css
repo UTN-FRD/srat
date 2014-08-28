@@ -44,12 +44,12 @@
 	float: right;
 	font-size: .9em;
 	position: relative;
-	top: -27px;
+	top: -15px;
 	width: 512px
 }
 
 .form-horizontal .form-actions {
-	margin-top: 20px;
+	margin-top: 0;
 	padding-left: 145px
 }
 

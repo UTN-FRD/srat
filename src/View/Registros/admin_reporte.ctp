@@ -71,6 +71,13 @@ $this->Html->addCrumb('Reportes');
 		'orderYear' => 'asc',
 		'type' => 'date'
 	));
+
+	echo $this->Form->input('tipo', array(
+		'class' => 'span2',
+		'default' => 1,
+		'options' => array('Inasistencia', 'Asistencia', 'Ambos'),
+		'type' => 'select'
+	))
 	?>
 </fieldset>
 <?php
