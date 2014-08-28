@@ -25,7 +25,7 @@ $this->Html->script('reportes', array('inline' => false));
 /**
  * Breadcrumbs
  */
-$this->Html->addCrumb('Asistencias', array('controller' => 'asistencias', 'action' => 'index'));
+$this->Html->addCrumb('Registros', array('controller' => 'registros', 'action' => 'index'));
 $this->Html->addCrumb('Reportes');
 ?>
 <?php echo $this->Form->create('Reporte', array('class' => 'form-horizontal')) ?>
@@ -102,13 +102,13 @@ if (!empty($rows)):
 	foreach ($rows as $rid => $row):
 		$rows[$rid] = array(
 			$start++,
-			h($row['Asistencia']['asignatura']),
+			h($row['Registro']['asignatura']),
 			$row['Usuario']['legajo'],
 			h(sprintf('%s, %s', $row['Usuario']['apellido'], $row['Usuario']['nombre'])),
-			date('d/m/Y', strtotime($row['Asistencia']['fecha'])),
-			date('H:i', strtotime($row['Asistencia']['entrada'])),
-			date('H:i', strtotime($row['Asistencia']['salida'])),
-			nl2br(h($row['Asistencia']['obs']))
+			date('d/m/Y', strtotime($row['Registro']['fecha'])),
+			date('H:i', strtotime($row['Registro']['entrada'])),
+			date('H:i', strtotime($row['Registro']['salida'])),
+			nl2br(h($row['Registro']['obs']))
 		);
 	endforeach;
 endif;

@@ -77,7 +77,7 @@ $this->Html->css(
 		?>
 		<tr>
 			<?php if (empty($data['asignatura'])): ?>
-				<td class="row1"><?php echo h($row['Asistencia']['asignatura']) ?></td>
+				<td class="row1"><?php echo h($row['Registro']['asignatura']) ?></td>
 			<?php endif ?>
 
 			<?php if (empty($data['usuario'])): ?>
@@ -85,10 +85,10 @@ $this->Html->css(
 				<td class="row3"><?php echo h(sprintf('%s, %s', $row['Usuario']['apellido'], $row['Usuario']['nombre'])) ?></td>
 			<?php endif ?>
 
-			<td class="row4"><?php echo date('d/m/Y', strtotime($row['Asistencia']['fecha'])) ?></td>
-			<td class="row5"><?php echo date('H:i', strtotime($row['Asistencia']['entrada'])) ?></td>
-			<td class="row6"><?php echo date('H:i', strtotime($row['Asistencia']['salida'])) ?></td>
-			<td class="row7"><?php echo nl2br(h($row['Asistencia']['obs'])) ?></td>
+			<td class="row4"><?php echo date('d/m/Y', strtotime($row['Registro']['fecha'])) ?></td>
+			<td class="row5"><?php echo date('H:i', strtotime($row['Registro']['entrada'])) ?></td>
+			<td class="row6"><?php echo date('H:i', strtotime($row['Registro']['salida'])) ?></td>
+			<td class="row7"><?php echo nl2br(h($row['Registro']['obs'])) ?></td>
 		</tr>
 		<?php endforeach ?>
 		<?php else: ?>

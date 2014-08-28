@@ -16,11 +16,11 @@
 App::uses('AppModel', 'Model');
 
 /**
- * Asistencia
+ * Registro
  *
  * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
-class Asistencia extends AppModel {
+class Registro extends AppModel {
 
 /**
  * Comportamientos
@@ -48,7 +48,7 @@ class Asistencia extends AppModel {
 	public $filterArgs = array(
 		'buscar' => array(
 			'field' => array(
-				'Asistencia.obs', 'Carrera.nombre', 'Materia.nombre', 'Usuario.apellido', 'Usuario.nombre',
+				'Registro.obs', 'Carrera.nombre', 'Materia.nombre', 'Usuario.apellido', 'Usuario.nombre',
 				'CONCAT(Usuario.nombre, " ", Usuario.apellido)'
 			),
 			'type' => 'like'

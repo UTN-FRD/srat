@@ -161,13 +161,13 @@ class Reporte extends AppModel {
 	}
 
 /**
- * Obtiene todas las asignaturas asociadas a cargos que se encuetran en la tabla de asistencias
+ * Obtiene todas las asignaturas asociadas a cargos que se encuetran en la tabla de registros
  *
  * @return array Asignaturas
  */
 	public function getAsignaturas() {
-		$result = $this->Cargo->Asistencia->find('list', array(
-			'fields' => array('Asistencia.id', 'Cargo.asignatura_id'),
+		$result = $this->Cargo->Registro->find('list', array(
+			'fields' => array('Registro.id', 'Cargo.asignatura_id'),
 			'group' => array('Cargo.asignatura_id'),
 			'recursive' => 0
 		));
@@ -188,7 +188,7 @@ class Reporte extends AppModel {
 	}
 
 /**
- * Obtiene todos los usuarios asociados a cargos que se encuentran en la tabla de asistencias
+ * Obtiene todos los usuarios asociados a cargos que se encuentran en la tabla de registros
  *
  * @param integer|null $aid Identificador de la asignatura
  *
@@ -200,9 +200,9 @@ class Reporte extends AppModel {
 			$conditions = array('Cargo.asignatura_id' => $aid);
 		}
 
-		$result = $this->Cargo->Asistencia->find('list', array(
+		$result = $this->Cargo->Registro->find('list', array(
 			'conditions' => $conditions,
-			'fields' => array('Asistencia.id', 'Cargo.usuario_id'),
+			'fields' => array('Registro.id', 'Cargo.usuario_id'),
 			'group' => array('Cargo.usuario_id'),
 			'recursive' => 0
 		));

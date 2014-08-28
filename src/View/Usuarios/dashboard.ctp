@@ -22,21 +22,21 @@ $this->Html->css('dashboard', array('inline' => false));
  */
 $this->Html->script('dashboard', array('inline' => false));
 ?>
-<?php if (empty($this->request->data['Asistencia'])): ?>
+<?php if (empty($this->request->data['Registro'])): ?>
 	<div class="alert alert-info">
 		No hay asignaturas asociadas a su usuario en el día de la fecha.
 	</div>
 <?php else: ?>
 	<?php
-	echo $this->Form->create('Asistencia');
+	echo $this->Form->create('Registro');
 
-	foreach ($this->request->data['Asistencia'] as $rid => $row):
+	foreach ($this->request->data['Registro'] as $rid => $row):
 		if (!empty($row['id'])):
-			echo $this->Form->hidden(sprintf('Asistencia.%d.id', $rid));
+			echo $this->Form->hidden(sprintf('Registro.%d.id', $rid));
 		endif;
 
-		echo $this->Form->hidden(sprintf('Asistencia.%d.fecha', $rid));
-		echo $this->Form->hidden(sprintf('Asistencia.%d.cargo_id', $rid));
+		echo $this->Form->hidden(sprintf('Registro.%d.fecha', $rid));
+		echo $this->Form->hidden(sprintf('Registro.%d.cargo_id', $rid));
 		echo $this->Form->hidden(sprintf('Tipo.%d.nombre', $rid));
 		echo $this->Form->hidden(sprintf('Cargo.%d.asignatura', $rid));
 		echo $this->Form->hidden(sprintf('Grado.%d.nombre', $rid));
@@ -57,7 +57,7 @@ $this->Html->script('dashboard', array('inline' => false));
 			<tr>
 				<td>
 					<?php
-					echo $this->Form->input(sprintf('Asistencia.%d.entrada', $rid), array(
+					echo $this->Form->input(sprintf('Registro.%d.entrada', $rid), array(
 						'class' => 'span1',
 						'div' => array('class' => 'time'),
 						'empty' => true,
@@ -71,7 +71,7 @@ $this->Html->script('dashboard', array('inline' => false));
 				</td>
 				<td>
 					<?php
-					echo $this->Form->input(sprintf('Asistencia.%d.salida', $rid), array(
+					echo $this->Form->input(sprintf('Registro.%d.salida', $rid), array(
 						'class' => 'span1',
 						'div' => array('class' => 'time'),
 						'empty' => true,
@@ -90,7 +90,7 @@ $this->Html->script('dashboard', array('inline' => false));
 			<tr>
 				<td colspan="2">
 					<?php
-					echo $this->Form->input(sprintf('Asistencia.%d.obs', $rid), array(
+					echo $this->Form->input(sprintf('Registro.%d.obs', $rid), array(
 						'label' => false,
 						'required' => false
 					));

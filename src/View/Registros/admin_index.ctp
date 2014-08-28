@@ -15,12 +15,12 @@
 /**
  * CSS
  */
-$this->Html->css('asistencias', array('inline' => false));
+$this->Html->css('registros', array('inline' => false));
 
 /**
  * Breadcrumbs
  */
-$this->Html->addCrumb('Asistencias');
+$this->Html->addCrumb('Registros');
 
 /**
  * Cabeceras
@@ -43,12 +43,12 @@ if (!empty($rows)):
 	foreach ($rows as $rid => $row):
 		$rows[$rid] = array(
 			$start++,
-			h($row['Asistencia']['asignatura']),
-			h($row['Asistencia']['usuario']),
-			date('d/m/Y', strtotime($row['Asistencia']['fecha'])),
-			date('H:i', strtotime($row['Asistencia']['entrada'])),
-			date('H:i', strtotime($row['Asistencia']['salida'])),
-			nl2br(h($row['Asistencia']['obs']))
+			h($row['Registro']['asignatura']),
+			h($row['Registro']['usuario']),
+			date('d/m/Y', strtotime($row['Registro']['fecha'])),
+			date('H:i', strtotime($row['Registro']['entrada'])),
+			date('H:i', strtotime($row['Registro']['salida'])),
+			nl2br(h($row['Registro']['obs']))
 		);
 	endforeach;
 endif;

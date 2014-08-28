@@ -66,10 +66,10 @@ class UsuariosController extends AppController {
 	public function dashboard() {
 		if ($this->request->is('post')) {
 			$data = current($this->request->data);
-			if ($this->Usuario->Cargo->Asistencia->validateMany($data)) {
+			if ($this->Usuario->Cargo->Registro->validateMany($data)) {
 				$data = array_filter($data);
 				if (!empty($data)) {
-					if ($this->Usuario->Cargo->Asistencia->saveMany($data, array('validate' => false))) {
+					if ($this->Usuario->Cargo->Registro->saveMany($data, array('validate' => false))) {
 						$this->_notify('record_created');
 					} else {
 						$this->_notify('record_not_saved');

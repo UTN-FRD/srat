@@ -108,9 +108,9 @@ $links = array(
 	),
 	array(
 		'condition' => $isAdmin,
-		'text' => 'Asistencias',
+		'text' => 'Registros',
 		'url' => array(
-			'controller' => 'asistencias',
+			'controller' => 'registros',
 			'action' => 'index',
 			'admin' => true,
 			'plugin' => false
@@ -120,7 +120,7 @@ $links = array(
 		'condition' => $isAdmin,
 		'text' => 'Reportes',
 		'url' => array(
-			'controller' => 'asistencias',
+			'controller' => 'registros',
 			'action' => 'reporte',
 			'admin' => true,
 			'plugin' => false
