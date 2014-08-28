@@ -61,6 +61,10 @@ class Registro extends AppModel {
  * @var array
  */
 	public $validate = array(
+		'tipo' => array(
+			'rule' => array('inList', array('0', '1')),
+			'message' => 'El valor seleccionado no es válido'
+		),
 		'cargo_id' => array(
 			'notEmpty' => array(
 				'rule' => 'notEmpty',

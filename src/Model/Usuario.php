@@ -328,7 +328,8 @@ class Usuario extends AppModel {
 					'Registro' => array(
 						'conditions' => array(
 							'Registro.fecha = CURDATE()',
-							'Registro.cargo_id = Cargo.id'
+							'Registro.cargo_id = Cargo.id',
+							'Registro.tipo' => 1
 						),
 						'foreignKey' => false
 					),
@@ -371,6 +372,7 @@ class Usuario extends AppModel {
 				if (empty($row['Registro']['cargo_id'])) {
 					$row['Registro']['fecha'] = date('Y-m-d');
 					$row['Registro']['cargo_id'] = $row['Cargo']['id'];
+					$row['Registro']['tipo'] = 1;
 				}
 
 				$out['Registro'][$rid] = $row['Registro'];

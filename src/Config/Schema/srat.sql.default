@@ -220,6 +220,7 @@ CREATE TABLE `horarios` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `registros` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `tipo` tinyint(2) unsigned NOT NULL,
   `cargo_id` int(10) unsigned NOT NULL,
   `fecha` date NOT NULL,
   `entrada` time NOT NULL,
@@ -227,7 +228,8 @@ CREATE TABLE `registros` (
   `obs` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IK_CARGO` (`cargo_id`),
-  KEY `UK_REGISTRO` (`cargo_id`,`fecha`),
+  KEY `IK_TIPO` (`tipo`),
+  KEY `UK_REGISTRO` (`tipo`,`cargo_id`,`fecha`),
   CONSTRAINT `FK_REGISTROS_CARGO` FOREIGN KEY (`cargo_id`) REFERENCES `cargos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

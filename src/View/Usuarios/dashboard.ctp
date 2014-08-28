@@ -37,6 +37,7 @@ $this->Html->script('dashboard', array('inline' => false));
 
 		echo $this->Form->hidden(sprintf('Registro.%d.fecha', $rid));
 		echo $this->Form->hidden(sprintf('Registro.%d.cargo_id', $rid));
+		echo $this->Form->hidden(sprintf('Registro.%d.tipo', $rid));
 		echo $this->Form->hidden(sprintf('Tipo.%d.nombre', $rid));
 		echo $this->Form->hidden(sprintf('Cargo.%d.asignatura', $rid));
 		echo $this->Form->hidden(sprintf('Grado.%d.nombre', $rid));
