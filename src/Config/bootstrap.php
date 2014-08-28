@@ -106,4 +106,4 @@ CakePlugin::load(array(
 /**
  * Ruta de acceso a wkhtmltopdf
  */
-Configure::write('CakePdf.binary', '/usr/bin/wkhtmltopdf');
+Configure::write('CakePdf.binary', '/usr/local/bin/wkhtmltopdf');
