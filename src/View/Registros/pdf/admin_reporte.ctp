@@ -16,7 +16,7 @@
  * CSS
  */
 $this->Html->css(
-	array('bootstrap.pdf.min', 'reportes'),
+	array('bootstrap.min', 'reportes'),
 	array('fullBase' => true, 'inline' => false)
 );
 ?>
