@@ -29,7 +29,6 @@ class RegistrosController extends AppController {
  */
 	public $components = array(
 		'RequestHandler',
-		'Search.Prg',
 		'Paginator' => array(
 			'fields' => array('asignatura', 'usuario', 'fecha', 'entrada', 'salida', 'obs'),
 			'limit' => 15,
@@ -38,22 +37,6 @@ class RegistrosController extends AppController {
 			'recursive' => 0
 		)
 	);
-
-/**
- * Índice
- *
- * @return void
- */
-	public function admin_index() {
-		$this->__setupModelAssociations();
-
-		$this->Prg->commonProcess();
-		$this->Paginator->settings += array(
-			'conditions' => $this->Registro->parseCriteria($this->Prg->parsedParams())
-		);
-
-		$this->set('rows', $this->Paginator->paginate());
-	}
 
 /**
  * Reporte

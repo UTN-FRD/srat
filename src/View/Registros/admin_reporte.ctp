@@ -25,7 +25,6 @@ $this->Html->script('reportes', array('inline' => false));
 /**
  * Breadcrumbs
  */
-$this->Html->addCrumb('Registros', array('controller' => 'registros', 'action' => 'index'));
 $this->Html->addCrumb('Reportes');
 ?>
 <?php echo $this->Form->create('Reporte', array('class' => 'form-horizontal')) ?>
