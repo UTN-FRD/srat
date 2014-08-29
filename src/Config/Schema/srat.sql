@@ -333,7 +333,7 @@ CREATE TABLE `registros` (
   PRIMARY KEY (`id`),
   KEY `IK_CARGO` (`cargo_id`),
   KEY `IK_TIPO` (`tipo`),
-  KEY `UK_REGISTRO` (`tipo`,`cargo_id`,`fecha`),
+  UNIQUE KEY `UK_REGISTRO` (`tipo`,`cargo_id`,`fecha`),
   CONSTRAINT `FK_REGISTROS_CARGO` FOREIGN KEY (`cargo_id`) REFERENCES `cargos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
