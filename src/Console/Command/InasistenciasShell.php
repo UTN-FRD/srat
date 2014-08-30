@@ -83,12 +83,11 @@ class InasistenciasShell extends AppShell {
 		$this->Registro->displayField = 'max_fecha';
 		$this->Registro->virtualFields = array('max_fecha' => 'MAX(fecha)');
 
-		$rows = $this->Registro->find('list', array(
+		return $this->Registro->find('list', array(
 			'conditions' => array('tipo' => 0),
 			'fields' => array('cargo_id', 'max_fecha'),
 			'group' => array('cargo_id')
 		));
-		return $rows;
 	}
 
 /**
