@@ -16,11 +16,11 @@
 App::uses('AppController', 'Controller');
 
 /**
- * Asistencias
+ * Registros
  *
  * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
-class AsistenciasController extends AppController {
+class RegistrosController extends AppController {
 
 /**
  * Componentes
@@ -29,30 +29,24 @@ class AsistenciasController extends AppController {
  */
 	public $components = array(
 		'RequestHandler',
-		'Search.Prg',
 		'Paginator' => array(
-			'fields' => array('asignatura', 'usuario', 'fecha', 'entrada', 'salida', 'obs'),
 			'limit' => 15,
 			'maxLimit' => 15,
-			'order' => array('Asistencia.fecha' => 'desc'),
+			'order' => array('Registro.fecha' => 'desc'),
 			'recursive' => 0
 		)
 	);
 
 /**
- * Índice
+ * Responde a solicitudes invalidadas por el componente Security
+ *
+ * @param null|string $type Tipo de error
  *
  * @return void
  */
-	public function admin_index() {
-		$this->__setupModelAssociations();
-
-		$this->Prg->commonProcess();
-		$this->Paginator->settings += array(
-			'conditions' => $this->Asistencia->parseCriteria($this->Prg->parsedParams())
-		);
-
-		$this->set('rows', $this->Paginator->paginate());
+	public function blackHole($type = null) {
+		$this->Session->delete('Reporte');
+		parent::blackHole($type);
 	}
 
 /**
@@ -98,7 +92,8 @@ class AsistenciasController extends AppController {
 						'asignatura_id' => null,
 						'usuario_id' => null,
 						'desde' => null,
-						'hasta' => null
+						'hasta' => null,
+						'tipo' => 1
 					)
 				);
 			}
@@ -118,12 +113,12 @@ class AsistenciasController extends AppController {
 			'asignaturas' => $asignaturas,
 			'usuarios' => $usuarios,
 			'rows' => $this->Paginator->paginate(),
-			'title_for_layout' => 'Reportes - Asistencias',
+			'title_for_layout' => 'Reportes - Registros',
 			'title_for_view' => 'Reportes'
 		));
 
-		if (isset($this->params['paging']['Asistencia']['order'])) {
-			$options['paging']['order'] = $this->params['paging']['Asistencia']['order'];
+		if (isset($this->params['paging']['Registro']['order'])) {
+			$options['paging']['order'] = $this->params['paging']['Registro']['order'];
 		}
 
 		$this->Session->write('Reporte', $options);
@@ -135,12 +130,12 @@ class AsistenciasController extends AppController {
  * @return void
  */
 	private function __setupModelAssociations() {
-		$this->Asistencia->virtualFields = array(
-			'asignatura' => $this->Asistencia->Cargo->Asignatura->virtualFields['asignatura'],
-			'usuario' => $this->Asistencia->Cargo->Usuario->virtualFields['nombre_completo']
+		$this->Registro->virtualFields = array(
+			'asignatura' => $this->Registro->Cargo->Asignatura->virtualFields['asignatura'],
+			'usuario' => $this->Registro->Cargo->Usuario->virtualFields['nombre_completo']
 		);
 
-		$this->Asistencia->bindModel(array(
+		$this->Registro->bindModel(array(
 			'hasOne' => array(
 				'Asignatura' => array(
 					'className' => 'Asignatura',
@@ -167,7 +162,7 @@ class AsistenciasController extends AppController {
 	}
 
 /**
- * Obtiene las opciones de búsqueda para el reporte de asistencia
+ * Obtiene las opciones de búsqueda para el reporte
  *
  * @param array $options Opciones
  *
@@ -175,12 +170,14 @@ class AsistenciasController extends AppController {
  */
 	private function __getFindOptions($options) {
 		$result = array(
-			'conditions' => array(),
+			'conditions' => array(
+				'Registro.tipo' => 1
+			),
 			'fields' => array(
 				'asignatura', 'Usuario.legajo', 'Usuario.apellido',
-				'Usuario.nombre', 'fecha', 'entrada', 'salida', 'obs'
+				'Usuario.nombre', 'tipo', 'fecha', 'entrada', 'salida', 'obs'
 			),
-			'order' => array('Asistencia.fecha' => 'desc'),
+			'order' => array('Registro.fecha' => 'desc'),
 			'recursive' => 0
 		);
 
@@ -193,11 +190,19 @@ class AsistenciasController extends AppController {
 		}
 
 		if (!empty($options['data']['desde'])) {
-			$result['conditions']['Asistencia.fecha >='] = $options['data']['desde'];
+			$result['conditions']['Registro.fecha >='] = $options['data']['desde'];
 		}
 
 		if (!empty($options['data']['hasta'])) {
-			$result['conditions']['Asistencia.fecha <='] = $options['data']['hasta'];
+			$result['conditions']['Registro.fecha <='] = $options['data']['hasta'];
+		}
+
+		if (isset($options['data']['tipo'])) {
+			if ($options['data']['tipo'] === '0') {
+				$result['conditions']['Registro.tipo'] = 0;
+			} elseif ($options['data']['tipo'] === '2') {
+				unset($result['conditions']['Registro.tipo']);
+			}
 		}
 
 		if (!empty($options['paging']['order'])) {
@@ -208,7 +213,7 @@ class AsistenciasController extends AppController {
 	}
 
 /**
- * Genera un reporte de asistencia en formato PDF
+ * Genera un reporte en formato PDF
  *
  * @param array $options Condiciones de búsqueda y opciones de ordenamiento
  *
@@ -230,6 +235,15 @@ class AsistenciasController extends AppController {
 			$charset = 'ISO-8859-1';
 		}
 
+		$title = 'Asistencia';
+		if (isset($options['data']['tipo'])) {
+			if ($options['data']['tipo'] === '0') {
+				$title = 'Inasistencia';
+			} elseif ($options['data']['tipo'] === '2') {
+				$title .= ' e Inasistencia';
+			}
+		}
+
 		$this->pdfConfig = array(
 			'engine' => 'CakePdf.WkHtmlToPdf',
 			'options' => array(
@@ -238,7 +252,7 @@ class AsistenciasController extends AppController {
 				'footer-font-name' => 'Arial',
 				'footer-font-size' => '9',
 				'footer-line' => false,
-				'header-center' => 'Reporte de Asistencia',
+				'header-center' => 'Reporte de ' . $title,
 				'header-font-name' => 'Arial',
 				'header-font-size' => '9',
 				'header-left' => 'Sistema de Registro de Asistencia y Temas',
@@ -262,7 +276,7 @@ class AsistenciasController extends AppController {
 		$this->__setupModelAssociations();
 
 		if (!empty($data['asignatura_id'])) {
-			$row = $this->Asistencia->Cargo->Asignatura->find('first', array(
+			$row = $this->Registro->Cargo->Asignatura->find('first', array(
 				'conditions' => array('Asignatura.id' => $data['asignatura_id']),
 				'fields' => array('asignatura'),
 				'recursive' => 0
@@ -271,10 +285,10 @@ class AsistenciasController extends AppController {
 		}
 
 		if (!empty($data['usuario_id'])) {
-			$this->Asistencia->Cargo->Usuario->virtualFields = array(
+			$this->Registro->Cargo->Usuario->virtualFields = array(
 				'nombre_completo' => 'CONCAT("(", Usuario.legajo, ")", " ", Usuario.apellido, ", ", Usuario.nombre)'
 			);
-			$row = $this->Asistencia->Cargo->Usuario->find('first', array(
+			$row = $this->Registro->Cargo->Usuario->find('first', array(
 				'conditions' => array('Usuario.id' => $data['usuario_id']),
 				'fields' => array('nombre_completo')
 			));
@@ -283,7 +297,7 @@ class AsistenciasController extends AppController {
 
 		$this->set(array(
 			'data' => $data,
-			'rows' => $this->Asistencia->find('all', $settings)
+			'rows' => $this->Registro->find('all', $settings)
 		));
 
 		try {

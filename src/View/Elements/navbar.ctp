@@ -108,19 +108,9 @@ $links = array(
 	),
 	array(
 		'condition' => $isAdmin,
-		'text' => 'Asistencias',
-		'url' => array(
-			'controller' => 'asistencias',
-			'action' => 'index',
-			'admin' => true,
-			'plugin' => false
-		)
-	),
-	array(
-		'condition' => $isAdmin,
 		'text' => 'Reportes',
 		'url' => array(
-			'controller' => 'asistencias',
+			'controller' => 'registros',
 			'action' => 'reporte',
 			'admin' => true,
 			'plugin' => false

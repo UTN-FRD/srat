@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 5.5.37, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.5.38, for debian-linux-gnu (x86_64)
 -- ------------------------------------------------------
--- Server version	5.5.37-0ubuntu0.13.10.1
+-- Server version	5.5.38-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -176,35 +176,6 @@ INSERT INTO `asignaturas_tipos` VALUES (1,'Curricular',NULL),(2,'Integradora',NU
 UNLOCK TABLES;
 
 --
--- Table structure for table `asistencias`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `asistencias` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `cargo_id` int(10) unsigned NOT NULL,
-  `fecha` date NOT NULL,
-  `entrada` time NOT NULL,
-  `salida` time NOT NULL,
-  `obs` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `UK_ASISTENCIA` (`cargo_id`,`fecha`),
-  KEY `IK_CARGO` (`cargo_id`),
-  CONSTRAINT `FK_ASISTENCIAS_CARGO` FOREIGN KEY (`cargo_id`) REFERENCES `cargos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `asistencias`
---
-
-LOCK TABLES `asistencias` WRITE;
-/*!40000 ALTER TABLE `asistencias` DISABLE KEYS */;
-/*!40000 ALTER TABLE `asistencias` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `cargos`
 --
 
@@ -343,6 +314,37 @@ CREATE TABLE `horarios` (
 LOCK TABLES `horarios` WRITE;
 /*!40000 ALTER TABLE `horarios` DISABLE KEYS */;
 /*!40000 ALTER TABLE `horarios` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `registros`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `registros` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `tipo` tinyint(2) unsigned NOT NULL,
+  `cargo_id` int(10) unsigned NOT NULL,
+  `fecha` date NOT NULL,
+  `entrada` time DEFAULT NULL,
+  `salida` time DEFAULT NULL,
+  `obs` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IK_CARGO` (`cargo_id`),
+  KEY `IK_TIPO` (`tipo`),
+  UNIQUE KEY `UK_REGISTRO` (`tipo`,`cargo_id`,`fecha`),
+  CONSTRAINT `FK_REGISTROS_CARGO` FOREIGN KEY (`cargo_id`) REFERENCES `cargos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `registros`
+--
+
+LOCK TABLES `registros` WRITE;
+/*!40000 ALTER TABLE `registros` DISABLE KEYS */;
+/*!40000 ALTER TABLE `registros` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

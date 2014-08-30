@@ -25,7 +25,6 @@ $this->Html->script('reportes', array('inline' => false));
 /**
  * Breadcrumbs
  */
-$this->Html->addCrumb('Asistencias', array('controller' => 'asistencias', 'action' => 'index'));
 $this->Html->addCrumb('Reportes');
 ?>
 <?php echo $this->Form->create('Reporte', array('class' => 'form-horizontal')) ?>
@@ -71,6 +70,13 @@ $this->Html->addCrumb('Reportes');
 		'orderYear' => 'asc',
 		'type' => 'date'
 	));
+
+	echo $this->Form->input('tipo', array(
+		'class' => 'span2',
+		'default' => 1,
+		'options' => array('Inasistencia', 'Asistencia', 'Ambos'),
+		'type' => 'select'
+	))
 	?>
 </fieldset>
 <?php
@@ -100,15 +106,16 @@ $headers = array(
 if (!empty($rows)):
 	$start = $this->Paginator->counter(array('format' => '%start%'));
 	foreach ($rows as $rid => $row):
+		$asistencia = ($row['Registro']['tipo'] == '1');
 		$rows[$rid] = array(
 			$start++,
-			h($row['Asistencia']['asignatura']),
+			h($row['Registro']['asignatura']),
 			$row['Usuario']['legajo'],
 			h(sprintf('%s, %s', $row['Usuario']['apellido'], $row['Usuario']['nombre'])),
-			date('d/m/Y', strtotime($row['Asistencia']['fecha'])),
-			date('H:i', strtotime($row['Asistencia']['entrada'])),
-			date('H:i', strtotime($row['Asistencia']['salida'])),
-			nl2br(h($row['Asistencia']['obs']))
+			date('d/m/Y', strtotime($row['Registro']['fecha'])),
+			($asistencia ? date('H:i', strtotime($row['Registro']['entrada'])) : '-'),
+			($asistencia ? date('H:i', strtotime($row['Registro']['salida'])) : '-'),
+			($asistencia ? nl2br(h($row['Registro']['obs'])) : '-')
 		);
 	endforeach;
 endif;

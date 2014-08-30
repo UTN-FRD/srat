@@ -74,7 +74,7 @@ class Cargo extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-		'Asistencia'
+		'Registro'
 	);
 
 /**

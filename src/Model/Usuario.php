@@ -325,10 +325,11 @@ class Usuario extends AppModel {
 			$this->Cargo->unbindModel(array('belongsTo' => array('Dedicacion', 'Usuario')));
 			$this->Cargo->bindModel(array(
 				'hasOne' => array(
-					'Asistencia' => array(
+					'Registro' => array(
 						'conditions' => array(
-							'Asistencia.fecha = CURDATE()',
-							'Asistencia.cargo_id = Cargo.id'
+							'Registro.fecha = CURDATE()',
+							'Registro.cargo_id = Cargo.id',
+							'Registro.tipo' => 1
 						),
 						'foreignKey' => false
 					),
@@ -355,7 +356,7 @@ class Usuario extends AppModel {
 
 			$rows = $this->Cargo->find('all', array(
 				'fields' => array(
-					'Asistencia.*',
+					'Registro.*',
 					'Cargo.asignatura',
 					'Grado.nombre',
 					'Tipo.nombre'
@@ -368,12 +369,13 @@ class Usuario extends AppModel {
 			));
 
 			foreach ($rows as $rid => $row) {
-				if (empty($row['Asistencia']['cargo_id'])) {
-					$row['Asistencia']['fecha'] = date('Y-m-d');
-					$row['Asistencia']['cargo_id'] = $row['Cargo']['id'];
+				if (empty($row['Registro']['cargo_id'])) {
+					$row['Registro']['fecha'] = date('Y-m-d');
+					$row['Registro']['cargo_id'] = $row['Cargo']['id'];
+					$row['Registro']['tipo'] = 1;
 				}
 
-				$out['Asistencia'][$rid] = $row['Asistencia'];
+				$out['Registro'][$rid] = $row['Registro'];
 				$out['Cargo'][$rid]['asignatura'] = $row['Cargo']['asignatura'];
 				$out['Grado'][$rid]['nombre'] = $row['Grado']['nombre'];
 				$out['Tipo'][$rid]['nombre'] = $row['Tipo']['nombre'];

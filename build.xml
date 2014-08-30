@@ -114,7 +114,6 @@
 		<property name="cat.source" value="${app.path}/webroot/css" override="true" />
 		<property name="cat.dest" value="${cat.source}/style.css" override="true" />
 		<property name="cat.files" override="true" value="
-			bootstrap.min.css,
 			select2.min.css,
 			layout.css,
 			notify.css,

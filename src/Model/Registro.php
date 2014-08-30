@@ -16,20 +16,11 @@
 App::uses('AppModel', 'Model');
 
 /**
- * Asistencia
+ * Registro
  *
  * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
-class Asistencia extends AppModel {
-
-/**
- * Comportamientos
- *
- * @var array
- */
-	public $actsAs = array(
-		'Search.Searchable'
-	);
+class Registro extends AppModel {
 
 /**
  * belongsTo
@@ -41,26 +32,15 @@ class Asistencia extends AppModel {
 	);
 
 /**
- * Campos de búsqueda
- *
- * @var array
- */
-	public $filterArgs = array(
-		'buscar' => array(
-			'field' => array(
-				'Asistencia.obs', 'Carrera.nombre', 'Materia.nombre', 'Usuario.apellido', 'Usuario.nombre',
-				'CONCAT(Usuario.nombre, " ", Usuario.apellido)'
-			),
-			'type' => 'like'
-		)
-	);
-
-/**
  * Reglas de validación
  *
  * @var array
  */
 	public $validate = array(
+		'tipo' => array(
+			'rule' => array('inList', array('0', '1')),
+			'message' => 'El valor seleccionado no es válido'
+		),
 		'cargo_id' => array(
 			'notEmpty' => array(
 				'rule' => 'notEmpty',
