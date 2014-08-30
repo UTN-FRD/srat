@@ -35,17 +35,14 @@ class InasistenciasShell extends AppShell {
  * @return void
  */
 	public function main() {
-		$result = $this->Registro->find('first', array(
-			'conditions' => array('tipo' => 1),
-			'fields' => array('fecha'),
-			'order' => array('id' => 'asc')
-		));
-		if (!empty($result)) {
+		$firstDate = $this->Registro->find('first', array('fields' => array('MIN(fecha) as min_fecha')));
+		if (!empty($firstDate)) {
 			$absences = $this->__getAbsencesList();
+			$firstDate = date('Y-m-d', strtotime($firstDate[0]['min_fecha'] . ' -1 day'));
 			$today = date('Y-m-d');
 
 			foreach ($this->__getDaysList() as $cargo => $days) {
-				$start = $result['Registro']['fecha'];
+				$start = $firstDate;
 				if (isset($absences[$cargo])) {
 					$start = $absences[$cargo];
 				}
