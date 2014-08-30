@@ -74,6 +74,7 @@ $this->Html->css(
 	<?php
 		if (!empty($rows)):
 			foreach ($rows as $rid => $row):
+				$asistencia = ($row['Registro']['tipo'] == '1');
 		?>
 		<tr>
 			<?php if (empty($data['asignatura'])): ?>
@@ -86,9 +87,9 @@ $this->Html->css(
 			<?php endif ?>
 
 			<td class="row4"><?php echo date('d/m/Y', strtotime($row['Registro']['fecha'])) ?></td>
-			<td class="row5"><?php echo date('H:i', strtotime($row['Registro']['entrada'])) ?></td>
-			<td class="row6"><?php echo date('H:i', strtotime($row['Registro']['salida'])) ?></td>
-			<td class="row7"><?php echo nl2br(h($row['Registro']['obs'])) ?></td>
+			<td class="row5"><?php echo ($asistencia ? date('H:i', strtotime($row['Registro']['entrada'])) : '-') ?></td>
+			<td class="row6"><?php echo ($asistencia ? date('H:i', strtotime($row['Registro']['salida'])) : '-') ?></td>
+			<td class="row7"><?php echo ($asistencia ? nl2br(h($row['Registro']['obs'])) : '-') ?></td>
 		</tr>
 		<?php endforeach ?>
 		<?php else: ?>

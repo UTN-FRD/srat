@@ -106,15 +106,16 @@ $headers = array(
 if (!empty($rows)):
 	$start = $this->Paginator->counter(array('format' => '%start%'));
 	foreach ($rows as $rid => $row):
+		$asistencia = ($row['Registro']['tipo'] == '1');
 		$rows[$rid] = array(
 			$start++,
 			h($row['Registro']['asignatura']),
 			$row['Usuario']['legajo'],
 			h(sprintf('%s, %s', $row['Usuario']['apellido'], $row['Usuario']['nombre'])),
 			date('d/m/Y', strtotime($row['Registro']['fecha'])),
-			date('H:i', strtotime($row['Registro']['entrada'])),
-			date('H:i', strtotime($row['Registro']['salida'])),
-			nl2br(h($row['Registro']['obs']))
+			($asistencia ? date('H:i', strtotime($row['Registro']['entrada'])) : '-'),
+			($asistencia ? date('H:i', strtotime($row['Registro']['salida'])) : '-'),
+			($asistencia ? nl2br(h($row['Registro']['obs'])) : '-')
 		);
 	endforeach;
 endif;

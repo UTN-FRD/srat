@@ -30,7 +30,6 @@ class RegistrosController extends AppController {
 	public $components = array(
 		'RequestHandler',
 		'Paginator' => array(
-			'fields' => array('asignatura', 'usuario', 'fecha', 'entrada', 'salida', 'obs'),
 			'limit' => 15,
 			'maxLimit' => 15,
 			'order' => array('Registro.fecha' => 'desc'),
@@ -93,7 +92,8 @@ class RegistrosController extends AppController {
 						'asignatura_id' => null,
 						'usuario_id' => null,
 						'desde' => null,
-						'hasta' => null
+						'hasta' => null,
+						'tipo' => 1
 					)
 				);
 			}
@@ -175,7 +175,7 @@ class RegistrosController extends AppController {
 			),
 			'fields' => array(
 				'asignatura', 'Usuario.legajo', 'Usuario.apellido',
-				'Usuario.nombre', 'fecha', 'entrada', 'salida', 'obs'
+				'Usuario.nombre', 'tipo', 'fecha', 'entrada', 'salida', 'obs'
 			),
 			'order' => array('Registro.fecha' => 'desc'),
 			'recursive' => 0
