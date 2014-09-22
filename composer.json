@@ -20,7 +20,7 @@
 	"require": {
 		"php": ">=5.4.0",
 		"cakedc/search": "2.2.*",
-		"ceeram/cakepdf": "1.0.*",
+		"friendsofcake/cakepdf": "1.0.*",
 		"pear-pear.cakephp.org/CakePHP": "~2.5.0"
 	},
 	"require-dev": {
@@ -31,7 +31,7 @@
 	},
 	"extra": {
 		"installer-paths": {
-			"src/Plugin/CakePdf": ["ceeram/cakepdf"],
+			"src/Plugin/CakePdf": ["friendsofcake/cakepdf"],
 			"src/Plugin/DebugKit": ["cakephp/debug_kit"],
 			"src/Plugin/Localized": ["cakephp/localized"],
 			"src/Plugin/Search": ["cakedc/search"]
