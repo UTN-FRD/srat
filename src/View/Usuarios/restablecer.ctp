@@ -28,6 +28,7 @@ $this->Html->addCrumb('Restablecer contraseña');
 
 	echo $this->Form->input('new_password', array(
 		'after' => 'Debe estar compuesta por letras, números y un mínimo de 6 caracteres',
+		'autofocus',
 		'class' => 'span3',
 		'label' => 'Nueva contraseña',
 		'type' => 'password'
