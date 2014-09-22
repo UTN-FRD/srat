@@ -47,6 +47,8 @@ class UsuariosController extends AppController {
 		if (!$this->Auth->user()) {
 			if (in_array($this->request->action, array('dashboard', 'logout'))) {
 				$this->Auth->authError = false;
+			} elseif ($this->request->action === 'login') {
+				$this->Security->csrfCheck = false;
 			}
 			$this->Auth->allow('docentes', 'login');
 		} else {
