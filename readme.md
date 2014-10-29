@@ -16,7 +16,7 @@ especiales como ser laboratorios y talleres.
 
 ### Sistema
 
-* Descargar la última versión desde https://github.com/jalbertocr/srat/releases
+* Descargar la última versión desde https://github.com/jacricelli/srat/releases
 * Descomprimir el archivo y copiar o mover la carpeta `srat` a la raíz del directorio público del servidor web
 * Importar el esquema de la base de datos ubicado en `srat/app/Config/Schema/srat.sql` utilizando MySQL
 desde la línea de comandos, phpMyAdmin o similar
@@ -78,7 +78,7 @@ Configure::write('CakePdf.binary', 'C:\wkhtmltopdf\bin\wkhtmltopdf.exe');
 * Clonar el repositorio en la raíz del directorio público del servidor web
 
 ```bash
-git clone git@github.com:jalbertocr/srat.git srat
+git clone git@github.com:jacricelli/srat.git srat
 ```
 * Ingresar en el directorio `srat` y ejecutar
 
