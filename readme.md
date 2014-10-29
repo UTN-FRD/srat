@@ -87,11 +87,11 @@ composer update
 ```
 **Nota:** Ignorar la advertencia relacionada con la resolución ambigua de clases
 
-* Importar el esquema de la base de datos ubicado en `srat/src/Config/Schema/srat.sql` utilizando MySQL
+* Importar el esquema de la base de datos ubicado en `srat/app/Config/Schema/srat.sql` utilizando MySQL
 desde la línea de comandos, phpMyAdmin o similar
-* Abrir `srat/src/Config/database.php` y definir los parámetros de la conexión predeterminada y pruebas
+* Abrir `srat/app/Config/database.php` y definir los parámetros de la conexión predeterminada y pruebas
 * Verificar que el usuario bajo el que corre el servidor web tiene permisos de escritura dentro del directorio
-`srat/src/tmp` y subdirectorios
+`srat/app/tmp` y subdirectorios
 * Ingresar al sistema en http://127.0.0.1/srat con el usuario predeterminado:
   * Legajo: 1
   * Contraseña: demo

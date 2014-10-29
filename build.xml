@@ -14,7 +14,7 @@
 		Propiedades
 	-->
 	<property name="build.dir" value="build" override="false" />
-	<property name="src.dir" value="src" override="false" />
+	<property name="app.dir" value="app" override="false" />
 
 	<property name="package.dir" value="${build.dir}/package" override="false" />
 	<property name="skel.dir" value="${build.dir}/skel" override="false" />
@@ -40,7 +40,7 @@
 		Ejecuta la suite de pruebas de la aplicación
 	-->
 	<target name="tests" description="Ejecuta la suite de pruebas de la aplicación">
-		<exec command="${src.dir}/Console/cake test app AllApp --stderr" checkreturn="true" logoutput="true"></exec>
+		<exec command="${app.dir}/Console/cake test app AllApp --stderr" checkreturn="true" logoutput="true"></exec>
 	</target>
 
 	<!--
@@ -48,7 +48,7 @@
 	-->
 	<target name="copy-app" depends="clean, tests" description="Prepara la copia inicial de la aplicación">
 		<copy todir="${app.path}">
-			<fileset dir="${src.dir}">
+			<fileset dir="${app.dir}">
 				<include name="**" />
 				<exclude name="**/.empty" />
 				<exclude name=".htaccess" />

@@ -31,10 +31,10 @@
 	},
 	"extra": {
 		"installer-paths": {
-			"src/Plugin/CakePdf": ["friendsofcake/cakepdf"],
-			"src/Plugin/DebugKit": ["cakephp/debug_kit"],
-			"src/Plugin/Localized": ["cakephp/localized"],
-			"src/Plugin/Search": ["cakedc/search"]
+			"app/Plugin/CakePdf": ["friendsofcake/cakepdf"],
+			"app/Plugin/DebugKit": ["cakephp/debug_kit"],
+			"app/Plugin/Localized": ["cakephp/localized"],
+			"app/Plugin/Search": ["cakedc/search"]
 		}
 	}
 }
