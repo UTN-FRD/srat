@@ -7,13 +7,13 @@
  * Este archivo está sujeto a los términos y condiciones descritos
  * en el archivo licencia.txt que acompaña a este software.
  *
- * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 
 /**
  * Configuración de conexiones a bases de datos
  *
- * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 class DATABASE_CONFIG {
 

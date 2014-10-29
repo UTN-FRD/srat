@@ -7,7 +7,7 @@
  * Este archivo está sujeto a los términos y condiciones descritos
  * en el archivo licencia.txt que acompaña a este software.
  *
- * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 
 /**
@@ -19,7 +19,7 @@ App::uses('ConnectionManager', 'Model');
 /**
  * Genera una copia de seguridad de la base de datos
  *
- * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 class BackupShell extends AppShell {
 
