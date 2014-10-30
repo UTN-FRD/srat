@@ -142,7 +142,7 @@ $links = array(
 	),
 	array(
 		'condition' => $loggedIn,
-		'text' => $user['nombre_completo'],
+		'text' => (isset($user['nombre_completo']) ? $user['nombre_completo'] : null),
 		'dropdown' => array(
 			array(
 				'condition' => !$reset,
@@ -153,16 +153,17 @@ $links = array(
 					'admin' => false,
 					'plugin' => false
 				)
-			),
-			array(
-				'text' => 'Cerrar sesión',
-				'url' => array(
-					'controller' => 'usuarios',
-					'action' => 'logout',
-					'admin' => false,
-					'plugin' => false
-				)
 			)
+		)
+	),
+	array(
+		'condition' => $loggedIn,
+		'text' => 'Cerrar sesión',
+		'url' => array(
+			'controller' => 'usuarios',
+			'action' => 'logout',
+			'admin' => false,
+			'plugin' => false
 		)
 	)
 );
