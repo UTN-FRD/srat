@@ -37,16 +37,9 @@
 	</target>
 
 	<!--
-		Ejecuta la suite de pruebas de la aplicación
-	-->
-	<target name="tests" description="Ejecuta la suite de pruebas de la aplicación">
-		<exec command="${app.dir}/Console/cake test app AllApp --stderr" checkreturn="true" logoutput="true"></exec>
-	</target>
-
-	<!--
 		Prepara la copia inicial de la aplicación
 	-->
-	<target name="copy-app" depends="clean, tests" description="Prepara la copia inicial de la aplicación">
+	<target name="copy-app" depends="clean" description="Prepara la copia inicial de la aplicación">
 		<copy todir="${app.path}">
 			<fileset dir="${app.dir}">
 				<include name="**" />
