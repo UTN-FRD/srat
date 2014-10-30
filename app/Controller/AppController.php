@@ -152,9 +152,7 @@ class AppController extends Controller {
  */
 	public function isAuthorized($user = null) {
 		if ($this->request->prefix === 'admin') {
-			if ($user['rol_id'] != 1) {
-				return false;
-			}
+			return (bool)$user['admin'];
 		}
 		return true;
 	}

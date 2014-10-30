@@ -184,7 +184,6 @@ class CargosController extends AppController {
 				'recursive' => 0
 			)),
 			'usuarios' => $this->Cargo->Usuario->find('list', array(
-				'conditions' => array('rol_id' => 2),
 				'order' => array('Usuario.nombre' => 'asc')
 			)),
 			'tipos' => $this->Cargo->Tipo->find('list', array('order' => array('id' => 'asc'))),

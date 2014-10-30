@@ -68,11 +68,11 @@ $this->Html->addCrumb('Editar');
 		'type' => 'checkbox'
 	));
 
-	echo $this->Form->input('rol_id', array(
-		'after' => 'Tipo de usuario',
-		'class' => 'span3',
-		'label' => 'Rol',
-		'locked' => $protected
+	echo $this->Form->input('admin', array(
+		'after' => 'Este usuario es un administrador del sistema',
+		'label' => 'Administrador',
+		'locked' => $protected,
+		'type' => 'checkbox'
 	));
 
 	echo $this->Form->input('estado', array(

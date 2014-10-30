@@ -18,7 +18,7 @@
 $isAdmin = $loggedIn = $reset = false;
 $user = AuthComponent::user();
 if ($user):
-	$isAdmin = ($user['rol_id'] == 1);
+	$isAdmin = (bool)$user['admin'];
 	$loggedIn = true;
 	$reset = (bool)$user['reset'];
 endif;

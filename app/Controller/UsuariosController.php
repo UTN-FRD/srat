@@ -131,14 +131,11 @@ class UsuariosController extends AppController {
  * @return void
  */
 	public function docentes() {
-		$settings = array(
-			'conditions' => array('rol_id' => 2),
-			'fields' => array('apellido', 'legajo', 'nombre'),
-			'recursive' => -1
-		);
 		$this->Prg->commonProcess();
-		$settings['conditions'] += $this->Usuario->parseCriteria($this->Prg->parsedParams());
-		$this->Paginator->settings += $settings;
+		$this->Paginator->settings += array(
+			'conditions' => $this->Usuario->parseCriteria($this->Prg->parsedParams()),
+			'fields' => array('apellido', 'legajo', 'nombre')
+		);
 
 		$this->set(array(
 			'rows' => $this->Paginator->paginate(),
@@ -214,8 +211,7 @@ class UsuariosController extends AppController {
 		$this->Prg->commonProcess();
 		$this->Paginator->settings += array(
 			'conditions' => $this->Usuario->parseCriteria($this->Prg->parsedParams()),
-			'fields' => array('id', 'apellido', 'estado', 'legajo', 'nombre', 'Rol.nombre'),
-			'recursive' => 0
+			'fields' => array('id', 'admin', 'apellido', 'estado', 'legajo', 'nombre')
 		);
 
 		$this->set('rows', $this->Paginator->paginate());
@@ -238,8 +234,6 @@ class UsuariosController extends AppController {
 				unset($this->request->data['Usuario']['password']);
 			}
 		}
-
-		$this->set('roles', $this->Usuario->Rol->find('list'));
 	}
 
 /**
@@ -271,11 +265,9 @@ class UsuariosController extends AppController {
 
 		if (!$this->request->data) {
 			$this->request->data = $this->Usuario->read(array(
-				'id', 'reset', 'rol_id', 'apellido', 'estado', 'legajo', 'nombre'
+				'id', 'admin', 'reset', 'apellido', 'estado', 'legajo', 'nombre'
 			));
 		}
-
-		$this->set('roles', $this->Usuario->Rol->find('list'));
 	}
 
 /**

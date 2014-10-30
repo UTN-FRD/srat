@@ -35,18 +35,6 @@ class Usuario extends AppModel {
 	);
 
 /**
- * belongsTo
- *
- * @var array
- */
-	public $belongsTo = array(
-		'Rol' => array(
-			'className' => 'UsuariosRol',
-			'foreignKey' => 'rol_id'
-		)
-	);
-
-/**
  * Nombre del campo utilizado
  * por el tipo de búsqueda `list`
  *
@@ -144,18 +132,11 @@ class Usuario extends AppModel {
 			'allowEmpty' => true,
 			'message' => ''
 		),
-		'rol_id' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
-				'required' => true,
-				'allowEmpty' => false,
-				'last' => true,
-				'message' => 'Este campo no puede estar vacío'
-			),
-			'exists' => array(
-				'rule' => array('validateExists', 'Rol'),
-				'message' => 'El valor seleccionado no existe'
-			)
+		'admin' => array(
+			'rule' => array('inList', array('0', '1')),
+			'required' => true,
+			'allowEmpty' => true,
+			'message' => ''
 		),
 		'estado' => array(
 			'notEmpty' => array(

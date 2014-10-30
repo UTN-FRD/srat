@@ -12,9 +12,12 @@
  */
 
 table.usuarios thead tr th:nth-child(2),
-table.usuarios thead tr th:nth-child(5),
-table.usuarios thead tr th:nth-child(6) {
+table.usuarios thead tr th:nth-child(5) {
 	width: 85px
+}
+
+table.usuarios thead tr th:nth-child(6) {
+	width: 110px
 }
 
 table.usuarios thead tr th:nth-child(2),

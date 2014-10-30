@@ -43,7 +43,7 @@ $headers = array(
 	$this->Paginator->sort('apellido', 'Apellido'),
 	$this->Paginator->sort('nombre', 'Nombre'),
 	$this->Paginator->sort('estado', 'Estado'),
-	$this->Paginator->sort('Rol.nombre', 'Rol'),
+	$this->Paginator->sort('admin', 'Administrador'),
 	'Tareas'
 );
 
@@ -71,7 +71,7 @@ if (!empty($rows)):
 			h($row['Usuario']['apellido']),
 			h($row['Usuario']['nombre']),
 			$status[$row['Usuario']['estado']],
-			h($row['Rol']['nombre']),
+			((bool)$row['Usuario']['admin'] ? 'Si' : 'No'),
 			implode(' ', $tasks)
 		);
 	endforeach;
