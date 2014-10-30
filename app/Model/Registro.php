@@ -28,6 +28,7 @@ class Registro extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
+		'Asignatura',
 		'Cargo'
 	);
 

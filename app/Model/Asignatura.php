@@ -86,7 +86,8 @@ class Asignatura extends AppModel {
  */
 	public $hasMany = array(
 		'Cargo',
-		'Horario'
+		'Horario',
+		'Registro'
 	);
 
 /**
