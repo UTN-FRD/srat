@@ -16,8 +16,6 @@
 <html dir="ltr" lang="es">
 	<head>
 		<meta charset="utf-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-
 		<title><?php echo h($title_for_layout) ?> :: Sistema de Registro de Asistencia y Temas</title>
 
 		<meta name="application-name" content="Sistema de Registro de Asistencia y Temas" />
