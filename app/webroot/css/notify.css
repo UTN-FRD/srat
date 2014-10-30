@@ -11,59 +11,71 @@
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 
-#notifications {
-	position: fixed;
-	top: 0;
-	width: 100%;
-	z-index: 55536
+.notifications {
+	padding-bottom: 10px;
 }
 
-#notifications div {
-	color: #fff;
+.notifications .alert {
 	font-size: 1.15em;
-	padding: 14px 0 15px;
-	text-align: center;
-	z-index: 65536
-}
 
-#notifications div button {
 	color: #fff;
-	filter: alpha(opacity=100);
-	left: -13px;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	text-shadow: none;
+}
+
+.notifications .close {
 	opacity: 1;
-	position: relative;
-	top: -2px
+	color: #fff;
+
+	filter: alpha(opacity=100);
 }
 
-.notify-error {
+.notifications .close:hover,
+.notifications .close:focus {
+	cursor: pointer;
+	text-decoration: none;
+
+	opacity: 1;
+	color: #fff;
+
+	filter: alpha(opacity=100);
+}
+
+.notifications .alert-error {
+	border: 1px solid #c43d3d;
 	background-color: #de4343;
-	border-bottom: 1px solid #c43d3d
 }
 
-.notify-info {
+.notifications .alert-info {
+	border: 1px solid #3b8eb5;
 	background-color: #4ea5cd;
-	border-bottom: 1px solid #3b8eb5
 }
 
-.notify-success {
+.notifications .alert-success {
+	border: 1px solid #55a12c;
 	background-color: #61b832;
-	border-bottom: 1px solid #55a12c
 }
 
-.notify-warning {
+.notifications .alert-warning {
+	border: 1px solid #d99a36;
 	background-color: #eaaf51;
-	border-bottom: 1px solid #d99a36
 }
 
 .noscript {
-	background: #eeecdf;
-	border-top: 2px solid #e6e1cf;
-	bottom: 0;
-	color: #8b0000;
 	font-size: 1.3em;
-	padding: 10px 0;
+
 	position: fixed;
-	text-align: center;
+	z-index: 99999;
+	bottom: 0;
+
 	width: 100%;
-	z-index: 99999
+	padding: 10px 0;
+
+	text-align: center;
+
+	color: #8b0000;
+	border-top: 2px solid #e6e1cf;
+	background: #eeecdf;
 }

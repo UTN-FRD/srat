@@ -137,7 +137,6 @@
 			bootstrap.min.js,
 			select2.min.js,
 			select2_locale_es.min.js,
-			notify.js,
 			form.js,
 			table.js"
 		/>

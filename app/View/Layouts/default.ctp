@@ -41,7 +41,7 @@
 			'bootstrap.min',
 			'select2.min',
 			'select2_locale_es.min',
-			'notify',
+			//'notify',
 			'form',
 			'table'
 		));
@@ -52,16 +52,16 @@
 	</head>
 	<body>
 		<div id="wrapper">
-			<div id="notifications">
-				<?php
-				echo $this->Session->flash('auth');
-				echo $this->Session->flash();
-				?>
-			</div>
-
 			<?php echo $this->element('navbar') ?>
 
 			<div id="page">
+				<div class="notifications">
+					<?php
+					echo $this->Session->flash('auth');
+					echo $this->Session->flash();
+					?>
+				</div>
+
 				<div class="clearfix crumbs">
 					<?php
 					echo $this->Html->getCrumbList(
@@ -74,7 +74,7 @@
 						<?php
 						echo preg_replace_callback(
 							"/[a-zA-Záéíóú]{3,}/u",
-							function($m) {
+							function ($m) {
 								return ucfirst($m[0]);
 							},
 							CakeTime::format(time(), '%A %d de %B de %Y, %H:%M')
