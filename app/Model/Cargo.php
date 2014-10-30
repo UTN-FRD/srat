@@ -69,15 +69,6 @@ class Cargo extends AppModel {
 	);
 
 /**
- * hasMany
- *
- * @var array
- */
-	public $hasMany = array(
-		'Registro'
-	);
-
-/**
  * Reglas de validación
  *
  * @var array
