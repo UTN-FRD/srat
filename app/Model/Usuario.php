@@ -60,7 +60,8 @@ class Usuario extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-		'Cargo'
+		'Cargo',
+		'Registro'
 	);
 
 /**
