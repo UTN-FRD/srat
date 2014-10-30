@@ -158,7 +158,10 @@ body {
 }
 
 .date {
+	color: #08c;
 	float: right;
+	font-weight: bold;
+	letter-spacing: 1px;
 	text-shadow: 0 1px 0 #fff
 }
 
