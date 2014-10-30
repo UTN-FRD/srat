@@ -98,12 +98,9 @@
 						<?php echo $this->fetch('content') ?>
 					</div>
 				</div>
-
-				<div id="footer">
-					Desarrollado por <a href="http://www.frd.utn.edu.ar/" target="_blank">Facultad Regional Delta</a>.
-				</div>
 			</div>
 		</div>
+
 		<noscript class="noscript">
 			La experiencia con esta aplicación puede verse afectada debido a que JavaScript está deshabilitado.
 		</noscript>
