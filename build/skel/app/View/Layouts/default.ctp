@@ -16,8 +16,6 @@
 <html dir="ltr" lang="es">
 	<head>
 		<meta charset="utf-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-
 		<title><?php echo h($title_for_layout) ?> :: Sistema de Registro de Asistencia y Temas</title>
 
 		<meta name="application-name" content="Sistema de Registro de Asistencia y Temas" />
@@ -36,16 +34,16 @@
 	</head>
 	<body>
 		<div id="wrapper">
-			<div id="notifications">
-				<?php
-				echo $this->Session->flash('auth');
-				echo $this->Session->flash();
-				?>
-			</div>
-
 			<?php echo $this->element('navbar') ?>
 
 			<div id="page">
+				<div class="notifications">
+					<?php
+					echo $this->Session->flash('auth');
+					echo $this->Session->flash();
+					?>
+				</div>
+
 				<div class="clearfix crumbs">
 					<?php
 					echo $this->Html->getCrumbList(
@@ -58,7 +56,7 @@
 						<?php
 						echo preg_replace_callback(
 							"/[a-zA-Záéíóú]{3,}/u",
-							function($m) {
+							function ($m) {
 								return ucfirst($m[0]);
 							},
 							CakeTime::format(time(), '%A %d de %B de %Y, %H:%M')
@@ -82,12 +80,9 @@
 						<?php echo $this->fetch('content') ?>
 					</div>
 				</div>
-
-				<div id="footer">
-					Desarrollado por <a href="http://www.frd.utn.edu.ar/" target="_blank">Facultad Regional Delta</a>.
-				</div>
 			</div>
 		</div>
+
 		<noscript class="noscript">
 			La experiencia con esta aplicación puede verse afectada debido a que JavaScript está deshabilitado.
 		</noscript>

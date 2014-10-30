@@ -39,7 +39,6 @@
 			'bootstrap.min',
 			'select2.min',
 			'select2_locale_es.min',
-			//'notify',
 			'form',
 			'table'
 		));
