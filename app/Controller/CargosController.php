@@ -135,7 +135,6 @@ class CargosController extends AppController {
 
 		$this->__setFormData();
 		$this->set(array(
-			'associated' => $this->Cargo->hasAssociations(),
 			'title_for_layout' => 'Editar - Usuarios - Asignaturas',
 			'title_for_view' => 'Editar usuario'
 		));
@@ -162,12 +161,8 @@ class CargosController extends AppController {
 		}
 
 		$notify = 'record_not_deleted';
-		if ($this->Cargo->hasAssociations()) {
-			$notify = 'record_delete_associated';
-		} else {
-			if ($this->Cargo->delete()) {
-				$notify = 'record_deleted';
-			}
+		if ($this->Cargo->delete()) {
+			$notify = 'record_deleted';
 		}
 		$this->_notify($notify);
 	}

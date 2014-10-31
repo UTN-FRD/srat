@@ -27,22 +27,17 @@ $this->Html->addCrumb('Editar');
 <?php echo $this->Form->create('Cargo', array('class' => 'form-vertical')) ?>
 <ul>
 	<li>Los campos indicados con <span class="required">*</span>son obligatorios.</li>
-	<?php if ($associated): ?>
-		<li class="highlight">Uno o más campos no pueden modificarse debido a que este registro se encuentra asociado.</li>
-	<?php endif ?>
 </ul>
 <fieldset>
 	<?php
 	echo $this->Form->hidden('id');
 
 	echo $this->Form->input('asignatura_id', array(
-		'class' => 'combobox span8',
-		'locked' => $associated
+		'class' => 'combobox span8'
 	));
 
 	echo $this->Form->input('usuario_id', array(
-		'class' => 'combobox span5',
-		'locked' => $associated
+		'class' => 'combobox span5'
 	));
 
 	echo $this->Form->input('grado_id', array(
