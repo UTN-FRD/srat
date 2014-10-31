@@ -131,17 +131,12 @@ class RegistrosController extends AppController {
  */
 	private function __setupModelAssociations() {
 		$this->Registro->virtualFields = array(
-			'asignatura' => $this->Registro->Cargo->Asignatura->virtualFields['asignatura'],
-			'usuario' => $this->Registro->Cargo->Usuario->virtualFields['nombre_completo']
+			'asignatura' => $this->Registro->Asignatura->virtualFields['asignatura'],
+			'usuario' => $this->Registro->Usuario->virtualFields['nombre_completo']
 		);
 
 		$this->Registro->bindModel(array(
 			'hasOne' => array(
-				'Asignatura' => array(
-					'className' => 'Asignatura',
-					'conditions' => 'Asignatura.id = Cargo.asignatura_id',
-					'foreignKey' => false
-				),
 				'Carrera' => array(
 					'className' => 'AsignaturasCarrera',
 					'conditions' => 'Carrera.id = Asignatura.carrera_id',
@@ -150,11 +145,6 @@ class RegistrosController extends AppController {
 				'Materia' => array(
 					'className' => 'AsignaturasMateria',
 					'conditions' => 'Materia.id = Asignatura.materia_id',
-					'foreignKey' => false
-				),
-				'Usuario' => array(
-					'className' => 'Usuario',
-					'conditions' => 'Usuario.id = Cargo.usuario_id',
 					'foreignKey' => false
 				)
 			)
@@ -182,11 +172,11 @@ class RegistrosController extends AppController {
 		);
 
 		if (!empty($options['data']['asignatura_id'])) {
-			$result['conditions']['Cargo.asignatura_id'] = $options['data']['asignatura_id'];
+			$result['conditions']['Registro.asignatura_id'] = $options['data']['asignatura_id'];
 		}
 
 		if (!empty($options['data']['usuario_id'])) {
-			$result['conditions']['Cargo.usuario_id'] = $options['data']['usuario_id'];
+			$result['conditions']['Registro.usuario_id'] = $options['data']['usuario_id'];
 		}
 
 		if (!empty($options['data']['desde'])) {
@@ -224,7 +214,7 @@ class RegistrosController extends AppController {
 
 		$date = preg_replace_callback(
 			"/[a-zA-Záéíóú]{3,}/u",
-			function($m) {
+			function ($m) {
 				return ucfirst($m[0]);
 			},
 			CakeTime::format(time(), '%A %d de %B de %Y')
@@ -276,7 +266,7 @@ class RegistrosController extends AppController {
 		$this->__setupModelAssociations();
 
 		if (!empty($data['asignatura_id'])) {
-			$row = $this->Registro->Cargo->Asignatura->find('first', array(
+			$row = $this->Registro->Asignatura->find('first', array(
 				'conditions' => array('Asignatura.id' => $data['asignatura_id']),
 				'fields' => array('asignatura'),
 				'recursive' => 0
@@ -285,10 +275,10 @@ class RegistrosController extends AppController {
 		}
 
 		if (!empty($data['usuario_id'])) {
-			$this->Registro->Cargo->Usuario->virtualFields = array(
+			$this->Registro->Usuario->virtualFields = array(
 				'nombre_completo' => 'CONCAT("(", Usuario.legajo, ")", " ", Usuario.apellido, ", ", Usuario.nombre)'
 			);
-			$row = $this->Registro->Cargo->Usuario->find('first', array(
+			$row = $this->Registro->Usuario->find('first', array(
 				'conditions' => array('Usuario.id' => $data['usuario_id']),
 				'fields' => array('nombre_completo')
 			));
@@ -304,7 +294,7 @@ class RegistrosController extends AppController {
 			$this->render();
 		} catch (Exception $e) {
 			$this->_notify(null, array(
-				'message' => "No fue posible exportar el resultado debido a un error interno.",
+				'message' => 'No fue posible exportar el resultado debido a un error interno.',
 				'redirect' => array('action' => 'reporte')
 			));
 		}

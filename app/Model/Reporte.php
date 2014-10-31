@@ -70,9 +70,6 @@ class Reporte extends AppModel {
 		'Asignatura' => array(
 			'foreignKey' => false
 		),
-		'Cargo' => array(
-			'foreignKey' => false
-		),
 		'Usuario' => array(
 			'foreignKey' => false
 		)
@@ -161,14 +158,14 @@ class Reporte extends AppModel {
 	}
 
 /**
- * Obtiene todas las asignaturas asociadas a cargos que se encuetran en la tabla de registros
+ * Obtiene todas las asignaturas que se encuentran en la tabla de registros
  *
  * @return array Asignaturas
  */
 	public function getAsignaturas() {
-		$result = $this->Cargo->Registro->find('list', array(
-			'fields' => array('Registro.id', 'Cargo.asignatura_id'),
-			'group' => array('Cargo.asignatura_id'),
+		$result = $this->Asignatura->Registro->find('list', array(
+			'fields' => array('Registro.id', 'Registro.asignatura_id'),
+			'group' => array('Registro.asignatura_id'),
 			'recursive' => 0
 		));
 
@@ -177,10 +174,10 @@ class Reporte extends AppModel {
 			$id = array_values($result);
 		}
 
-		$this->Cargo->Asignatura->unbindModel(array(
+		$this->Asignatura->unbindModel(array(
 			'belongsTo' => array('Area', 'Nivel', 'Tipo')
 		));
-		return $this->Cargo->Asignatura->find('list', array(
+		return $this->Asignatura->find('list', array(
 			'conditions' => array('Asignatura.id' => $id),
 			'order' => array('Materia.nombre' => 'asc'),
 			'recursive' => 0
@@ -188,7 +185,7 @@ class Reporte extends AppModel {
 	}
 
 /**
- * Obtiene todos los usuarios asociados a cargos que se encuentran en la tabla de registros
+ * Obtiene todos los usuarios que se encuentran en la tabla de registros
  *
  * @param integer|null $aid Identificador de la asignatura
  *
@@ -197,13 +194,13 @@ class Reporte extends AppModel {
 	public function getUsuarios($aid = null) {
 		$conditions = array();
 		if ($aid) {
-			$conditions = array('Cargo.asignatura_id' => $aid);
+			$conditions = array('Registro.asignatura_id' => $aid);
 		}
 
-		$result = $this->Cargo->Registro->find('list', array(
+		$result = $this->Usuario->Registro->find('list', array(
 			'conditions' => $conditions,
-			'fields' => array('Registro.id', 'Cargo.usuario_id'),
-			'group' => array('Cargo.usuario_id'),
+			'fields' => array('Registro.id', 'Registro.usuario_id'),
+			'group' => array('Registro.usuario_id'),
 			'recursive' => 0
 		));
 
@@ -212,17 +209,17 @@ class Reporte extends AppModel {
 			$id = array_values($result);
 		}
 
-		$virtualFields = $this->Cargo->Usuario->virtualFields;
-		$this->Cargo->Usuario->virtualFields = array(
+		$virtualFields = $this->Usuario->virtualFields;
+		$this->Usuario->virtualFields = array(
 			'nombre_completo' => 'CONCAT("(", Usuario.legajo, ")", " ", Usuario.nombre, " ", Usuario.apellido)'
 		);
 
-		$result = $this->Cargo->Usuario->find('list', array(
+		$result = $this->Usuario->find('list', array(
 			'conditions' => array('Usuario.id' => $id),
 			'order' => array('Usuario.legajo' => 'asc')
 		));
 
-		$this->Cargo->Usuario->virtualFields = $virtualFields;
+		$this->Usuario->virtualFields = $virtualFields;
 		return $result;
 	}
 }
