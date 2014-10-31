@@ -35,12 +35,13 @@ $this->Html->script('dashboard', array('inline' => false));
 			echo $this->Form->hidden(sprintf('Registro.%d.id', $rid));
 		endif;
 
-		echo $this->Form->hidden(sprintf('Registro.%d.fecha', $rid));
-		echo $this->Form->hidden(sprintf('Registro.%d.cargo_id', $rid));
-		echo $this->Form->hidden(sprintf('Registro.%d.tipo', $rid));
-		echo $this->Form->hidden(sprintf('Tipo.%d.nombre', $rid));
 		echo $this->Form->hidden(sprintf('Cargo.%d.asignatura', $rid));
 		echo $this->Form->hidden(sprintf('Grado.%d.nombre', $rid));
+		echo $this->Form->hidden(sprintf('Registro.%d.asignatura_id', $rid));
+		echo $this->Form->hidden(sprintf('Registro.%d.fecha', $rid));
+		echo $this->Form->hidden(sprintf('Registro.%d.tipo', $rid));
+		echo $this->Form->hidden(sprintf('Registro.%d.usuario_id', $rid));
+		echo $this->Form->hidden(sprintf('Tipo.%d.nombre', $rid));
 		?>
 		<table class="asignaturas table table-bordered">
 			<tr>
@@ -61,7 +62,6 @@ $this->Html->script('dashboard', array('inline' => false));
 					echo $this->Form->input(sprintf('Registro.%d.entrada', $rid), array(
 						'class' => 'span1',
 						'div' => array('class' => 'time'),
-						'empty' => true,
 						'interval' => 5,
 						'label' => false,
 						'required' => false,
@@ -75,7 +75,6 @@ $this->Html->script('dashboard', array('inline' => false));
 					echo $this->Form->input(sprintf('Registro.%d.salida', $rid), array(
 						'class' => 'span1',
 						'div' => array('class' => 'time'),
-						'empty' => true,
 						'interval' => 5,
 						'label' => false,
 						'required' => false,

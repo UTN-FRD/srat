@@ -29,7 +29,7 @@ class Registro extends AppModel {
  */
 	public $belongsTo = array(
 		'Asignatura',
-		'usuario'
+		'Usuario'
 	);
 
 /**
@@ -42,7 +42,7 @@ class Registro extends AppModel {
 			'rule' => array('inList', array('0', '1')),
 			'message' => 'El valor seleccionado no es válido'
 		),
-		'cargo_id' => array(
+		'asignatura_id' => array(
 			'notEmpty' => array(
 				'rule' => 'notEmpty',
 				'required' => true,
@@ -51,7 +51,20 @@ class Registro extends AppModel {
 				'message' => 'Este campo no puede estar vacío'
 			),
 			'exists' => array(
-				'rule' => array('validateExists', 'Cargo'),
+				'rule' => array('validateExists', 'Asignatura'),
+				'message' => 'El valor seleccionado no existe'
+			)
+		),
+		'usuario_id' => array(
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
+				'required' => true,
+				'allowEmpty' => false,
+				'last' => true,
+				'message' => 'Este campo no puede estar vacío'
+			),
+			'exists' => array(
+				'rule' => array('validateExists', 'Usuario'),
 				'message' => 'El valor seleccionado no existe'
 			)
 		),
@@ -110,17 +123,11 @@ class Registro extends AppModel {
  */
 	public function beforeValidate($options = array()) {
 		if (!isset($this->data[$this->alias]['id'])) {
-			$skip = true;
-			foreach (array('entrada', 'salida', 'obs') as $field) {
-				if (!empty($this->data[$this->alias][$field])) {
-					$skip = false;
-					break;
-				}
-			}
-			if ($skip) {
+			if (empty($this->data[$this->alias]['obs'])) {
 				$this->data = $this->validate = array();
 			}
 		}
+
 		return true;
 	}
 

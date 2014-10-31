@@ -13,6 +13,6 @@
 
 $(function() {
 	$('div.time select:first-child').each(function() {
-		$('option', this).slice(1, 9).remove();
+		$('option', this).slice(0, 8).remove();
 	});
 });
