@@ -1,21 +1,24 @@
 <?php
 /**
- * AppShell file
+ * Sistema de Registro de Asistencia y Temas
  *
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         CakePHP(tm) v 2.0
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
+ *
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo licencia.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
 
+/**
+ * Dependencias
+ */
 App::uses('Shell', 'Console');
 
 /**
- * Application Shell
+ * Shell de la aplicación
  *
- * Add your application-wide methods in the class below, your shells
- * will inherit them.
- *
- * @package       app.Console.Command
+ * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
-class AppShell extends Shell {
-
+class AppController extends Controller {
 }
