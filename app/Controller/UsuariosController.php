@@ -139,7 +139,7 @@ class UsuariosController extends AppController {
 	public function docentes() {
 		$this->Prg->commonProcess();
 		$this->Paginator->settings += array(
-			'conditions' => $this->Usuario->parseCriteria($this->Prg->parsedParams()),
+			'conditions' => array_merge(array('id >' => 1, $this->Usuario->parseCriteria($this->Prg->parsedParams()))),
 			'fields' => array('apellido', 'legajo', 'nombre')
 		);
 
