@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 5.5.38, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.40, for debian-linux-gnu (i686)
 -- ------------------------------------------------------
--- Server version	5.5.38-0ubuntu0.14.04.1
+-- Server version	5.5.40-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -325,16 +325,19 @@ UNLOCK TABLES;
 CREATE TABLE `registros` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `tipo` tinyint(2) unsigned NOT NULL,
-  `cargo_id` int(10) unsigned NOT NULL,
+  `asignatura_id` int(10) unsigned NOT NULL,
+  `usuario_id` int(10) unsigned NOT NULL,
   `fecha` date NOT NULL,
   `entrada` time DEFAULT NULL,
   `salida` time DEFAULT NULL,
-  `obs` text DEFAULT NULL,
+  `obs` text,
   PRIMARY KEY (`id`),
-  KEY `IK_CARGO` (`cargo_id`),
+  UNIQUE KEY `UK_REGISTRO` (`tipo`,`asignatura_id`,`usuario_id`,`fecha`),
   KEY `IK_TIPO` (`tipo`),
-  UNIQUE KEY `UK_REGISTRO` (`tipo`,`cargo_id`,`fecha`),
-  CONSTRAINT `FK_REGISTROS_CARGO` FOREIGN KEY (`cargo_id`) REFERENCES `cargos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `IK_ASIGNATURA` (`asignatura_id`),
+  KEY `IK_USUARIO` (`usuario_id`),
+  CONSTRAINT `FK_REGISTROS_USUARIO` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
+  CONSTRAINT `FK_REGISTROS_ASIGNATURA` FOREIGN KEY (`asignatura_id`) REFERENCES `asignaturas` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -355,7 +358,7 @@ UNLOCK TABLES;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usuarios` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `rol_id` tinyint(3) unsigned DEFAULT NULL,
+  `admin` tinyint(1) unsigned DEFAULT NULL,
   `legajo` mediumint(8) unsigned NOT NULL,
   `password` char(60) NOT NULL,
   `reset` tinyint(1) unsigned DEFAULT NULL,
@@ -363,9 +366,7 @@ CREATE TABLE `usuarios` (
   `apellido` varchar(25) NOT NULL,
   `nombre` varchar(40) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_LEGAJO` (`legajo`),
-  KEY `IK_ROL` (`rol_id`),
-  CONSTRAINT `FK_USUARIOS_ROL` FOREIGN KEY (`rol_id`) REFERENCES `usuarios_roles` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
+  UNIQUE KEY `UK_LEGAJO` (`legajo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -377,31 +378,6 @@ LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 INSERT INTO `usuarios` VALUES (1,1,1,'$2a$10$JTFmlyWPAXBXVh.NW0azOuU1WvwL/W0q2vRQum7vM645Ote/Cy8Oq',NULL,1,'-','Administrador');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `usuarios_roles`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `usuarios_roles` (
-  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) NOT NULL,
-  `obs` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_NOMBRE` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `usuarios_roles`
---
-
-LOCK TABLES `usuarios_roles` WRITE;
-/*!40000 ALTER TABLE `usuarios_roles` DISABLE KEYS */;
-INSERT INTO `usuarios_roles` VALUES (1,'Administrador',NULL),(2,'Docente',NULL);
-/*!40000 ALTER TABLE `usuarios_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
