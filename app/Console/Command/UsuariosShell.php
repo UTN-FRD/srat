@@ -51,10 +51,10 @@ class UsuariosShell extends AppShell {
 
 		$option = strtoupper($this->in(
 			sprintf('¿Está seguro que desea restablecer la contraseña del usuario (%d) %s?', $legajo, $row['Usuario']['nombre_completo']),
-			array('Y', 'N'),
+			array('S', 'N'),
 			'N'
 		));
-		if ($option === 'Y') {
+		if ($option === 'S') {
 			$result = $this->Usuario->save(
 				array('id' => $row['Usuario']['id'], 'reset' => 1),
 				array('fieldList' => array('id', 'password', 'reset'))
