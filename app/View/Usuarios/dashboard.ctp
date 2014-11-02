@@ -28,80 +28,61 @@ $this->Html->script('dashboard', array('inline' => false));
 	</div>
 <?php else: ?>
 	<?php
-	echo $this->Form->create('Registro');
-
+	echo $this->Form->create('Registro', array('class' => 'form-asignaturas'));
 	foreach ($this->request->data['Registro'] as $rid => $row):
+		$class = ($rid % 2 === 0 ? 'left' : 'right');
 		if (!empty($row['id'])):
 			echo $this->Form->hidden(sprintf('Registro.%d.id', $rid));
 		endif;
-
 		echo $this->Form->hidden(sprintf('Cargo.%d.asignatura', $rid));
-		echo $this->Form->hidden(sprintf('Grado.%d.nombre', $rid));
 		echo $this->Form->hidden(sprintf('Registro.%d.asignatura_id', $rid));
 		echo $this->Form->hidden(sprintf('Registro.%d.fecha', $rid));
 		echo $this->Form->hidden(sprintf('Registro.%d.tipo', $rid));
 		echo $this->Form->hidden(sprintf('Registro.%d.usuario_id', $rid));
-		echo $this->Form->hidden(sprintf('Tipo.%d.nombre', $rid));
 		?>
-		<table class="asignaturas table table-bordered">
-			<tr>
-				<th>Asignatura</th>
-				<th>Cargo</th>
-			</tr>
-			<tr>
-				<td><?php echo h($this->request->data['Cargo'][$rid]['asignatura']) ?></td>
-				<td><?php printf('(%s) %s', h($this->request->data['Tipo'][$rid]['nombre']), h($this->request->data['Grado'][$rid]['nombre'])) ?></td>
-			</tr>
-			<tr>
-				<th>Hora de ingreso</th>
-				<th>Hora de salida</th>
-			</tr>
-			<tr>
-				<td>
-					<?php
-					echo $this->Form->input(sprintf('Registro.%d.entrada', $rid), array(
-						'class' => 'span1',
-						'div' => array('class' => 'time'),
-						'interval' => 5,
-						'label' => false,
-						'required' => false,
-						'separator' => ' : ',
-						'timeFormat' => 24
-					));
-					?>
-				</td>
-				<td>
-					<?php
-					echo $this->Form->input(sprintf('Registro.%d.salida', $rid), array(
-						'class' => 'span1',
-						'div' => array('class' => 'time'),
-						'interval' => 5,
-						'label' => false,
-						'required' => false,
-						'separator' => ' : ',
-						'timeFormat' => 24
-					));
-					?>
-				</td>
-			</tr>
-			<tr>
-				<th colspan="2">Temas del día</th>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<?php
-					echo $this->Form->input(sprintf('Registro.%d.obs', $rid), array(
-						'label' => false,
-						'required' => false
-					));
-					?>
-				</td>
-			</tr>
+		<table class="table table-bordered table-condensed table-<?php echo $class ?>">
+			<thead>
+				<tr>
+					<th>Asignatura</th>
+					<th>Entrada</th>
+					<th>Salida</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><?php echo h($this->request->data['Cargo'][$rid]['asignatura']) ?></td>
+					<td>
+						<?php
+						echo $this->Form->input(sprintf('Registro.%d.entrada', $rid), array(
+							'error' => false, 'interval' => 5, 'label' => false,
+							'required' => false, 'separator' => ' : ', 'timeFormat' => 24
+						))
+						?>
+					</td>
+					<td>
+						<?php
+						echo $this->Form->input(sprintf('Registro.%d.salida', $rid), array(
+							'error' => false, 'interval' => 5, 'label' => false,
+							'required' => false, 'separator' => ' : ', 'timeFormat' => 24
+						))
+						?>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<?php
+						echo $this->Form->input(sprintf('Registro.%d.obs', $rid), array(
+							'error' => false, 'label' => false, 'required' => false, 'rows' => 2
+						))
+						?>
+					</td>
+				</tr>
+			</tbody>
 		</table>
 		<?php
 	endforeach;
-
-	echo $this->Form->buttons(array('Guardar cambios' => array('type' => 'submit')), false);
-	echo $this->Form->end();
 	?>
+	<div class="clearfix">
+	</div>
+	<?php echo $this->Form->buttons(array('Guardar cambios' => array('type' => 'submit'))) ?>
 <?php endif ?>

@@ -77,8 +77,17 @@ class UsuariosController extends AppController {
 						$this->_notify('record_not_saved');
 					}
 				} else {
-					$this->_notify('operation_no_changes', array('redirect' => true));
+					$this->_notify(null, array(
+						'level' => 'info',
+						'message' => 'La operación se ha completado exitosamente pero no se han realizado cambios.',
+						'redirect' => true
+					));
 				}
+			} elseif (!empty($this->Usuario->Registro->validationErrors)) {
+				$this->_notify(null, array(
+					'level' => 'warning',
+					'message' => 'La operación no se ha completado debido a que uno o más valores no son válidos.',
+				));
 			}
 		}
 
@@ -86,10 +95,7 @@ class UsuariosController extends AppController {
 			$this->request->data = $this->Usuario->getCargos($this->Auth->user('id'));
 		}
 
-		$this->set(array(
-			'title_for_layout' => 'Asignaturas',
-			'title_for_view' => 'Asignaturas'
-		));
+		$this->set('title_for_layout', 'Asignaturas');
 	}
 
 /**

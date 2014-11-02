@@ -11,67 +11,102 @@
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 
-#page {
-	width: 822px
+.page-small #page {
+	width: 700px
 }
 
-.breadcrumb {
+#content {
+	min-height: 20px;
+	padding: 20px 15px 0
+}
+
+.breadcrumb,
+.page-header {
 	display: none
 }
 
-#view .alert {
-	text-align: center
+#view .alert-info {
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	background-color: #4ea5cd;
+	border-radius: 0;
+	border: 1px solid #3b8eb5;
+	color: #fff;
+	font-size: 1.2em;
+	text-align: center;
+	text-shadow: none
 }
 
-table.asignaturas {
-	margin: 0 auto 30px;
-	width: 768px
+.page-small .table-left {
+	float: none;
+	width: auto
 }
 
-table.asignaturas th {
-	background-color: #efefef;
-	width: 400px
+.table-left {
+	float: left;
+	width: 615px
 }
 
-table.asignaturas td {
-	padding: 10px 8px
+.table-right {
+	float: right;
+	width: 615px
 }
 
-table.asignaturas .control-group,
-table.asignaturas select,
-table.asignaturas textarea {
+.form-asignaturas {
+	margin-bottom: 0;
+	padding-bottom: 0
+}
+
+.form-asignaturas td {
+	vertical-align: middle
+}
+
+.form-asignaturas .control-group,
+.form-asignaturas select,
+.form-asignaturas textarea {
 	margin: 0
 }
 
-table.asignaturas select,
-table.asignaturas textarea {
+.form-asignaturas select,
+.form-asignaturas textarea {
 	-moz-border-radius: 0;
 	-webkit-border-radius: 0;
 	border-radius: 0
 }
 
-table.asignaturas .time select:first-child {
-	margin-right: 3px
+.form-asignaturas thead th:nth-child(2),
+.form-asignaturas thead th:nth-child(3) {
+	text-align: center;
+	width: 145px
 }
 
-table.asignaturas .time select:last-child {
-	margin-left: 3px
+.form-asignaturas tbody td:nth-child(2),
+.form-asignaturas tbody td:nth-child(3) {
+	text-align: center
 }
 
-table.asignaturas textarea {
-	width: 738px
+.form-asignaturas select {
+	width: 65px
 }
 
-table.asignaturas .help-inline {
-	display: block;
-	padding-left: 0;
-	padding-top: 3px
+.form-asignaturas .control-group select:first-child {
+	margin-right: 2px
 }
 
-.form-actions {
-	text-align: right
+.form-asignaturas .control-group select:last-child {
+	margin-left: 2px
 }
 
-.form-actions button {
-	margin-right: 0
+.page-small .form-asignaturas textarea {
+	width: 632px
+}
+
+.form-asignaturas textarea {
+	width: 589px
+}
+
+.form-asignaturas .form-actions {
+	border-bottom: none;
+	padding: 15px;
+	text-align: center
 }

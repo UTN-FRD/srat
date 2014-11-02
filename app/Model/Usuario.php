@@ -304,7 +304,7 @@ class Usuario extends AppModel {
 		$id = $this->id;
 
 		if ($id && $this->exists()) {
-			$this->Cargo->unbindModel(array('belongsTo' => array('Dedicacion', 'Usuario')));
+			$this->Cargo->unbindModel(array('belongsTo' => array('Dedicacion', 'Grado', 'Tipo', 'Usuario')));
 			$this->Cargo->bindModel(array(
 				'hasOne' => array(
 					'Registro' => array(
@@ -341,11 +341,9 @@ class Usuario extends AppModel {
 				'fields' => array(
 					'Cargo.asignatura',
 					'Cargo.asignatura_id',
-					'Grado.nombre',
 					'Horario.entrada',
 					'Horario.salida',
 					'Registro.*',
-					'Tipo.nombre'
 				),
 				'conditions' => array(
 					'Cargo.usuario_id' => $id,
@@ -366,8 +364,6 @@ class Usuario extends AppModel {
 
 				$out['Registro'][$rid] = $row['Registro'];
 				$out['Cargo'][$rid]['asignatura'] = $row['Cargo']['asignatura'];
-				$out['Grado'][$rid]['nombre'] = $row['Grado']['nombre'];
-				$out['Tipo'][$rid]['nombre'] = $row['Tipo']['nombre'];
 			}
 		}
 

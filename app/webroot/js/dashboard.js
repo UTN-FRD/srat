@@ -12,7 +12,11 @@
  */
 
 $(function() {
-	$('div.time select:first-child').each(function() {
+	if ($('.form-asignaturas .table').length < 2) {
+		$('body').addClass('page-small');
+	}
+
+	$('.form-asignaturas td:nth-child(2) select:first-child').each(function() {
 		$('option', this).slice(0, 8).remove();
 	});
 });
