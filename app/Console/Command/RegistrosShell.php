@@ -28,4 +28,24 @@ class RegistrosShell extends AppShell {
  * @var array
  */
 	public $uses = array('Registro');
+
+/**
+ * Elimina el registro de asistencia
+ *
+ * @return void
+ */
+	public function eliminar() {
+		$option = strtoupper($this->in(
+			'¿Está seguro que desea eliminar el registro de asistencia?',
+			array('S', 'N'),
+			'N'
+		));
+		if ($option === 'S') {
+			if ($this->Registro->getDataSource()->truncate($this->Registro->useTable)) {
+				$this->out('La operación solicitada se ha completado exitosamente.');
+			} else {
+				$this->error('No fue posible eliminar el registro de asistencia debido a un error interno.');
+			}
+		}
+	}
 }
