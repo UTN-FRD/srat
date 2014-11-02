@@ -1,0 +1,233 @@
+/*!
+ * Diseño
+ *
+ * Sistema de Registro de Asistencia y Temas
+ *
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
+ *
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo licencia.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
+ */
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../fonts/OpenSans.eot');
+	src: url('../fonts/OpenSans.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/OpenSans.woff') format('woff'),
+	url('../fonts/OpenSans.ttf') format('truetype'),
+	url('../fonts/OpenSans.svg#OpenSans') format('svg');
+}
+
+@font-face {
+	font-family: 'Raleway';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../fonts/Raleway.eot');
+	src: url('../fonts/Raleway.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/Raleway.woff') format('woff'),
+	url('../fonts/Raleway.ttf') format('truetype'),
+	url('../fonts/Raleway.svg#Raleway') format('svg');
+}
+
+body {
+	background: #eef2ea
+}
+
+@media (max-width: 979px) {
+	body .navbar .navbar-inner .brand {
+		margin-left: -20px
+	}
+}
+
+@media (max-width: 1322px) {
+	.navbar {
+		width: 1342px;
+	}
+
+	#page {
+		width: 1322px
+	}
+}
+
+#wrapper {
+	z-index: 1
+}
+
+.navbar {
+	background: #fff;
+	border-bottom: 1px solid #d0d5cb;
+	box-shadow: 0 1px 4px rgba(0,0,0,0.065);
+	margin-bottom: 0
+}
+
+.navbar-inner {
+	-moz-border-radius: 0;
+	-moz-box-shadow: none;
+	-webkit-border-radius: 0;
+	-webkit-box-shadow: none;
+	background-color: #fff;
+	background-image: none;
+	border-radius: 0;
+	border: none;
+	box-shadow: none;
+	filter: none;
+	margin: 0 auto;
+	min-height: 50px;
+	width: 1302px
+}
+
+.navbar .navbar-inner .brand {
+	font-family: 'Raleway';
+	padding: 15px 5px 10px 20px
+}
+
+.navbar .navbar-inner .nav > li > a {
+	color: #0096BB;
+	padding: 15px
+}
+
+.navbar .nav > li > a:focus,
+.navbar .nav > li > a:hover {
+	background-color: #eef2ea;
+	color: #75796f
+}
+
+.navbar .nav li.dropdown.open > .dropdown-toggle .caret,
+.navbar .nav li.dropdown.active > .dropdown-toggle .caret,
+.navbar .nav li.dropdown.open.active > .dropdown-toggle .caret,
+.navbar .nav li.dropdown > a:hover .caret,
+.navbar .nav li.dropdown > a:focus .caret {
+	border-bottom-color: #75796f;
+	border-top-color: #75796f
+}
+
+.navbar .nav li.dropdown > .dropdown-toggle .caret {
+	border-bottom-color: #0096BB;
+	border-top-color: #0096BB
+}
+
+.navbar .navbar-inner .pull-right > li.divider-vertical {
+	border-left: 1px dotted #d0d5cb;
+	margin-top: 3px;
+	padding-top: 4px
+}
+
+.navbar .nav li.dropdown.open > .dropdown-toggle,
+.navbar .nav li.dropdown.active > .dropdown-toggle,
+.navbar .nav li.dropdown.open.active > .dropdown-toggle {
+	background-color: #eef2ea;
+	color: #75796f
+}
+
+.navbar .navbar-inner .dropdown-menu {
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	border-radius: 0;
+	margin-top: 0
+}
+
+#page {
+	margin: 38px auto 30px;
+	padding: 0 15px 15px;
+	width: 1302px
+}
+
+.crumbs {
+	font-size: 1.1em;
+	padding-top: 0
+}
+
+.breadcrumb {
+	background: none;
+	border-radius: 0;
+	float: left;
+	margin: 0;
+	padding: 0
+}
+
+.breadcrumb > li > .divider {
+	color: #75796f
+}
+
+.breadcrumb > .active {
+	color: #0b1902
+}
+
+.date {
+	color: #005580;
+	float: right;
+	letter-spacing: 1px;
+	text-shadow: 0 1px 0 #fff
+}
+
+#content {
+	background: #fff;
+	border: 1px solid #d0d5cb;
+	box-shadow: 0 2px 6px rgba(100, 100, 100, 0.3);
+	margin: 1px 0;
+	min-height: 550px;
+	padding: 0 15px 15px
+}
+
+.page-header {
+	border-bottom: 1px dotted #d8d8d8;
+	font-family: 'Open Sans';
+	font-weight: normal;
+	line-height: 35px;
+	margin-bottom: 20px;
+	margin-top: 15px;
+	padding-bottom: 2px
+}
+
+.page-tasks {
+	float: right;
+	margin-bottom: 0;
+	margin-top: 17px
+}
+
+.page-tasks > li > a {
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	border-radius: 0
+}
+
+.page-tasks .dropdown-menu {
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	border-radius: 0;
+	left: auto;
+	margin-top: 1px;
+	right: 0
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+	background-color: #eef2ea;
+	color: #75796f
+}
+
+.nav-tabs .open .dropdown-toggle,
+.nav-pills .open .dropdown-toggle,
+.nav > li.dropdown.open.active > a:hover,
+.nav > li.dropdown.open.active > a:focus {
+	background-color: #eef2ea;
+	color: #75796f
+}
+
+.nav li.dropdown.open .caret,
+.nav li.dropdown.open.active .caret,
+.nav li.dropdown.open a:hover .caret,
+.nav li.dropdown.open a:focus .caret,
+.nav .dropdown-toggle:hover .caret,
+.nav .dropdown-toggle:focus .caret {
+	border-bottom-color: #75796f;
+	border-top-color: #75796f
+}
+
+#view {
+	color: #202020;
+	padding: 0 5px
+}

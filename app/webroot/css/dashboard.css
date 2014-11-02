@@ -1,0 +1,112 @@
+/*!
+ * Dashboard
+ *
+ * Sistema de Registro de Asistencia y Temas
+ *
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
+ *
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo licencia.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
+ */
+
+.page-small #page {
+	width: 700px
+}
+
+#content {
+	min-height: 20px;
+	padding: 20px 15px 0
+}
+
+.breadcrumb,
+.page-header {
+	display: none
+}
+
+#view .alert-info {
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	background-color: #4ea5cd;
+	border-radius: 0;
+	border: 1px solid #3b8eb5;
+	color: #fff;
+	font-size: 1.2em;
+	text-align: center;
+	text-shadow: none
+}
+
+.page-small .table-left {
+	float: none;
+	width: auto
+}
+
+.table-left {
+	float: left;
+	width: 615px
+}
+
+.table-right {
+	float: right;
+	width: 615px
+}
+
+.form-asignaturas {
+	margin-bottom: 0;
+	padding-bottom: 0
+}
+
+.form-asignaturas td {
+	vertical-align: middle
+}
+
+.form-asignaturas .control-group,
+.form-asignaturas select,
+.form-asignaturas textarea {
+	margin: 0
+}
+
+.form-asignaturas select,
+.form-asignaturas textarea {
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	border-radius: 0
+}
+
+.form-asignaturas thead th:nth-child(2),
+.form-asignaturas thead th:nth-child(3) {
+	text-align: center;
+	width: 145px
+}
+
+.form-asignaturas tbody td:nth-child(2),
+.form-asignaturas tbody td:nth-child(3) {
+	text-align: center
+}
+
+.form-asignaturas select {
+	width: 65px
+}
+
+.form-asignaturas .control-group select:first-child {
+	margin-right: 2px
+}
+
+.form-asignaturas .control-group select:last-child {
+	margin-left: 2px
+}
+
+.page-small .form-asignaturas textarea {
+	width: 632px
+}
+
+.form-asignaturas textarea {
+	width: 589px
+}
+
+.form-asignaturas .form-actions {
+	border-bottom: none;
+	padding: 15px;
+	text-align: center
+}

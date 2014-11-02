@@ -1,0 +1,81 @@
+/*!
+ * Notificación
+ *
+ * Sistema de Registro de Asistencia y Temas
+ *
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
+ *
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo licencia.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
+ */
+
+.notifications {
+	padding-bottom: 10px;
+}
+
+.notifications .alert {
+	font-size: 1.2em;
+
+	color: #fff;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	text-shadow: none;
+}
+
+.notifications .close {
+	opacity: 1;
+	color: #fff;
+
+	filter: alpha(opacity=100);
+}
+
+.notifications .close:hover,
+.notifications .close:focus {
+	cursor: pointer;
+	text-decoration: none;
+
+	opacity: 1;
+	color: #fff;
+
+	filter: alpha(opacity=100);
+}
+
+.notifications .alert-error {
+	border: 1px solid #c43d3d;
+	background-color: #de4343;
+}
+
+.notifications .alert-info {
+	border: 1px solid #3b8eb5;
+	background-color: #4ea5cd;
+}
+
+.notifications .alert-success {
+	border: 1px solid #55a12c;
+	background-color: #61b832;
+}
+
+.notifications .alert-warning {
+	border: 1px solid #d99a36;
+	background-color: #eaaf51;
+}
+
+.noscript {
+	font-size: 1.3em;
+
+	position: fixed;
+	z-index: 99999;
+	bottom: 0;
+
+	width: 100%;
+	padding: 10px 0;
+
+	text-align: center;
+
+	color: #8b0000;
+	border-top: 2px solid #e6e1cf;
+	background: #eeecdf;
+}

@@ -1,0 +1,32 @@
+/*!
+ * Cargos
+ *
+ * Sistema de Registro de Asistencia y Temas
+ *
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
+ *
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo licencia.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
+ */
+
+#view .table thead th:nth-child(4) {
+	width: 225px
+}
+
+#view .table thead th:nth-child(5) {
+	width: 125px
+}
+
+#view .table thead th:nth-child(6),
+#view .table tbody td:nth-child(6) {
+	text-align: center;
+	width: 95px
+}
+
+#CargoDedicacion,
+#CargoResolucion {
+	text-align: center;
+	width: 75px
+}

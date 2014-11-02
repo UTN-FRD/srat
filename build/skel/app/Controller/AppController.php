@@ -7,7 +7,7 @@
  * Este archivo está sujeto a los términos y condiciones descritos
  * en el archivo licencia.txt que acompaña a este software.
  *
- * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 
 /**
@@ -18,7 +18,7 @@ App::uses('Controller', 'Controller');
 /**
  * Controlador de la aplicación
  *
- * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 class AppController extends Controller {
 
@@ -50,7 +50,8 @@ class AppController extends Controller {
 			'loginAction' => array('controller' => 'usuarios', 'action' => 'login', 'admin' => false, 'plugin' => false),
 			'loginRedirect' => array('controller' => 'usuarios', 'action' => 'dashboard', 'admin' => false, 'plugin' => false),
 			'logoutRedirect' => array('controller' => 'usuarios', 'action' => 'login', 'admin' => false, 'plugin' => false)
-		)
+		),
+		'Inasistencia'
 	);
 
 /**
@@ -151,9 +152,7 @@ class AppController extends Controller {
  */
 	public function isAuthorized($user = null) {
 		if ($this->request->prefix === 'admin') {
-			if ($user['rol_id'] != 1) {
-				return false;
-			}
+			return (bool)$user['admin'];
 		}
 		return true;
 	}

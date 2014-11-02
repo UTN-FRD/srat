@@ -1,13 +1,13 @@
 # Aplicación
-/src/Config/database.php
-/src/tmp
+/app/Config/database.php
+/app/tmp
 
 # Composer
 /composer.lock
-/src/Plugin/CakePdf
-/src/Plugin/DebugKit
-/src/Plugin/Localized
-/src/Plugin/Search
+/app/Plugin/CakePdf
+/app/Plugin/DebugKit
+/app/Plugin/Localized
+/app/Plugin/Search
 /vendor
 
 # Editores

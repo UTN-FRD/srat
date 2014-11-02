@@ -1,0 +1,47 @@
+<?php
+/**
+ * Sistema de Registro de Asistencia y Temas
+ *
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
+ *
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo licencia.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
+ */
+
+/**
+ * Configuración de conexiones a bases de datos
+ *
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
+ */
+class DATABASE_CONFIG {
+
+/**
+ * Predeterminada
+ *
+ * @var array
+ */
+	public $default = array(
+		'database' => '',
+		'datasource' => 'Database/Mysql',
+		'encoding' => 'utf8',
+		'host' => '',
+		'login' => '',
+		'password' => ''
+	);
+
+/**
+ * Pruebas
+ *
+ * @var array
+ */
+	public $test = array(
+		'database' => 'test',
+		'datasource' => 'Database/Mysql',
+		'encoding' => 'utf8',
+		'host' => '',
+		'login' => '',
+		'password' => ''
+	);
+}

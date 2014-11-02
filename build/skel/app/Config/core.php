@@ -9,7 +9,7 @@
  * Este archivo está sujeto a los términos y condiciones descritos
  * en el archivo licencia.txt que acompaña a este software.
  *
- * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 
 /**
@@ -34,11 +34,6 @@ Configure::write('Exception', array(
 	'log' => true,
 	'renderer' => 'AppExceptionRenderer'
 ));
-
-/**
- * Ruta base en caso que la aplicación se encuentre en un subdirectorio
- */
-Configure::write('App.base', '/' . basename(dirname(dirname(__DIR__))));
 
 /**
  * Codificación de caracteres
@@ -94,8 +89,7 @@ Configure::write('Security.cipherSeed', '376138663337353532663361366338');
  */
 Cache::config('_cake_core_', array(
 	'duration' => '+12 months',
-	'engine' => 'File',
-	'path' => CACHE . 'persistent' . DS,
+	'engine' => 'Apc',
 	'prefix' => APP_DIR . '_cake_core_'
 ));
 
@@ -104,7 +98,6 @@ Cache::config('_cake_core_', array(
  */
 Cache::config('_cake_model_', array(
 	'duration' => '+12 months',
-	'engine' => 'File',
-	'path' => CACHE . 'models' . DS,
+	'engine' => 'Apc',
 	'prefix' => APP_DIR . '_cake_model_'
 ));

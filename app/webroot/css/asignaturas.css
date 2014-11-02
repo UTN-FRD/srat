@@ -1,0 +1,21 @@
+/*!
+ * Asignaturas
+ *
+ * Sistema de Registro de Asistencia y Temas
+ *
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
+ *
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo licencia.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
+ */
+
+#view .table thead tr th:nth-child(3) {
+	width: 180px
+}
+
+#view .table thead tr th:nth-child(4),
+#view .table thead tr th:nth-child(5) {
+	width: 90px
+}

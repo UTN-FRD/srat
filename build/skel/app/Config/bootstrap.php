@@ -9,7 +9,7 @@
  * Este archivo está sujeto a los términos y condiciones descritos
  * en el archivo licencia.txt que acompaña a este software.
  *
- * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 
 /**
@@ -78,7 +78,7 @@ Configure::write('Dispatcher.filters', array(
  */
 Cache::config('default', array(
 	'duration' => '+12 months',
-	'engine' => 'File',
+	'engine' => 'Apc',
 	'prefix' => APP_DIR . '_default_'
 ));
 
