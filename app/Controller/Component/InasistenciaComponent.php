@@ -185,11 +185,13 @@ class InasistenciaComponent extends Component {
 						return sprintf('(0, %d, %d, \'%s\')', $data['asignatura_id'], $data['usuario_id'], $date);
 					}, array_diff($dates, $rows));
 
-					$this->Registro->query(sprintf(
-						'INSERT INTO `%s` (`tipo`, `asignatura_id`, `usuario_id`, `fecha`) VALUES %s',
-						$this->Registro->useTable,
-						implode(',', $rows)
-					));
+					if (!empty($rows)) {
+						$this->Registro->query(sprintf(
+							'INSERT INTO `%s` (`tipo`, `asignatura_id`, `usuario_id`, `fecha`) VALUES %s',
+							$this->Registro->useTable,
+							implode(',', $rows)
+						));
+					}
 				}
 			}
 		}
