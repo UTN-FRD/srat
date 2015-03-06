@@ -54,7 +54,7 @@ class UsuariosController extends AppController {
 		} else {
 			if ($this->Auth->user('reset')) {
 				if (!in_array($this->request->action, array('login', 'logout', 'restablecer'))) {
-					$this->redirect(array('action' => 'restablecer'));
+					$this->redirect(array('action' => 'restablecer', 'admin' => false));
 				}
 			}
 		}
