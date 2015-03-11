@@ -13,7 +13,7 @@
 /**
  * Dependencias
  */
-App::uses('AppShell', 'Console');
+App::uses('AppShell', 'Console/Command');
 App::uses('ConnectionManager', 'Model');
 
 /**

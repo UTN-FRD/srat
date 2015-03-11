@@ -90,7 +90,7 @@ Configure::write('Dispatcher.filters', array(
  */
 Cache::config('default', array(
 	'duration' => '+12 months',
-	'engine' => 'File',
+	'engine' => (PHP_SAPI !== 'cli' ? 'Apc' : 'File'),
 	'prefix' => APP_DIR . '_default_'
 ));
 

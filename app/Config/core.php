@@ -89,7 +89,7 @@ Configure::write('Security.cipherSeed', '376138663337353532663361366338');
  */
 Cache::config('_cake_core_', array(
 	'duration' => '+10 seconds',
-	'engine' => 'File',
+	'engine' => (PHP_SAPI !== 'cli' ? 'Apc' : 'File'),
 	'path' => CACHE . 'persistent' . DS,
 	'prefix' => APP_DIR . '_cake_core_'
 ));
@@ -99,7 +99,7 @@ Cache::config('_cake_core_', array(
  */
 Cache::config('_cake_model_', array(
 	'duration' => '+10 seconds',
-	'engine' => 'File',
+	'engine' => (PHP_SAPI !== 'cli' ? 'Apc' : 'File'),
 	'path' => CACHE . 'models' . DS,
 	'prefix' => APP_DIR . '_cake_model_'
 ));

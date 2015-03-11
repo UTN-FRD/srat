@@ -20,5 +20,5 @@ App::uses('Shell', 'Console');
  *
  * @author Jorge Alberto Cricelli <jalberto.cr@live.com>
  */
-class AppController extends Controller {
+class AppShell extends Shell {
 }
