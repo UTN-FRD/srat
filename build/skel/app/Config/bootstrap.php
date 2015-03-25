@@ -77,9 +77,9 @@ Configure::write('Dispatcher.filters', array(
  * Configuración del cache
  */
 Cache::config('default', array(
-	'duration' => '+12 months',
+	'duration' => '+1 year',
 	'engine' => (PHP_SAPI !== 'cli' ? 'Apc' : 'File'),
-	'prefix' => APP_DIR . '_default_'
+	'prefix' => basename(ROOT) . '_default_'
 ));
 
 /**
