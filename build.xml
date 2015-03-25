@@ -163,7 +163,7 @@
 	-->
 	<target name="build" depends="clean, copy-app, asset-optimize" description="Genera la aplicación">
 		<copy todir="${app.lib}" overwrite="true">
-			<fileset dir="vendor/pear-pear.cakephp.org/CakePHP">
+			<fileset dir="vendor/cakephp/cakephp/lib">
 				<include name="Cake/**" />
 				<exclude name="Cake/Test/**" />
 				<exclude name="Cake/TestSuite/**" />
