@@ -70,7 +70,7 @@ Configure::write('Cache.check', true);
  */
 Configure::write('Session', array(
 	'cookie' => 'utn_srat',
-	'defaults' => 'cake',
+	'defaults' => 'cache',
 	'timeout' => 720
 ));
 
