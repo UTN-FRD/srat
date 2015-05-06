@@ -44,6 +44,7 @@ $headers = array(
 	$this->Paginator->sort('nombre', 'Nombre'),
 	$this->Paginator->sort('estado', 'Estado'),
 	$this->Paginator->sort('admin', 'Administrador'),
+	$this->Paginator->sort('acceso', 'Último acceso'),
 	'Tareas'
 );
 
@@ -72,6 +73,11 @@ if (!empty($rows)):
 			h($row['Usuario']['nombre']),
 			$status[$row['Usuario']['estado']],
 			((bool)$row['Usuario']['admin'] ? 'Si' : 'No'),
+			(
+				!empty($row['Usuario']['acceso']) ?
+				ucwords(CakeTime::format($row['Usuario']['acceso'], '%a, %b %d %Y, %H:%M')) :
+				'Nunca'
+			),
 			implode(' ', $tasks)
 		);
 	endforeach;

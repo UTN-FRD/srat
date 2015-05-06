@@ -219,7 +219,7 @@ class UsuariosController extends AppController {
 		$this->Prg->commonProcess();
 		$this->Paginator->settings += array(
 			'conditions' => $this->Usuario->parseCriteria($this->Prg->parsedParams()),
-			'fields' => array('id', 'admin', 'apellido', 'estado', 'legajo', 'nombre')
+			'fields' => array('id', 'admin', 'apellido', 'estado', 'legajo', 'nombre', 'acceso')
 		);
 
 		$this->set('rows', $this->Paginator->paginate());
@@ -247,7 +247,7 @@ class UsuariosController extends AppController {
 /**
  * Editar
  *
- * @param integer|null $id Identificador
+ * @param int|null $id Identificador
  *
  * @return void
  *
@@ -281,7 +281,7 @@ class UsuariosController extends AppController {
 /**
  * Eliminar
  *
- * @param integer|null $id Identificador
+ * @param int|null $id Identificador
  *
  * @return void
  *
@@ -307,5 +307,29 @@ class UsuariosController extends AppController {
 			}
 		}
 		$this->_notify($notify);
+	}
+
+/**
+ * Devuelve una lista de todos los eventos que se dispararan en el controlador durante su ciclo de vida
+ *
+ * @return array
+ */
+	public function implementedEvents() {
+		return array_merge(
+			parent::implementedEvents(),
+			array('Auth.afterIdentify' => 'afterIdentify')
+		);
+	}
+
+/**
+ * afterIdentify
+ *
+ * @param CakeEvent $event Evento
+ *
+ * @return void
+ */
+	public function afterIdentify(CakeEvent $event) {
+		$this->Usuario->id = $event->data['user']['id'];
+		$this->Usuario->saveField('acceso', date("Y-m-d H:i:s"));
 	}
 }

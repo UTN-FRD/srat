@@ -70,7 +70,7 @@ Configure::write('Cache.check', true);
  */
 Configure::write('Session', array(
 	'cookie' => 'utn_srat',
-	'defaults' => 'cake',
+	'defaults' => 'cache',
 	'timeout' => 720
 ));
 
@@ -85,21 +85,25 @@ Configure::write('Security.salt', 'e41240b96a8bf79004a616257682792e4a69a9b5');
 Configure::write('Security.cipherSeed', '376138663337353532663361366338');
 
 /**
+ * Configuración del cache
+ */
+$cacheConfig = array(
+	'duration' => (Configure::read('debug') == 0 ? '+1 year' : '+10 seconds'),
+	'engine' => (PHP_SAPI !== 'cli' ? 'Apc' : 'File')
+);
+
+/**
  * Cache del core del framework
  */
-Cache::config('_cake_core_', array(
-	'duration' => '+10 seconds',
-	'engine' => (PHP_SAPI !== 'cli' ? 'Apc' : 'File'),
+Cache::config('_cake_core_', array_merge($cacheConfig, array(
 	'path' => CACHE . 'persistent' . DS,
-	'prefix' => APP_DIR . '_cake_core_'
-));
+	'prefix' => basename(ROOT) . '_cake_core_'
+)));
 
 /**
  * Cache de modelos y orígenes de datos
  */
-Cache::config('_cake_model_', array(
-	'duration' => '+10 seconds',
-	'engine' => (PHP_SAPI !== 'cli' ? 'Apc' : 'File'),
+Cache::config('_cake_model_', array_merge($cacheConfig, array(
 	'path' => CACHE . 'models' . DS,
-	'prefix' => APP_DIR . '_cake_model_'
-));
+	'prefix' => basename(ROOT) . '_cake_model_'
+)));
