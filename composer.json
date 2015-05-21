@@ -19,16 +19,12 @@
 	},
 	"require-dev": {
 		"cakephp/cakephp-codesniffer": "~1.0",
-		"cakephp/debug_kit" : "~2.2",
-		"cakephp/localized": "~2.5",
 		"phing/phing": "~2.7",
 		"phpunit/phpunit": "~3.7"
 	},
 	"extra": {
 		"installer-paths": {
 			"app/Plugin/CakePdf": ["friendsofcake/cakepdf"],
-			"app/Plugin/DebugKit": ["cakephp/debug_kit"],
-			"app/Plugin/Localized": ["cakephp/localized"],
 			"app/Plugin/Search": ["cakedc/search"]
 		}
 	}

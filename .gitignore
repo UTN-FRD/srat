@@ -5,8 +5,6 @@
 # Composer
 /composer.lock
 /app/Plugin/CakePdf
-/app/Plugin/DebugKit
-/app/Plugin/Localized
 /app/Plugin/Search
 /vendor
 

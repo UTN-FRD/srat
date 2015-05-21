@@ -51,8 +51,7 @@ class AppController extends Controller {
 			'loginRedirect' => array('controller' => 'usuarios', 'action' => 'dashboard', 'admin' => false, 'plugin' => false),
 			'logoutRedirect' => array('controller' => 'usuarios', 'action' => 'login', 'admin' => false, 'plugin' => false)
 		),
-		'Inasistencia',
-		'DebugKit.Toolbar'
+		'Inasistencia'
 	);
 
 /**
