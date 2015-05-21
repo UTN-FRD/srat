@@ -10,6 +10,3 @@
 
 # Editores
 *.sublime-*
-
-# Phing
-/build/package

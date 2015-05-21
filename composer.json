@@ -18,9 +18,7 @@
 		"friendsofcake/cakepdf": "~1.0"
 	},
 	"require-dev": {
-		"cakephp/cakephp-codesniffer": "~1.0",
-		"phing/phing": "~2.7",
-		"phpunit/phpunit": "~3.7"
+		"cakephp/cakephp-codesniffer": "~1.0"
 	},
 	"extra": {
 		"installer-paths": {
