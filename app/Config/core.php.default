@@ -77,12 +77,12 @@ Configure::write('Session', array(
 /**
  * Cadena al azar usada por los métodos de seguridad
  */
-Configure::write('Security.salt', 'e41240b96a8bf79004a616257682792e4a69a9b5');
+Configure::write('Security.salt', '');
 
 /**
  * Cadena numérica al azar usada por los métodos de seguridad
  */
-Configure::write('Security.cipherSeed', '376138663337353532663361366338');
+Configure::write('Security.cipherSeed', '');
 
 /**
  * Cache del core del framework
