@@ -13,18 +13,6 @@
  */
 
 /**
- * Autocargador de clases de Composer
- */
-require_once dirname(APP) . DS . 'vendor' . DS . 'autoload.php';
-
-/**
- * Autocargador de clases de CakePHP
- * https://github.com/composer/composer/commit/c80cb76b9b5082ecc3e5b53b1050f76bb27b127b
- */
-spl_autoload_unregister(array('App', 'load'));
-spl_autoload_register(array('App', 'load'), true, true);
-
-/**
  * Dependencias
  */
 App::uses('CakeLog', 'Log');
