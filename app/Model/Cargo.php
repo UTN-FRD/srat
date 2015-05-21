@@ -170,7 +170,7 @@ class Cargo extends AppModel {
  *
  * @param array $options Opciones
  *
- * @return boolean `true` para continuar la operación de guardado o `false` para cancelarla
+ * @return bool `true` para continuar la operación de guardado o `false` para cancelarla
  */
 	public function beforeSave($options = array()) {
 		if (!empty($this->data[$this->alias]['dedicacion'])) {

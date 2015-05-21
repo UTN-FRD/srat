@@ -78,7 +78,7 @@ class AsignaturasMateriasController extends AppController {
 /**
  * Editar
  *
- * @param integer|null $id Identificador
+ * @param int|null $id Identificador
  *
  * @return void
  *
@@ -112,7 +112,7 @@ class AsignaturasMateriasController extends AppController {
 /**
  * Eliminar
  *
- * @param integer|null $id Identificador
+ * @param int|null $id Identificador
  *
  * @return void
  *

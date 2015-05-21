@@ -247,7 +247,7 @@ class UsuariosController extends AppController {
 /**
  * Editar
  *
- * @param integer|null $id Identificador
+ * @param int|null $id Identificador
  *
  * @return void
  *
@@ -281,7 +281,7 @@ class UsuariosController extends AppController {
 /**
  * Eliminar
  *
- * @param integer|null $id Identificador
+ * @param int|null $id Identificador
  *
  * @return void
  *

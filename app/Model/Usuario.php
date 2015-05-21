@@ -194,7 +194,7 @@ class Usuario extends AppModel {
  *
  * @param array $options Opciones
  *
- * @return boolean `true` para continuar la operación de validación o `false` para cancelarla
+ * @return bool `true` para continuar la operación de validación o `false` para cancelarla
  */
 	public function beforeValidate($options = array()) {
 		if (!$this->id) {
@@ -233,7 +233,7 @@ class Usuario extends AppModel {
  *
  * @param array $options Opciones
  *
- * @return boolean `true` para continuar la operación de guardado o `false` para cancelarla
+ * @return bool `true` para continuar la operación de guardado o `false` para cancelarla
  */
 	public function beforeSave($options = array()) {
 		if (!empty($this->data[$this->alias]['new_password'])) {
@@ -255,7 +255,7 @@ class Usuario extends AppModel {
 /**
  * afterSave
  *
- * @param boolean $created Indica si se ha creado un registro
+ * @param bool $created Indica si se ha creado un registro
  * @param array $options Opciones
  *
  * @return void
@@ -273,7 +273,7 @@ class Usuario extends AppModel {
  *
  * @param array $check Nombre del campo y su valor
  *
- * @return boolean `true` en caso exitoso o `false` en caso contrario
+ * @return bool `true` en caso exitoso o `false` en caso contrario
  */
 	public function validatePassword($check) {
 		if (!empty($check)) {

@@ -102,7 +102,7 @@ class HorariosController extends AppController {
 /**
  * Editar
  *
- * @param integer|null $id Identificador
+ * @param int|null $id Identificador
  *
  * @return void
  *
@@ -139,7 +139,7 @@ class HorariosController extends AppController {
 /**
  * Eliminar
  *
- * @param integer|null $id Identificador
+ * @param int|null $id Identificador
  *
  * @return void
  *

@@ -127,7 +127,7 @@ class Horario extends AppModel {
  *
  * @param array $check Nombre del campo y su valor
  *
- * @return boolean `true` en caso exitoso o `false` en caso contrario
+ * @return bool `true` en caso exitoso o `false` en caso contrario
  */
 	public function validateEndTime($check) {
 		if (!empty($this->data[$this->alias]['entrada']) && !empty($this->data[$this->alias]['salida'])) {

@@ -33,7 +33,7 @@ class AppModel extends Model {
 /**
  * Nivel de recursividad
  *
- * @var integer
+ * @var int
  */
 	public $recursive = -1;
 
@@ -43,7 +43,7 @@ class AppModel extends Model {
  * @param array $check Nombre del campo y su valor
  * @param string $model Modelo asociado
  *
- * @return boolean `true` en caso exitoso o `false` en caso contrario
+ * @return bool `true` en caso exitoso o `false` en caso contrario
  */
 	public function validateExists($check, $model) {
 		if (!empty($check) && !empty($model)) {
@@ -60,7 +60,7 @@ class AppModel extends Model {
  * @param array $check Nombre del campo y su valor
  * @param array $fields Campos adicionales
  *
- * @return boolean `true` en caso exitoso o `false` en caso contrario
+ * @return bool `true` en caso exitoso o `false` en caso contrario
  */
 	public function validateUnique($check, $fields = array()) {
 		if (!empty($check)) {
@@ -76,9 +76,9 @@ class AppModel extends Model {
 /**
  * Comprueba si un registro se encuentra asociado examinando las asociaciones del modelo
  *
- * @param integer|string|array $id Identificador del registro
+ * @param int|string|array $id Identificador del registro
  *
- * @return boolean `true` en caso exitoso o `false` en caso contrario
+ * @return bool `true` en caso exitoso o `false` en caso contrario
  */
 	public function hasAssociations($id = null) {
 		if ($id) {

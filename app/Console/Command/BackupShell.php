@@ -78,7 +78,7 @@ class BackupShell extends AppShell {
 /**
  * Obtiene la ruta de acceso al archivo de la copia de seguridad
  *
- * @return boolean|string Ruta de acceso al archivo o `false` en caso contrario
+ * @return bool|string Ruta de acceso al archivo o `false` en caso contrario
  */
 	private function __getOutputFile() {
 		if (
@@ -101,7 +101,7 @@ class BackupShell extends AppShell {
  *
  * @param string $filename Ruta de acceso al archivo
  *
- * @return boolean|string Comando o `false` en caso contrario
+ * @return bool|string Comando o `false` en caso contrario
  */
 	private function __getBackupCommand($filename) {
 		if (
@@ -141,7 +141,7 @@ class BackupShell extends AppShell {
  *
  * @param string $filename Ruta de acceso al archivo
  *
- * @return boolean `true` en caso exitoso o `false` en caso contrario
+ * @return bool `true` en caso exitoso o `false` en caso contrario
  */
 	private function __gzipFile($filename) {
 		if (!empty($filename)) {

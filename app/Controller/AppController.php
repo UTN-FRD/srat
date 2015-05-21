@@ -143,7 +143,7 @@ class AppController extends Controller {
  *
  * @param array $user Datos del usuario
  *
- * @return boolean `true` en caso exitoso o `false` en caso contrario
+ * @return bool `true` en caso exitoso o `false` en caso contrario
  */
 	public function isAuthorized($user = null) {
 		if ($this->request->prefix === 'admin') {

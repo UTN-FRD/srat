@@ -119,7 +119,7 @@ class Registro extends AppModel {
  *
  * @param array $options Opciones
  *
- * @return boolean `true` para continuar la operación de validación o `false` para cancelarla
+ * @return bool `true` para continuar la operación de validación o `false` para cancelarla
  */
 	public function beforeValidate($options = array()) {
 		if (!isset($this->data[$this->alias]['id'])) {
@@ -136,7 +136,7 @@ class Registro extends AppModel {
  *
  * @param array $check Nombre del campo y su valor
  *
- * @return boolean `true` en caso exitoso o `false` en caso contrario
+ * @return bool `true` en caso exitoso o `false` en caso contrario
  */
 	public function validateEndTime($check) {
 		if (!empty($this->data[$this->alias]['entrada']) && !empty($this->data[$this->alias]['salida'])) {

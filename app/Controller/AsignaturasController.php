@@ -78,7 +78,7 @@ class AsignaturasController extends AppController {
 /**
  * Editar
  *
- * @param integer|null $id Identificador
+ * @param int|null $id Identificador
  *
  * @return void
  *
@@ -117,7 +117,7 @@ class AsignaturasController extends AppController {
 /**
  * Eliminar
  *
- * @param integer|null $id Identificador
+ * @param int|null $id Identificador
  *
  * @return void
  *
