@@ -89,8 +89,3 @@ CakePlugin::load(array(
 	'CakePdf' => array('bootstrap' => true, 'routes' => true),
 	'Search'
 ));
-
-/**
- * Ruta de acceso a wkhtmltopdf
- */
-Configure::write('CakePdf.binary', '/usr/local/bin/wkhtmltopdf');

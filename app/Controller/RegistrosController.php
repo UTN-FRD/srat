@@ -212,6 +212,9 @@ class RegistrosController extends AppController {
 	private function __generateReport($options) {
 		$this->autoRender = false;
 
+		$isWindows = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
+		$charset = (!$isWindows ? 'ASCII' : 'ISO-8859-1');
+
 		$date = preg_replace_callback(
 			"/[a-zA-Záéíóú]{3,}/u",
 			function ($m) {
@@ -219,11 +222,6 @@ class RegistrosController extends AppController {
 			},
 			CakeTime::format(time(), '%A %d de %B de %Y')
 		);
-
-		$charset = 'ASCII';
-		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-			$charset = 'ISO-8859-1';
-		}
 
 		$title = 'Asistencia';
 		if (isset($options['data']['tipo'])) {
@@ -260,6 +258,10 @@ class RegistrosController extends AppController {
 			'orientation' => 'landscape',
 			'page-size' => 'A4'
 		);
+
+		if (!Configure::check('CakePdf.binary') && !$isWindows) {
+			$this->pdfConfig['binary'] = trim(shell_exec('which wkhtmltopdf'));
+		}
 
 		$data = $options['data'];
 		$settings = $this->__getFindOptions($options);
