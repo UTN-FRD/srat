@@ -36,6 +36,11 @@ Configure::write('Exception', array(
 ));
 
 /**
+ * Descomentar la siguiente línea cuando no se utilice mod_rewrite
+ */
+#Configure::write('App.baseUrl', env('SCRIPT_NAME'));
+
+/**
  * Codificación de caracteres
  */
 Configure::write('App.encoding', 'UTF-8');
