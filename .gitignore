@@ -12,3 +12,6 @@
 # Editores
 /*.sublime-project
 /*.sublime-workspace
+
+# Makefile
+/build
