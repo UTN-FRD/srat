@@ -13,17 +13,26 @@ REMOTE=origin
 # Rama actual
 CURRENT_BRANCH=$(shell git branch | grep '*' | tr -d '* ')
 
+# Número versión
+DASH_VERSION=$(shell echo $(VERSION) | sed -e s/\\./-/g)
+
 # Tarea predeterminada
 .DEFAULT: help
 ALL: help
 
 # Tareas ficticias
-.PHONY: help
+.PHONY: help clean
 
 # Ayuda
 help:
 	@echo "$(APP_TITLE)"
 	@echo "-----------------------------------------"
+	@echo ""
+	@echo "clean"
+	@echo "  Elimina archivos generados por esta aplicación."
+	@echo ""
+	@echo "build"
+	@echo "  Genera la aplicación. Requiere el parámetro VERSION."
 	@echo ""
 
 
@@ -48,3 +57,132 @@ tag-release: guard-VERSION bump-version
 	@echo "Etiquetando $(VERSION)"
 	git tag -a $(VERSION) -m "$(APP_TITLE) $(VERSION)"
 	git push --tags $(REMOTE) $(CURRENT_BRANCH)
+
+
+# Limpieza
+clean:
+	rm -rf ./build/*.zip
+	rm -rf ./build/package
+	rm -rf ./build/tmp
+
+	mkdir -p ./build/package
+	mkdir -p ./build/tmp
+
+
+# Genera la aplicación
+build: guard-VERSION clean
+	@echo "Extrayendo copia de la aplicación..."
+	git checkout-index -a -f --prefix=./build/tmp/
+
+
+	@echo "Instalando dependencias de la aplicación..."
+	cd ./build/tmp && \
+	wget -nv -qO- https://getcomposer.org/installer | php && \
+	php composer.phar install --no-dev --no-autoloader
+
+
+	@echo "Preparando CakePHP..."
+	rm -rf ./build/tmp/vendor/cakephp/cakephp/lib/Cake/Console
+	rm -rf ./build/tmp/vendor/cakephp/cakephp/lib/Cake/Test
+	rm -rf ./build/tmp/vendor/cakephp/cakephp/lib/Cake/TestSuite
+
+	mv ./build/tmp/vendor/cakephp/cakephp/lib ./build/package/lib
+
+
+	@echo "Preparando archivos de la aplicación..."
+	rm -rf \
+		./build/tmp/app/Config/acl.* \
+		./build/tmp/app/Config/email.* \
+		./build/tmp/app/Config/Schema/db_acl.* \
+		./build/tmp/app/Config/Schema/i18n.* \
+		./build/tmp/app/Config/Schema/sessions.* \
+		./build/tmp/app/Locale/eng \
+		./build/tmp/app/Plugin/CakePdf/*.json \
+		./build/tmp/app/Plugin/CakePdf/*.md \
+		./build/tmp/app/Plugin/CakePdf/.travis.yml \
+		./build/tmp/app/Plugin/CakePdf/Test \
+		./build/tmp/app/Plugin/CakePdf/Vendor \
+		./build/tmp/app/Plugin/Search/*.json \
+		./build/tmp/app/Plugin/Search/*.md \
+		./build/tmp/app/Plugin/Search/*.txt \
+		./build/tmp/app/Plugin/Search/.semver \
+		./build/tmp/app/Plugin/Search/.travis.yml \
+		./build/tmp/app/Plugin/Search/Docs \
+		./build/tmp/app/Plugin/Search/Locale/*.pot \
+		./build/tmp/app/Plugin/Search/Locale/deu \
+		./build/tmp/app/Plugin/Search/Locale/fre \
+		./build/tmp/app/Plugin/Search/Locale/por \
+		./build/tmp/app/Plugin/Search/Locale/rus \
+		./build/tmp/app/Plugin/Search/Test \
+		./build/tmp/app/Test \
+		./build/tmp/app/tmp/tests \
+		./build/tmp/app/View/Emails \
+		./build/tmp/app/View/Layouts/ajax.ctp \
+		./build/tmp/app/View/Layouts/Emails \
+		./build/tmp/app/View/Layouts/error.ctp \
+		./build/tmp/app/View/Layouts/flash.ctp \
+		./build/tmp/app/View/Layouts/js \
+		./build/tmp/app/View/Layouts/rss \
+		./build/tmp/app/View/Layouts/xml \
+		./build/tmp/app/View/Scaffolds \
+		./build/tmp/app/webroot/css/cake.generic.css \
+		./build/tmp/app/webroot/favicon.ico \
+		./build/tmp/app/webroot/files \
+		./build/tmp/app/webroot/img/*.gif \
+		./build/tmp/app/webroot/img/*.png \
+		./build/tmp/app/webroot/test.php
+
+	touch ./build/tmp/app/webroot/favicon.ico
+
+	mv ./build/tmp/app/Config/core.php.default ./build/tmp/app/Config/core.php
+	mv ./build/tmp/app/Config/database.php.default ./build/tmp/app/Config/database.php
+
+
+	@echo "Optimizando hojas de estilos en cascada..."
+	find ./build/tmp/app/webroot/css -type f -name "*.css" -not -name "*.min.css" -exec yuglify -w -s {} \;
+	cat \
+		./build/tmp/app/webroot/css/select2.min.css \
+		./build/tmp/app/webroot/css/layout.css \
+		./build/tmp/app/webroot/css/notify.css \
+		./build/tmp/app/webroot/css/form.css \
+		./build/tmp/app/webroot/css/table.css \
+		> ./build/tmp/app/webroot/css/style.css
+
+	rm \
+		./build/tmp/app/webroot/css/select2.min.css \
+		./build/tmp/app/webroot/css/layout.css \
+		./build/tmp/app/webroot/css/notify.css \
+		./build/tmp/app/webroot/css/form.css \
+		./build/tmp/app/webroot/css/table.css
+
+
+	@echo "Optimizando scripts..."
+	find ./build/tmp/app/webroot/js -type f -name "*.js" -not -name "*.min.js" -exec yuglify -w -s {} \;
+	cat \
+		./build/tmp/app/webroot/js/jquery.min.js \
+		./build/tmp/app/webroot/js/bootstrap.min.js \
+		./build/tmp/app/webroot/js/select2.min.js \
+		./build/tmp/app/webroot/js/select2_locale_es.min.js \
+		./build/tmp/app/webroot/js/form.js \
+		./build/tmp/app/webroot/js/table.js \
+		> ./build/tmp/app/webroot/js/script.js
+
+	rm \
+		./build/tmp/app/webroot/js/jquery.min.js \
+		./build/tmp/app/webroot/js/bootstrap.min.js \
+		./build/tmp/app/webroot/js/select2.min.js \
+		./build/tmp/app/webroot/js/select2_locale_es.min.js \
+		./build/tmp/app/webroot/js/form.js \
+		./build/tmp/app/webroot/js/table.js
+
+
+	@echo "Actualizando archivos..."
+	mv ./build/tmp/app ./build/package/app
+
+	cp -t ./build/package ./build/tmp/.htaccess ./build/tmp/index.php ./build/tmp/LICENCIA.txt ./build/tmp/VERSION.txt
+	cp -ra ./build/skel/* ./build/package
+
+	find ./build/package -type f -name "empty" -delete
+
+	@echo "Generando zipball..."
+	cd ./build/package && find . | zip -q ../$(APP_NAME)-$(DASH_VERSION).zip -@
