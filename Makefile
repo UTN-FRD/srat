@@ -2,19 +2,35 @@
 
 # Las siguientes variables de entorno deben establecerse
 # - VERSION
+# - GITHUB_USER
+# - GITHUB_PASS
+# - GITHUB_TOKEN (opcional si se utiliza doble factor de autenticación)
 
 # Ajustes de la aplicación
 APP_NAME=srat
 APP_TITLE=Sistema de Registro de Asistencia y Temas
 
 # Ajustes de GitHub
+API_HOST=https://api.github.com
+OWNER=jacricelli
 REMOTE=origin
+REPO=srat
+UPLOAD_HOST=https://uploads.github.com
+
+ifdef GITHUB_TOKEN
+	AUTH=-H 'Authorization: token $(GITHUB_TOKEN)'
+else
+	AUTH=-u $(GITHUB_USER) -p$(GITHUB_PASS)
+endif
 
 # Rama actual
 CURRENT_BRANCH=$(shell git branch | grep '*' | tr -d '* ')
 
 # Número versión
 DASH_VERSION=$(shell echo $(VERSION) | sed -e s/\\./-/g)
+
+# Utilizar el número de versión para averiguar si el lanzamiento es un pre-lanzamiento
+PRERELEASE=$(shell echo $(VERSION) | grep -E 'dev|rc|alpha|beta' --quiet && echo 'true' || echo 'false')
 
 # Tarea predeterminada
 .DEFAULT: help
@@ -33,6 +49,13 @@ help:
 	@echo ""
 	@echo "build"
 	@echo "  Genera la aplicación. Requiere el parámetro VERSION."
+	@echo ""
+	@echo "publish"
+	@echo "  Publica un borrador de lanzamiento y GitHub junto con el archivo zip de la aplicación. Requiere los parámetros"
+	@echo "  VERSION, GITHUB_USER y/o GITHUB_TOKEN."
+	@echo ""
+	@echo "release"
+	@echo "  Atajo para ejecutar las tareas 'build' y 'publish'."
 	@echo ""
 
 
@@ -186,3 +209,27 @@ build: guard-VERSION clean
 
 	@echo "Generando zipball..."
 	cd ./build/package && find . | zip -q ../$(APP_NAME)-$(DASH_VERSION).zip -@
+
+
+# Publica un lanzamiento en GitHub
+publish: guard-VERSION guard-GITHUB_USER build
+	@echo "Creando borrador de lanzamiento para $(VERSION). prerelease=$(PRERELEASE)"
+	curl $(AUTH) -XPOST $(API_HOST)/repos/$(OWNER)/$(REPO)/releases \
+	-d '{ "tag_name": "$(VERSION)", "name": "$(APP_TITLE) $(VERSION)", "draft": true, "prerelease": $(PRERELEASE) }' \
+	 > release.json
+
+	php -r '$$f = file_get_contents("./release.json"); $$d = json_decode($$f, true); file_put_contents("./id.txt", $$d["id"]);'
+
+	@echo "Subiendo zipball a GitHub..."
+	curl $(AUTH) -XPOST \
+		$(UPLOAD_HOST)/repos/$(OWNER)/$(REPO)/releases/`cat ./id.txt`/assets?name=$(APP_NAME)-$(DASH_VERSION).zip \
+		-H "Accept: application/vnd.github.manifold-preview" \
+		-H 'Content-Type: application/zip' \
+		--data-binary '@./build/$(APP_NAME)-$(DASH_VERSION).zip'
+
+	rm release.json
+	rm id.txt
+
+
+# Atajo para hacer un lanzamiento
+release: guard-VERSION guard-GITHUB_USER tag-release clean build publish
