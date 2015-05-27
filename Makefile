@@ -157,7 +157,6 @@ build: guard-VERSION clean
 
 	touch ./build/tmp/app/webroot/favicon.ico
 
-	mv ./build/tmp/app/Config/core.php.default ./build/tmp/app/Config/core.php
 	mv ./build/tmp/app/Config/database.php.default ./build/tmp/app/Config/database.php
 
 
