@@ -67,13 +67,6 @@ CakeLog::config('error', array(
 ));
 
 /**
- * Filtros del despachador
- */
-Configure::write('Dispatcher.filters', array(
-	'AssetDispatcher'
-));
-
-/**
  * Configuración del cache
  */
 Cache::config('default', array(
