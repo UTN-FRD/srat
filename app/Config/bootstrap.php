@@ -70,7 +70,7 @@ CakeLog::config('error', array(
  * Configuración del cache
  */
 Cache::config('default', array(
-	'duration' => '+1 year',
+	'duration' => '+10 seconds',
 	'engine' => 'File',
 	'prefix' => basename(ROOT) . '_default_'
 ));
