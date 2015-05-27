@@ -78,7 +78,6 @@ $this->Html->addCrumb('Editar');
 	echo $this->Form->input('estado', array(
 		'after' => 'Estado del usuario',
 		'class' => 'span2',
-		'locked' => $protected,
 		'options' => array('Deshabilitado', 'Habilitado')
 	));
 

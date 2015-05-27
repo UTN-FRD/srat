@@ -261,7 +261,15 @@ class UsuariosController extends AppController {
 
 		if ($this->request->is('put')) {
 			if (empty($this->request->data['refresh'])) {
-				if ($this->Usuario->save($this->request->data)) {
+				$user = $this->Usuario->save($this->request->data);
+				if ($user) {
+					if ($user['Usuario']['id'] == $this->Auth->user('id')) {
+						if (!$user['Usuario']['estado']) {
+							return $this->redirect(
+								array('controller' => 'usuarios', 'action' => 'logout', 'admin' => false)
+							);
+						}
+					}
 					$this->_notify('record_modified');
 				} elseif (empty($this->Usuario->validationErrors)) {
 					$this->_notify('record_not_saved');
