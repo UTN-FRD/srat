@@ -31,7 +31,8 @@
 			'layout',
 			'notify',
 			'form',
-			'table'
+			'table',
+			'debug'
 		));
 
 		echo $this->Html->script(array(
@@ -101,5 +102,7 @@
 		<noscript class="noscript">
 			La experiencia con esta aplicación puede verse afectada debido a que JavaScript está deshabilitado.
 		</noscript>
+
+		<?php echo $this->element('sql_dump') ?>
 	</body>
 </html>
