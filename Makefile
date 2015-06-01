@@ -105,7 +105,6 @@ build: guard-VERSION clean
 
 
 	@echo "Preparando CakePHP..."
-	rm -rf ./build/tmp/vendor/cakephp/cakephp/lib/Cake/Console
 	rm -rf ./build/tmp/vendor/cakephp/cakephp/lib/Cake/Test
 	rm -rf ./build/tmp/vendor/cakephp/cakephp/lib/Cake/TestSuite
 
@@ -115,6 +114,7 @@ build: guard-VERSION clean
 	@echo "Preparando archivos de la aplicación..."
 	rm -rf \
 		./build/tmp/app/Config/acl.* \
+		./build/tmp/app/Config/core.php.default \
 		./build/tmp/app/Config/email.* \
 		./build/tmp/app/Config/Schema/db_acl.* \
 		./build/tmp/app/Config/Schema/i18n.* \
