@@ -115,6 +115,15 @@ class Registro extends AppModel {
 	);
 
 /**
+ * Campos virtuales
+ *
+ * @var array
+ */
+	public $virtualFields = array(
+		'solo_fecha' => 'DATE(fecha)'
+	);
+
+/**
  * beforeValidate
  *
  * @param array $options Opciones

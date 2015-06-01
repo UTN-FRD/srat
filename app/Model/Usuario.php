@@ -310,7 +310,7 @@ class Usuario extends AppModel {
 					'Registro' => array(
 						'conditions' => array(
 							'Registro.asignatura_id = Cargo.asignatura_id',
-							'Registro.fecha = CURDATE()',
+							'DATE(Registro.fecha) = CURDATE()',
 							'Registro.tipo' => 1,
 							'Registro.usuario_id = Cargo.usuario_id'
 						),
@@ -356,7 +356,7 @@ class Usuario extends AppModel {
 				if (empty($row['Registro']['id'])) {
 					$row['Registro']['asignatura_id'] = $row['Cargo']['asignatura_id'];
 					$row['Registro']['entrada'] = $row['Horario']['entrada'];
-					$row['Registro']['fecha'] = date('Y-m-d');
+					$row['Registro']['fecha'] = date('Y-m-d H:i:s');
 					$row['Registro']['salida'] = $row['Horario']['salida'];
 					$row['Registro']['tipo'] = 1;
 					$row['Registro']['usuario_id'] = $id;
