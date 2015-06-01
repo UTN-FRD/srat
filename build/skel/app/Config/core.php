@@ -92,23 +92,29 @@ Configure::write('Security.cipherSeed', '');
 /**
  * Configuración del cache
  */
-$cacheConfig = array(
+Configure::write('App.Cache', array(
 	'duration' => (Configure::read('debug') == 0 ? '+1 year' : '+10 seconds'),
 	'engine' => (PHP_SAPI !== 'cli' ? 'Apc' : 'File')
-);
+));
 
 /**
  * Cache del core del framework
  */
-Cache::config('_cake_core_', array_merge($cacheConfig, array(
-	'path' => CACHE . 'persistent' . DS,
-	'prefix' => basename(ROOT) . '_cake_core_'
-)));
+Cache::config('_cake_core_', array_merge(
+	Configure::read('App.Cache'),
+	array(
+		'path' => CACHE . 'persistent' . DS,
+		'prefix' => basename(ROOT) . '_cake_core_'
+	)
+));
 
 /**
  * Cache de modelos y orígenes de datos
  */
-Cache::config('_cake_model_', array_merge($cacheConfig, array(
-	'path' => CACHE . 'models' . DS,
-	'prefix' => basename(ROOT) . '_cake_model_'
-)));
+Cache::config('_cake_model_', array_merge(
+	Configure::read('App.Cache'),
+	array(
+		'path' => CACHE . 'models' . DS,
+		'prefix' => basename(ROOT) . '_cake_model_'
+	)
+));

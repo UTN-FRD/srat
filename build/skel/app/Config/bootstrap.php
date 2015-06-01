@@ -69,10 +69,11 @@ CakeLog::config('error', array(
 /**
  * Configuración del cache
  */
-Cache::config('default', array(
-	'duration' => '+1 year',
-	'engine' => 'File',
-	'prefix' => basename(ROOT) . '_default_'
+Cache::config('default', array_merge(
+	Configure::read('App.Cache'),
+	array(
+		'prefix' => basename(ROOT) . '_default_'
+	)
 ));
 
 /**
