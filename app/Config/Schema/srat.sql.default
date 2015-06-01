@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 5.5.40, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.5.43, for debian-linux-gnu (x86_64)
 -- ------------------------------------------------------
--- Server version	5.5.40-0ubuntu0.14.04.1
+-- Server version	5.5.43-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -220,10 +220,10 @@ CREATE TABLE `horarios` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `registros` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `tipo` tinyint(2) NOT NULL,
+  `tipo` tinyint(2) unsigned NOT NULL,
   `asignatura_id` int(10) unsigned NOT NULL,
   `usuario_id` int(10) unsigned NOT NULL,
-  `fecha` date NOT NULL,
+  `fecha` datetime NOT NULL,
   `entrada` time DEFAULT NULL,
   `salida` time DEFAULT NULL,
   `obs` text,
@@ -232,8 +232,8 @@ CREATE TABLE `registros` (
   KEY `IK_TIPO` (`tipo`),
   KEY `IK_ASIGNATURA` (`asignatura_id`),
   KEY `IK_USUARIO` (`usuario_id`),
-  CONSTRAINT `FK_REGISTROS_USUARIO` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
-  CONSTRAINT `FK_REGISTROS_ASIGNATURA` FOREIGN KEY (`asignatura_id`) REFERENCES `asignaturas` (`id`)
+  CONSTRAINT `FK_REGISTROS_ASIGNATURA` FOREIGN KEY (`asignatura_id`) REFERENCES `asignaturas` (`id`),
+  CONSTRAINT `FK_REGISTROS_USUARIO` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -247,11 +247,12 @@ CREATE TABLE `usuarios` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `admin` tinyint(1) unsigned DEFAULT NULL,
   `legajo` mediumint(8) unsigned NOT NULL,
-  `password` varchar(128) NOT NULL,
+  `password` char(60) NOT NULL,
   `reset` tinyint(1) unsigned DEFAULT NULL,
   `estado` tinyint(1) unsigned NOT NULL,
   `apellido` varchar(25) NOT NULL,
   `nombre` varchar(40) NOT NULL,
+  `acceso` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_LEGAJO` (`legajo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

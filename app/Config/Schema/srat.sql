@@ -327,7 +327,7 @@ CREATE TABLE `registros` (
   `tipo` tinyint(2) unsigned NOT NULL,
   `asignatura_id` int(10) unsigned NOT NULL,
   `usuario_id` int(10) unsigned NOT NULL,
-  `fecha` date NOT NULL,
+  `fecha` datetime NOT NULL,
   `entrada` time DEFAULT NULL,
   `salida` time DEFAULT NULL,
   `obs` text,
@@ -336,8 +336,8 @@ CREATE TABLE `registros` (
   KEY `IK_TIPO` (`tipo`),
   KEY `IK_ASIGNATURA` (`asignatura_id`),
   KEY `IK_USUARIO` (`usuario_id`),
-  CONSTRAINT `FK_REGISTROS_USUARIO` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
-  CONSTRAINT `FK_REGISTROS_ASIGNATURA` FOREIGN KEY (`asignatura_id`) REFERENCES `asignaturas` (`id`)
+  CONSTRAINT `FK_REGISTROS_ASIGNATURA` FOREIGN KEY (`asignatura_id`) REFERENCES `asignaturas` (`id`),
+  CONSTRAINT `FK_REGISTROS_USUARIO` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -365,6 +365,7 @@ CREATE TABLE `usuarios` (
   `estado` tinyint(1) unsigned NOT NULL,
   `apellido` varchar(25) NOT NULL,
   `nombre` varchar(40) NOT NULL,
+  `acceso` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_LEGAJO` (`legajo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
