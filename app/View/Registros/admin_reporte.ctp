@@ -112,7 +112,7 @@ if (!empty($rows)):
 			h($row['Registro']['asignatura']),
 			$row['Usuario']['legajo'],
 			h(sprintf('%s, %s', $row['Usuario']['apellido'], $row['Usuario']['nombre'])),
-			date('d/m/Y H:i:s', strtotime($row['Registro']['fecha'])),
+			date('d/m/Y' . ($asistencia ? ' H:i:s' : ''), strtotime($row['Registro']['fecha'])),
 			($asistencia ? date('H:i', strtotime($row['Registro']['entrada'])) : '-'),
 			($asistencia ? date('H:i', strtotime($row['Registro']['salida'])) : '-'),
 			($asistencia ? nl2br(h($row['Registro']['obs'])) : '-')

@@ -86,7 +86,7 @@ $this->Html->css(
 				<td class="row3"><?php echo h(sprintf('%s, %s', $row['Usuario']['apellido'], $row['Usuario']['nombre'])) ?></td>
 			<?php endif ?>
 
-			<td class="row4"><?php echo date('d/m/Y H:i:s', strtotime($row['Registro']['fecha'])) ?></td>
+			<td class="row4"><?php echo date('d/m/Y' . ($asistencia ? ' H:i:s' : ''), strtotime($row['Registro']['fecha'])) ?></td>
 			<td class="row5"><?php echo ($asistencia ? date('H:i', strtotime($row['Registro']['entrada'])) : '-') ?></td>
 			<td class="row6"><?php echo ($asistencia ? date('H:i', strtotime($row['Registro']['salida'])) : '-') ?></td>
 			<td class="row7"><?php echo ($asistencia ? nl2br(h($row['Registro']['obs'])) : '-') ?></td>
