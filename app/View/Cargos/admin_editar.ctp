@@ -63,8 +63,7 @@ $this->Html->addCrumb('Editar');
 
 	echo $this->Form->input('resolucion', array(
 		'label' => 'Resolución',
-		'max' => 65535,
-		'min' => 1
+		'type' => 'text'
 	));
 	?>
 </fieldset>

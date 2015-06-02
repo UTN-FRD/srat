@@ -38,8 +38,7 @@ $this->Html->addCrumb('Agregar');
 		'autofocus',
 		'class' => 'legajo',
 		'label' => 'Número de legajo',
-		'max' => 16777215,
-		'min' => 1
+		'type' => 'text'
 	));
 
 	echo $this->Form->input('password', array(

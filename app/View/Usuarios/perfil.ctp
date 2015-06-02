@@ -35,9 +35,8 @@ $this->Html->addCrumb('Perfil');
 		'class' => 'legajo',
 		'label' => 'Número de legajo',
 		'locked' => true,
-		'max' => 16777215,
-		'min' => 1,
-		'required' => false
+		'required' => false,
+		'type' => 'text'
 	));
 
 	$required = (!empty($this->request->data['Usuario']['old_password']) || !empty($this->request->data['Usuario']['password']));

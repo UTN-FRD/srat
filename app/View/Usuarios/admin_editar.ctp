@@ -49,8 +49,7 @@ $this->Html->addCrumb('Editar');
 		'class' => 'legajo',
 		'label' => 'Número de legajo',
 		'locked' => $protected,
-		'max' => 16777215,
-		'min' => 1
+		'type' => 'text'
 	));
 
 	echo $this->Form->input('password', array(

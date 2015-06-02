@@ -21,7 +21,7 @@ echo $this->Form->create('Usuario');
 echo $this->Form->input('legajo', array(
 	'autofocus',
 	'label' => 'Número de legajo',
-	'min' => 1
+	'type' => 'text'
 ));
 echo $this->Form->input('password', array(
 	'label' => 'Contraseña'
