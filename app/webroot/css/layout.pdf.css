@@ -14,3 +14,7 @@
 #wrapper {
 	padding: 10px 5px
 }
+
+.page-break {
+	page-break-after: always;
+}

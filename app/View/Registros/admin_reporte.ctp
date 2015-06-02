@@ -27,12 +27,11 @@ $this->Html->script('reportes', array('inline' => false));
  */
 $this->Html->addCrumb('Reportes');
 ?>
-<?php echo $this->Form->create('Reporte', array('class' => 'form-horizontal')) ?>
-<div class="help-box">
+<?php echo $this->Form->create('Reporte', array('class' => 'form-horizontal report-filter')) ?>
+<div class="report-filter-howto">
 	<ul>
 		<li>Puede utilizar el formulario ubicado a la izquierda para filtrar el resultado y generar condiciones más específicas.</li>
 		<li>Recuerde actualizar la consulta antes de exportar el resultado para que todos los cambios sean tenidos en cuenta.</li>
-		<li>La vista previa es aproximada y se encuentra dividida por páginas en esta vista sólo por conveniencia.</li>
 		<li>Puede cambiar el orden del resultado haciendo clic en cada columna. El mismo será tenido en cuenta al exportar el resultado.</li>
 		<li>Los campos seleccionados en el formulario serán persistidos hasta que haga clic en el botón Restablecer o cierre sesión.</li>
 		<li>En caso que desee descargar un archivo en vez de visualizarlo, haga clic derecho en el botón Exportar resultado y luego en Guardar enlace como...</li>
@@ -109,7 +108,7 @@ if (!empty($rows)):
 		$asistencia = ($row['Registro']['tipo'] == '1');
 		$rows[$rid] = array(
 			$start++,
-			h($row['Registro']['asignatura']),
+			str_replace(':', ':<br />', h($row['Registro']['asignatura'])),
 			$row['Usuario']['legajo'],
 			h(sprintf('%s, %s', $row['Usuario']['apellido'], $row['Usuario']['nombre'])),
 			date('d/m/Y' . ($asistencia ? ' H:i:s' : ''), strtotime($row['Registro']['fecha'])),
@@ -124,6 +123,7 @@ endif;
  * Tabla
  */
 echo $this->element('table', array(
+	'class' => 'report-preview',
 	'headers' => $headers,
 	'rows' => $rows,
 	'search' => false,
