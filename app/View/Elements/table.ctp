@@ -46,6 +46,10 @@
 		endif;
 		$classes .= " $class";
 	endif;
+
+	if (!empty($beforeTable)):
+		echo $beforeTable;
+	endif;
 	?>
 	<table class="<?php echo $classes ?>">
 		<thead>
@@ -61,4 +65,9 @@
 			<?php endif ?>
 		</tbody>
 	</table>
+	<?php
+	if (!empty($afterTable)):
+		echo $afterTable;
+	endif;
+	?>
 </div>
