@@ -63,7 +63,7 @@
 }
 
 .report-preview thead th:nth-child(2) {
-	width: 225px;
+	width: 260px;
 }
 
 .report-preview thead th:nth-child(3),
@@ -151,7 +151,7 @@
 }
 
 .report-table .row1 {
-	width: 255px;
+	width: 290px;
 }
 
 .report-table .row2 {
