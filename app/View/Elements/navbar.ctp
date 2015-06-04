@@ -108,7 +108,8 @@ $links = array(
 	),
 	array(
 		'condition' => $isAdmin,
-		'text' => 'Inasistencias',
+		'options' => array('escape' => false),
+		'text' => 'Inasistencias <span class="badge badge-info">' . (isset($totalInasistencias) ? $totalInasistencias : 0) . '</span>',
 		'url' => array(
 			'controller' => 'registros',
 			'action' => 'inasistencias',
