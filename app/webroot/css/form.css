@@ -33,6 +33,12 @@ textarea {
 	resize: none
 }
 
+.form-horizontal textarea + .help-inline {
+	display: block;
+	padding-left: 2px;
+	padding-top: 3px;
+}
+
 span.required {
 	color: #ff0000;
 	font-size: 1.3em;

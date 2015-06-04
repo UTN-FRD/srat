@@ -77,6 +77,53 @@ class RegistrosController extends AppController {
 	}
 
 /**
+ * Editar inasistencia
+ *
+ * @return void
+ *
+ * @throws MethodNotAllowedException Si la petición no se realiza utilizando el método POST o no se reciben datos
+ */
+	public function admin_editar_inasistencia() {
+		if (!$this->request->is('post')) {
+			throw new MethodNotAllowedException;
+		}
+		$this->__setupModelAssociations();
+
+		if (isset($this->request->data['Registro'][0])) {
+			if ($this->Registro->saveMany($this->request->data['Registro'], array('fieldList' => array('obs')))) {
+				$this->_notify('record_modified', array('redirect' => array('action' => 'inasistencias')));
+			} elseif (empty($this->Registro->validationErrors)) {
+				$this->_notify('record_not_saved');
+			}
+		} elseif (!empty($this->request->data['Registro']['id'])) {
+			$max = max($this->request->data['Registro']['id']);
+			if (!$max) {
+				$this->redirect(array('action' => 'inasistencias'));
+			}
+
+			$ids = array();
+			foreach ($this->request->data['Registro']['id'] as $id => $checked) {
+				if ((bool)$checked) {
+					$ids[] = $id;
+				}
+			}
+			$this->request->data['Registro'] = array();
+
+			$rows = $this->Registro->find('all', array(
+				'conditions' => array('Registro.id' => $ids, 'Registro.tipo' => 0),
+				'fields' => array('id', 'asignatura', 'usuario', 'obs'),
+				'recursive' => 0
+			));
+			$this->request->data['Registro'] = Hash::extract($rows, '{n}.Registro');
+		}
+
+		$this->set(array(
+			'title_for_layout' => 'Editar - Inasistencias - Registros',
+			'title_for_view' => 'Editar registro(s)'
+		));
+	}
+
+/**
  * Reporte
  *
  * @return void

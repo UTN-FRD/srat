@@ -11,26 +11,42 @@
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 
-.table-wrapper tbody td {
+.table-wrapper .form-inasistencia {
+	margin: 0;
+	padding: 0;
+}
+
+.table-wrapper .form-inasistencia tbody td {
 	height: 40px;
 	vertical-align: middle;
 }
 
-.table-wrapper thead th:nth-child(2) {
+.table-wrapper .form-inasistencia thead th:nth-child(2),
+.table-wrapper .form-inasistencia tbody td:nth-child(2) {
+	text-align: center;
+	width: 10px;
+}
+
+.table-wrapper .form-inasistencia thead th:nth-child(3) {
 	width: 260px;
 }
 
-.table-wrapper thead th:nth-child(3),
-.table-wrapper tbody td:nth-child(3) {
+.table-wrapper .form-inasistencia thead th:nth-child(4),
+.table-wrapper .form-inasistencia tbody td:nth-child(4) {
 	text-align: center;
 	width: 75px;
 }
 
-.table-wrapper thead th:nth-child(4) {
+.table-wrapper .form-inasistencia thead th:nth-child(5) {
 	width: 150px;
 }
 
-.table-wrapper thead th:nth-child(5),
-.table-wrapper tbody td:nth-child(5) {
+.table-wrapper .form-inasistencia thead th:nth-child(6),
+.table-wrapper .form-inasistencia tbody td:nth-child(6) {
 	width: 65px;
+}
+
+.table-wrapper .form-inasistencia tbody .checked td {
+	background-color: #006699;
+	color: #fff;
 }

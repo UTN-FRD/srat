@@ -126,6 +126,15 @@ Router::connect('/admin/asignaturas/usuarios/:action/*', array(
 ));
 
 /**
+ * Editar inasistencias
+ */
+Router::connect('/admin/registros/inasistencias/editar/*', array(
+	'controller' => 'registros',
+	'action' => 'editar_inasistencia',
+	'admin' => true
+));
+
+/**
  * Rutas de los plugins
  */
 CakePlugin::routes();
