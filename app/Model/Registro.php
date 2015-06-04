@@ -23,6 +23,15 @@ App::uses('AppModel', 'Model');
 class Registro extends AppModel {
 
 /**
+ * Comportamientos
+ *
+ * @var array
+ */
+	public $actsAs = array(
+		'Search.Searchable'
+	);
+
+/**
  * belongsTo
  *
  * @var array
@@ -30,6 +39,18 @@ class Registro extends AppModel {
 	public $belongsTo = array(
 		'Asignatura',
 		'Usuario'
+	);
+
+/**
+ * Campos de búsqueda
+ *
+ * @var array
+ */
+	public $filterArgs = array(
+		'buscar' => array(
+			'method' => 'orConditions',
+			'type' => 'query'
+		)
 	);
 
 /**
@@ -155,5 +176,35 @@ class Registro extends AppModel {
 			return ($startTime < $endTime);
 		}
 		return false;
+	}
+
+/**
+ * Genera condiciones de búsqueda
+ *
+ * @param array $data Datos a buscar
+ *
+ * @return array
+ */
+	public function orConditions($data = array()) {
+		$value = current($data);
+		$condition = array(
+			'OR' => array(
+				'Carrera.nombre LIKE' => '%' . $value . '%',
+				'Materia.nombre LIKE' => '%' . $value . '%',
+				'Usuario.apellido LIKE' => '%' . $value . '%',
+				'Usuario.nombre LIKE' => '%' . $value . '%'
+			)
+		);
+
+		if (preg_match('/^[0-9\/]+$/', $value)) {
+			$date = date_create_from_format('d/m/Y', $value);
+			if ($date) {
+				$condition['OR']['Registro.fecha LIKE'] = '%' . $date->format('Y-m-d') . '%';
+			} else {
+				$condition['OR']['Registro.fecha LIKE'] = '%' . $value . '%';
+			}
+		}
+
+		return $condition;
 	}
 }

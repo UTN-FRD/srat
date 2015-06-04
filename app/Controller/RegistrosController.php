@@ -28,6 +28,7 @@ class RegistrosController extends AppController {
  * @var array
  */
 	public $components = array(
+		'Search.Prg',
 		'RequestHandler',
 		'Paginator' => array(
 			'limit' => 15,
@@ -47,6 +48,32 @@ class RegistrosController extends AppController {
 	public function blackHole($type = null) {
 		$this->Session->delete('Reporte');
 		parent::blackHole($type);
+	}
+
+/**
+ * Inasistencias
+ *
+ * @return void
+ */
+	public function admin_inasistencias() {
+		$this->__setupModelAssociations();
+
+		$this->Prg->commonProcess();
+		$this->Paginator->settings += array(
+			'conditions' => array_merge(
+				$this->Registro->parseCriteria($this->Prg->parsedParams()),
+				array('Registro.tipo' => 0)
+			),
+			'fields' => array(
+				'id', 'asignatura', 'Usuario.legajo', 'Usuario.apellido', 'Usuario.nombre', 'fecha', 'obs'
+			)
+		);
+
+		$this->set(array(
+			'rows' => $this->Paginator->paginate(),
+			'title_for_layout' => 'Inasistencias - Registros',
+			'title_for_view' => 'Inasistencias'
+		));
 	}
 
 /**

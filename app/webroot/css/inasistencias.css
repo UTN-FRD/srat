@@ -1,0 +1,36 @@
+/*!
+ * Inasistencias
+ *
+ * Sistema de Registro de Asistencia y Temas
+ *
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
+ *
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo LICENCIA.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
+ */
+
+.table-wrapper tbody td {
+	height: 40px;
+	vertical-align: middle;
+}
+
+.table-wrapper thead th:nth-child(2) {
+	width: 260px;
+}
+
+.table-wrapper thead th:nth-child(3),
+.table-wrapper tbody td:nth-child(3) {
+	text-align: center;
+	width: 75px;
+}
+
+.table-wrapper thead th:nth-child(4) {
+	width: 150px;
+}
+
+.table-wrapper thead th:nth-child(5),
+.table-wrapper tbody td:nth-child(5) {
+	width: 65px;
+}
