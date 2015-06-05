@@ -96,7 +96,7 @@ $headers = array(
 	$this->Paginator->sort('fecha', 'Fecha'),
 	$this->Paginator->sort('entrada', 'Entrada'),
 	$this->Paginator->sort('salida', 'Salida'),
-	'Temas'
+	'Observaciones'
 );
 
 /**
@@ -114,7 +114,7 @@ if (!empty($rows)):
 			date('d/m/Y' . ($asistencia ? ' H:i:s' : ''), strtotime($row['Registro']['fecha'])),
 			($asistencia ? date('H:i', strtotime($row['Registro']['entrada'])) : '-'),
 			($asistencia ? date('H:i', strtotime($row['Registro']['salida'])) : '-'),
-			($asistencia ? nl2br(h($row['Registro']['obs'])) : '-')
+			nl2br(h($row['Registro']['obs']))
 		);
 	endforeach;
 endif;

@@ -27,7 +27,7 @@
 			<th class="row4">Fecha</th>
 			<th class="row5">Entrada</th>
 			<th class="row6">Salida</th>
-			<th class="row7">Temas</th>
+			<th class="row7">Observaciones</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -59,7 +59,7 @@
 			</td>
 
 			<td class="row7">
-				<?php echo ($asistencia ? nl2br(h($row['Registro']['obs'])) : '-') ?>
+				<?php echo nl2br(h($row['Registro']['obs'])) ?>
 			</td>
 		</tr>
 		<?php endforeach ?>
