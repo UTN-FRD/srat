@@ -1,17 +1,17 @@
 # Aplicación
+/app/Config/core.php
 /app/Config/database.php
 /app/tmp
 
 # Composer
-/composer.lock
 /app/Plugin/CakePdf
-/app/Plugin/DebugKit
-/app/Plugin/Localized
 /app/Plugin/Search
+/composer.lock
 /vendor
 
 # Editores
-*.sublime-*
+/*.sublime-project
+/*.sublime-workspace
 
-# Phing
-/build/package
+# Makefile
+/build

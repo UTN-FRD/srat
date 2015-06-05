@@ -21,10 +21,22 @@ class I18nSchema extends CakeSchema {
 
 	public $name = 'i18n';
 
+/**
+ * [before description]
+ *
+ * @param array $event [description]
+ * @return [type]        [description]
+ */
 	public function before($event = array()) {
 		return true;
 	}
 
+/**
+ * [after description]
+ *
+ * @param array $event [description]
+ * @return [type]        [description]
+ */
 	public function after($event = array()) {
 	}
 

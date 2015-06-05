@@ -1,10 +1,28 @@
-# Archivos de texto con fin de línea LF
+# Comportamiento por defecto en caso que no se haya establecido core.autocrlf
 * text eol=lf
 
-# Archivos de texto con fin de línea CRLF
+# Archivos que deben normalizarse
+*.css text
+*.ctp text
+*.default text
+*.ini text
+*.js text
+*.md text
+*.php text
+*.po text
+*.sql text
+*.txt text
+*.xml text
+*.yml text
+.htaccess text
+
+# Archivos en los que se utiliza CRLF
 *.bat eol=crlf
 
-# Archivos binarios
+# Archivos en los que se utiliza LF
+*.pem eol=lf
+
+# Archivos que no deben modificarse
 *.eot binary
 *.gif binary
 *.ico binary

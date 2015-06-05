@@ -1,0 +1,67 @@
+/*!
+ * Depuración
+ *
+ * Sistema de Registro de Asistencia y Temas
+ *
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
+ *
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo LICENCIA.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
+ */
+
+.sql-log
+{
+    font-size: .9em;
+
+    width: 98%;
+    margin: 30px auto;
+
+    border-color: #ccc;
+    background: #fff;
+}
+
+.sql-log caption
+{
+    padding-bottom: 4px;
+
+    text-align: center;
+
+    color: navy;
+}
+
+.sql-log > thead > tr > th,
+.sql-log > tbody > tr > th,
+.sql-log > thead > tr > td,
+.sql-log > tbody > tr > td
+{
+    border: 1px solid #ccc;
+}
+
+.sql-log thead th:nth-child(1),
+.sql-log tbody td:nth-child(1)
+{
+    width: 50px;
+
+    text-align: center;
+}
+
+.sql-log thead th:nth-child(3),
+.sql-log thead th:nth-child(4),
+.sql-log thead th:nth-child(5),
+.sql-log thead th:nth-child(6),
+.sql-log tbody td:nth-child(3),
+.sql-log tbody td:nth-child(4),
+.sql-log tbody td:nth-child(5),
+.sql-log tbody td:nth-child(6)
+{
+    width: 80px;
+
+    text-align: right;
+}
+
+.sql-log tbody tr:hover
+{
+    background-color: #ffffdf;
+}

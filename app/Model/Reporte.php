@@ -5,7 +5,7 @@
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
  * Este archivo está sujeto a los términos y condiciones descritos
- * en el archivo licencia.txt que acompaña a este software.
+ * en el archivo LICENCIA.txt que acompaña a este software.
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
@@ -25,7 +25,7 @@ class Reporte extends AppModel {
 /**
  * Tabla
  *
- * @var boolean|string
+ * @var bool|string
  */
 	public $useTable = false;
 
@@ -145,7 +145,7 @@ class Reporte extends AppModel {
  *
  * @param array $check Nombre del campo y su valor
  *
- * @return boolean `true` en caso exitoso o `false` en caso contrario
+ * @return bool `true` en caso exitoso o `false` en caso contrario
  */
 	public function validEndDate($check) {
 		if (!empty($this->data[$this->alias]['desde']) && !empty($this->data[$this->alias]['hasta'])) {
@@ -187,7 +187,7 @@ class Reporte extends AppModel {
 /**
  * Obtiene todos los usuarios que se encuentran en la tabla de registros
  *
- * @param integer|null $aid Identificador de la asignatura
+ * @param int|null $aid Identificador de la asignatura
  *
  * @return array Usuarios
  */

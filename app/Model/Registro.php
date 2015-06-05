@@ -5,7 +5,7 @@
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
  * Este archivo está sujeto a los términos y condiciones descritos
- * en el archivo licencia.txt que acompaña a este software.
+ * en el archivo LICENCIA.txt que acompaña a este software.
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
@@ -23,6 +23,15 @@ App::uses('AppModel', 'Model');
 class Registro extends AppModel {
 
 /**
+ * Comportamientos
+ *
+ * @var array
+ */
+	public $actsAs = array(
+		'Search.Searchable'
+	);
+
+/**
  * belongsTo
  *
  * @var array
@@ -30,6 +39,18 @@ class Registro extends AppModel {
 	public $belongsTo = array(
 		'Asignatura',
 		'Usuario'
+	);
+
+/**
+ * Campos de búsqueda
+ *
+ * @var array
+ */
+	public $filterArgs = array(
+		'buscar' => array(
+			'method' => 'orConditions',
+			'type' => 'query'
+		)
 	);
 
 /**
@@ -115,11 +136,20 @@ class Registro extends AppModel {
 	);
 
 /**
+ * Campos virtuales
+ *
+ * @var array
+ */
+	public $virtualFields = array(
+		'solo_fecha' => 'DATE(fecha)'
+	);
+
+/**
  * beforeValidate
  *
  * @param array $options Opciones
  *
- * @return boolean `true` para continuar la operación de validación o `false` para cancelarla
+ * @return bool `true` para continuar la operación de validación o `false` para cancelarla
  */
 	public function beforeValidate($options = array()) {
 		if (!isset($this->data[$this->alias]['id'])) {
@@ -136,7 +166,7 @@ class Registro extends AppModel {
  *
  * @param array $check Nombre del campo y su valor
  *
- * @return boolean `true` en caso exitoso o `false` en caso contrario
+ * @return bool `true` en caso exitoso o `false` en caso contrario
  */
 	public function validateEndTime($check) {
 		if (!empty($this->data[$this->alias]['entrada']) && !empty($this->data[$this->alias]['salida'])) {
@@ -146,5 +176,35 @@ class Registro extends AppModel {
 			return ($startTime < $endTime);
 		}
 		return false;
+	}
+
+/**
+ * Genera condiciones de búsqueda
+ *
+ * @param array $data Datos a buscar
+ *
+ * @return array
+ */
+	public function orConditions($data = array()) {
+		$value = current($data);
+		$condition = array(
+			'OR' => array(
+				'Carrera.nombre LIKE' => '%' . $value . '%',
+				'Materia.nombre LIKE' => '%' . $value . '%',
+				'Usuario.apellido LIKE' => '%' . $value . '%',
+				'Usuario.nombre LIKE' => '%' . $value . '%'
+			)
+		);
+
+		if (preg_match('/^[0-9\/]+$/', $value)) {
+			$date = date_create_from_format('d/m/Y', $value);
+			if ($date) {
+				$condition['OR']['Registro.fecha LIKE'] = '%' . $date->format('Y-m-d') . '%';
+			} else {
+				$condition['OR']['Registro.fecha LIKE'] = '%' . $value . '%';
+			}
+		}
+
+		return $condition;
 	}
 }

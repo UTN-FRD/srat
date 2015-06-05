@@ -7,7 +7,7 @@
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
  * Este archivo está sujeto a los términos y condiciones descritos
- * en el archivo licencia.txt que acompaña a este software.
+ * en el archivo LICENCIA.txt que acompaña a este software.
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
@@ -31,7 +31,8 @@
 			'layout',
 			'notify',
 			'form',
-			'table'
+			'table',
+			'debug'
 		));
 
 		echo $this->Html->script(array(
@@ -101,5 +102,7 @@
 		<noscript class="noscript">
 			La experiencia con esta aplicación puede verse afectada debido a que JavaScript está deshabilitado.
 		</noscript>
+
+		<?php echo $this->element('sql_dump') ?>
 	</body>
 </html>

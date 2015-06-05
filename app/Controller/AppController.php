@@ -5,7 +5,7 @@
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
  * Este archivo está sujeto a los términos y condiciones descritos
- * en el archivo licencia.txt que acompaña a este software.
+ * en el archivo LICENCIA.txt que acompaña a este software.
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
@@ -51,8 +51,7 @@ class AppController extends Controller {
 			'loginRedirect' => array('controller' => 'usuarios', 'action' => 'dashboard', 'admin' => false, 'plugin' => false),
 			'logoutRedirect' => array('controller' => 'usuarios', 'action' => 'login', 'admin' => false, 'plugin' => false)
 		),
-		'Inasistencia',
-		'DebugKit.Toolbar'
+		'Inasistencia'
 	);
 
 /**
@@ -126,6 +125,21 @@ class AppController extends Controller {
 				));
 			}
 		}
+
+		if ($this->Auth->user('admin')) {
+			$cacheKey = 'absences' . $this->Auth->user('legajo');
+			$totalInasistencias = Cache::read($cacheKey);
+			if ($totalInasistencias === false) {
+				$totalInasistencias = ClassRegistry::init('Registro')->find('count', array(
+					'conditions' => array(
+						'Registro.tipo' => 0,
+						'Registro.fecha' => date('Y-m-d', strtotime('-1 day'))
+					)
+				));
+				Cache::write($cacheKey, $totalInasistencias);
+			}
+			$this->set(compact('totalInasistencias'));
+		}
 	}
 
 /**
@@ -144,7 +158,7 @@ class AppController extends Controller {
  *
  * @param array $user Datos del usuario
  *
- * @return boolean `true` en caso exitoso o `false` en caso contrario
+ * @return bool `true` en caso exitoso o `false` en caso contrario
  */
 	public function isAuthorized($user = null) {
 		if ($this->request->prefix === 'admin') {

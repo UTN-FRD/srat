@@ -5,7 +5,7 @@
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
  * Este archivo está sujeto a los términos y condiciones descritos
- * en el archivo licencia.txt que acompaña a este software.
+ * en el archivo LICENCIA.txt que acompaña a este software.
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
@@ -170,7 +170,7 @@ class Cargo extends AppModel {
  *
  * @param array $options Opciones
  *
- * @return boolean `true` para continuar la operación de guardado o `false` para cancelarla
+ * @return bool `true` para continuar la operación de guardado o `false` para cancelarla
  */
 	public function beforeSave($options = array()) {
 		if (!empty($this->data[$this->alias]['dedicacion'])) {

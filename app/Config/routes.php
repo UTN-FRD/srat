@@ -7,7 +7,7 @@
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
  * Este archivo está sujeto a los términos y condiciones descritos
- * en el archivo licencia.txt que acompaña a este software.
+ * en el archivo LICENCIA.txt que acompaña a este software.
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
@@ -102,28 +102,37 @@ Router::connect('/admin/asignaturas/materias/:action/*', array(
 /**
  * Horarios
  */
-Router::connect('/admin/asignaturas/horarios', [
+Router::connect('/admin/asignaturas/horarios', array(
 	'controller' => 'horarios',
 	'action' => 'index',
 	'admin' => true
-]);
-Router::connect('/admin/asignaturas/horarios/:action/*', [
+));
+Router::connect('/admin/asignaturas/horarios/:action/*', array(
 	'controller' => 'horarios',
 	'admin' => true
-]);
+));
 
 /**
  * Cargos
  */
-Router::connect('/admin/asignaturas/usuarios', [
+Router::connect('/admin/asignaturas/usuarios', array(
 	'controller' => 'cargos',
 	'action' => 'index',
 	'admin' => true
-]);
-Router::connect('/admin/asignaturas/usuarios/:action/*', [
+));
+Router::connect('/admin/asignaturas/usuarios/:action/*', array(
 	'controller' => 'cargos',
 	'admin' => true
-]);
+));
+
+/**
+ * Editar inasistencias
+ */
+Router::connect('/admin/registros/inasistencias/editar/*', array(
+	'controller' => 'registros',
+	'action' => 'editar_inasistencia',
+	'admin' => true
+));
 
 /**
  * Rutas de los plugins

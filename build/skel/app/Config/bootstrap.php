@@ -7,7 +7,7 @@
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
  * Este archivo está sujeto a los términos y condiciones descritos
- * en el archivo licencia.txt que acompaña a este software.
+ * en el archivo LICENCIA.txt que acompaña a este software.
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
@@ -69,10 +69,11 @@ CakeLog::config('error', array(
 /**
  * Configuración del cache
  */
-Cache::config('default', array(
-	'duration' => '+1 year',
-	'engine' => (PHP_SAPI !== 'cli' ? 'Apc' : 'File'),
-	'prefix' => basename(ROOT) . '_default_'
+Cache::config('default', array_merge(
+	Configure::read('App.Cache'),
+	array(
+		'prefix' => basename(ROOT) . '_default_'
+	)
 ));
 
 /**
@@ -82,8 +83,3 @@ CakePlugin::load(array(
 	'CakePdf' => array('bootstrap' => true, 'routes' => true),
 	'Search'
 ));
-
-/**
- * Ruta de acceso a wkhtmltopdf
- */
-Configure::write('CakePdf.binary', '');

@@ -5,7 +5,7 @@
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
  * Este archivo está sujeto a los términos y condiciones descritos
- * en el archivo licencia.txt que acompaña a este software.
+ * en el archivo LICENCIA.txt que acompaña a este software.
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
@@ -101,7 +101,7 @@ class InasistenciaComponent extends Component {
 		$out = array();
 		$rows = $this->Registro->find('all', array(
 			'conditions' => array('tipo' => 0),
-			'fields' => array('asignatura_id', 'usuario_id', 'MAX(fecha) AS fecha'),
+			'fields' => array('asignatura_id', 'usuario_id', 'MAX(DATE(fecha)) AS fecha'),
 			'group' => array('asignatura_id', 'usuario_id')
 		));
 
@@ -157,7 +157,7 @@ class InasistenciaComponent extends Component {
  * @return void
  */
 	private function __updateAbsences() {
-		$oldest = $this->Registro->find('first', array('fields' => array('MIN(fecha) as min_fecha')));
+		$oldest = $this->Registro->find('first', array('fields' => array('MIN(DATE(fecha)) as min_fecha')));
 		if (!empty($oldest)) {
 			$absences = $this->__getAbsencesList();
 			$oldest = date('Y-m-d', strtotime($oldest[0]['min_fecha'] . ' -1 day'));
@@ -172,17 +172,22 @@ class InasistenciaComponent extends Component {
 				$dates = $this->__generateDateList($start, $today, $data['days']);
 				if (!empty($dates)) {
 					$rows = $this->Registro->find('list', array(
-						'fields' => array('id', 'fecha'),
+						'fields' => array('id', 'solo_fecha'),
 						'conditions' => array(
 							'asignatura_id' => $data['asignatura_id'],
-							'fecha' => $dates,
+							'DATE(fecha)' => $dates,
 							'tipo' => 1,
 							'usuario_id' => $data['usuario_id']
 						)
 					));
 
 					$rows = array_map(function ($date) use ($data) {
-						return sprintf('(0, %d, %d, \'%s\')', $data['asignatura_id'], $data['usuario_id'], $date);
+						return sprintf(
+							'(0, %d, %d, \'%s\')',
+							$data['asignatura_id'],
+							$data['usuario_id'],
+							date('Y-m-d H:i:s', strtotime($date))
+						);
 					}, array_diff($dates, $rows));
 
 					if (!empty($rows)) {
