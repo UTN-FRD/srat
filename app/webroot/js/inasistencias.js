@@ -13,8 +13,7 @@
 
 $(function() {
 	var editLink = $('.page-tasks .edit-link'),
-	table = $('.table-wrapper > form > table'),
-	defaultMessage = $('.page-tasks .default-message');
+	table = $('.table-wrapper > form > table');
 
 	if (editLink.length) {
 		editLink.data('href', editLink.attr('href'))
@@ -59,11 +58,13 @@ $(function() {
 		});
 	}
 
-	if (defaultMessage.length) {
-		defaultMessage.on('click', function() {
+	if ($('.edit-inasistencia').length) {
+		$('.edit-inasistencia input[type=text]:first').focus();
+		$('.page-tasks .default-message').on('click', function() {
 			var message = prompt('Por favor, ingrese el mensaje que se usará para todos los registros');
 			if (message !== null) {
 				$('.edit-inasistencia input[type=text]').val(message);
+				$('.edit-inasistencia input[type=text]:first').focus();
 			}
 			return false;
 		});
