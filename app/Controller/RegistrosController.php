@@ -111,7 +111,7 @@ class RegistrosController extends AppController {
 
 			$rows = $this->Registro->find('all', array(
 				'conditions' => array('Registro.id' => $ids, 'Registro.tipo' => 0),
-				'fields' => array('id', 'asignatura', 'usuario', 'obs'),
+				'fields' => array('id', 'asignatura', 'usuario', 'fecha', 'obs'),
 				'recursive' => 0
 			));
 			$this->request->data['Registro'] = Hash::extract($rows, '{n}.Registro');

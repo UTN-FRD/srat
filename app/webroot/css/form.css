@@ -33,7 +33,7 @@ textarea {
 	resize: none
 }
 
-.form-horizontal textarea + .help-inline {
+.form-vertical textarea + .help-inline {
 	display: block;
 	padding-left: 2px;
 	padding-top: 3px;

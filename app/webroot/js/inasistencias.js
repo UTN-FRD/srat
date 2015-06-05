@@ -13,7 +13,8 @@
 
 $(function() {
 	var editLink = $('.page-tasks .edit-link'),
-	table = $('.table-wrapper > form > table');
+	table = $('.table-wrapper > form > table'),
+	defaultMessage = $('.page-tasks .default-message');
 
 	if (editLink.length) {
 		editLink.data('href', editLink.attr('href'))
@@ -55,6 +56,16 @@ $(function() {
 		$('tbody > tr > td > input', table).checkboxRangeSelection();
 		$('tbody > tr > td > input', table).on('change', function() {
 			checkedFn(this);
+		});
+	}
+
+	if (defaultMessage.length) {
+		defaultMessage.on('click', function() {
+			var message = prompt('Por favor, ingrese el mensaje que se usará para todos los registros');
+			if (message !== null) {
+				$('.edit-inasistencia input[type=text]').val(message);
+			}
+			return false;
 		});
 	}
 });

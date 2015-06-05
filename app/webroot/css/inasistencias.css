@@ -50,3 +50,12 @@
 	background-color: #006699;
 	color: #fff;
 }
+
+.edit-inasistencia fieldset ul {
+	list-style: none;
+	margin-left: 0;
+}
+
+.edit-inasistencia fieldset ul li {
+	line-height: 24px;
+}
