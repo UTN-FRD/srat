@@ -5,7 +5,7 @@
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
  * Este archivo está sujeto a los términos y condiciones descritos
- * en el archivo licencia.txt que acompaña a este software.
+ * en el archivo LICENCIA.txt que acompaña a este software.
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
@@ -194,7 +194,7 @@ class Usuario extends AppModel {
  *
  * @param array $options Opciones
  *
- * @return boolean `true` para continuar la operación de validación o `false` para cancelarla
+ * @return bool `true` para continuar la operación de validación o `false` para cancelarla
  */
 	public function beforeValidate($options = array()) {
 		if (!$this->id) {
@@ -233,7 +233,7 @@ class Usuario extends AppModel {
  *
  * @param array $options Opciones
  *
- * @return boolean `true` para continuar la operación de guardado o `false` para cancelarla
+ * @return bool `true` para continuar la operación de guardado o `false` para cancelarla
  */
 	public function beforeSave($options = array()) {
 		if (!empty($this->data[$this->alias]['new_password'])) {
@@ -255,7 +255,7 @@ class Usuario extends AppModel {
 /**
  * afterSave
  *
- * @param boolean $created Indica si se ha creado un registro
+ * @param bool $created Indica si se ha creado un registro
  * @param array $options Opciones
  *
  * @return void
@@ -273,7 +273,7 @@ class Usuario extends AppModel {
  *
  * @param array $check Nombre del campo y su valor
  *
- * @return boolean `true` en caso exitoso o `false` en caso contrario
+ * @return bool `true` en caso exitoso o `false` en caso contrario
  */
 	public function validatePassword($check) {
 		if (!empty($check)) {
@@ -310,7 +310,7 @@ class Usuario extends AppModel {
 					'Registro' => array(
 						'conditions' => array(
 							'Registro.asignatura_id = Cargo.asignatura_id',
-							'Registro.fecha = CURDATE()',
+							'DATE(Registro.fecha) = CURDATE()',
 							'Registro.tipo' => 1,
 							'Registro.usuario_id = Cargo.usuario_id'
 						),
@@ -356,7 +356,7 @@ class Usuario extends AppModel {
 				if (empty($row['Registro']['id'])) {
 					$row['Registro']['asignatura_id'] = $row['Cargo']['asignatura_id'];
 					$row['Registro']['entrada'] = $row['Horario']['entrada'];
-					$row['Registro']['fecha'] = date('Y-m-d');
+					$row['Registro']['fecha'] = date('Y-m-d H:i:s');
 					$row['Registro']['salida'] = $row['Horario']['salida'];
 					$row['Registro']['tipo'] = 1;
 					$row['Registro']['usuario_id'] = $id;

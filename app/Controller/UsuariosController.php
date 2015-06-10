@@ -5,7 +5,7 @@
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
  * Este archivo está sujeto a los términos y condiciones descritos
- * en el archivo licencia.txt que acompaña a este software.
+ * en el archivo LICENCIA.txt que acompaña a este software.
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
@@ -247,7 +247,7 @@ class UsuariosController extends AppController {
 /**
  * Editar
  *
- * @param integer|null $id Identificador
+ * @param int|null $id Identificador
  *
  * @return void
  *
@@ -261,7 +261,15 @@ class UsuariosController extends AppController {
 
 		if ($this->request->is('put')) {
 			if (empty($this->request->data['refresh'])) {
-				if ($this->Usuario->save($this->request->data)) {
+				$user = $this->Usuario->save($this->request->data);
+				if ($user) {
+					if ($user['Usuario']['id'] == $this->Auth->user('id')) {
+						if (!$user['Usuario']['estado']) {
+							return $this->redirect(
+								array('controller' => 'usuarios', 'action' => 'logout', 'admin' => false)
+							);
+						}
+					}
 					$this->_notify('record_modified');
 				} elseif (empty($this->Usuario->validationErrors)) {
 					$this->_notify('record_not_saved');
@@ -281,7 +289,7 @@ class UsuariosController extends AppController {
 /**
  * Eliminar
  *
- * @param integer|null $id Identificador
+ * @param int|null $id Identificador
  *
  * @return void
  *

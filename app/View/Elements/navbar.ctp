@@ -7,7 +7,7 @@
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
  * Este archivo está sujeto a los términos y condiciones descritos
- * en el archivo licencia.txt que acompaña a este software.
+ * en el archivo LICENCIA.txt que acompaña a este software.
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
@@ -104,6 +104,17 @@ $links = array(
 					'plugin' => false
 				)
 			)
+		)
+	),
+	array(
+		'condition' => $isAdmin,
+		'options' => array('escape' => false),
+		'text' => 'Inasistencias <span class="badge badge-info">' . (isset($totalInasistencias) ? $totalInasistencias : 0) . '</span>',
+		'url' => array(
+			'controller' => 'registros',
+			'action' => 'inasistencias',
+			'admin' => true,
+			'plugin' => false
 		)
 	),
 	array(

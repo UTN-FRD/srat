@@ -7,7 +7,7 @@
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
  * Este archivo está sujeto a los términos y condiciones descritos
- * en el archivo licencia.txt que acompaña a este software.
+ * en el archivo LICENCIA.txt que acompaña a este software.
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
@@ -63,8 +63,7 @@ $this->Html->addCrumb('Editar');
 
 	echo $this->Form->input('resolucion', array(
 		'label' => 'Resolución',
-		'max' => 65535,
-		'min' => 1
+		'type' => 'text'
 	));
 	?>
 </fieldset>

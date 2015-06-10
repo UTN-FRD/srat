@@ -7,7 +7,7 @@
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
  * Este archivo está sujeto a los términos y condiciones descritos
- * en el archivo licencia.txt que acompaña a este software.
+ * en el archivo LICENCIA.txt que acompaña a este software.
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
@@ -27,12 +27,11 @@ $this->Html->script('reportes', array('inline' => false));
  */
 $this->Html->addCrumb('Reportes');
 ?>
-<?php echo $this->Form->create('Reporte', array('class' => 'form-horizontal')) ?>
-<div class="help-box">
+<?php echo $this->Form->create('Reporte', array('class' => 'form-horizontal report-filter')) ?>
+<div class="report-filter-howto">
 	<ul>
 		<li>Puede utilizar el formulario ubicado a la izquierda para filtrar el resultado y generar condiciones más específicas.</li>
 		<li>Recuerde actualizar la consulta antes de exportar el resultado para que todos los cambios sean tenidos en cuenta.</li>
-		<li>La vista previa es aproximada y se encuentra dividida por páginas en esta vista sólo por conveniencia.</li>
 		<li>Puede cambiar el orden del resultado haciendo clic en cada columna. El mismo será tenido en cuenta al exportar el resultado.</li>
 		<li>Los campos seleccionados en el formulario serán persistidos hasta que haga clic en el botón Restablecer o cierre sesión.</li>
 		<li>En caso que desee descargar un archivo en vez de visualizarlo, haga clic derecho en el botón Exportar resultado y luego en Guardar enlace como...</li>
@@ -97,7 +96,7 @@ $headers = array(
 	$this->Paginator->sort('fecha', 'Fecha'),
 	$this->Paginator->sort('entrada', 'Entrada'),
 	$this->Paginator->sort('salida', 'Salida'),
-	'Temas'
+	'Observaciones'
 );
 
 /**
@@ -109,13 +108,13 @@ if (!empty($rows)):
 		$asistencia = ($row['Registro']['tipo'] == '1');
 		$rows[$rid] = array(
 			$start++,
-			h($row['Registro']['asignatura']),
+			str_replace(':', ':<br />', h($row['Registro']['asignatura'])),
 			$row['Usuario']['legajo'],
 			h(sprintf('%s, %s', $row['Usuario']['apellido'], $row['Usuario']['nombre'])),
-			date('d/m/Y', strtotime($row['Registro']['fecha'])),
+			date('d/m/Y' . ($asistencia ? ' H:i:s' : ''), strtotime($row['Registro']['fecha'])),
 			($asistencia ? date('H:i', strtotime($row['Registro']['entrada'])) : '-'),
 			($asistencia ? date('H:i', strtotime($row['Registro']['salida'])) : '-'),
-			($asistencia ? nl2br(h($row['Registro']['obs'])) : '-')
+			nl2br(h($row['Registro']['obs']))
 		);
 	endforeach;
 endif;
@@ -124,6 +123,7 @@ endif;
  * Tabla
  */
 echo $this->element('table', array(
+	'class' => 'report-preview',
 	'headers' => $headers,
 	'rows' => $rows,
 	'search' => false,

@@ -19,10 +19,22 @@ class SessionsSchema extends CakeSchema {
 
 	public $name = 'Sessions';
 
+/**
+ * [before description]
+ *
+ * @param array $event [description]
+ * @return [type]        [description]
+ */
 	public function before($event = array()) {
 		return true;
 	}
 
+/**
+ * [after description]
+ *
+ * @param array $event [description]
+ * @return [type]        [description]
+ */
 	public function after($event = array()) {
 	}
 

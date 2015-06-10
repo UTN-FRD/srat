@@ -7,22 +7,10 @@
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
  * Este archivo está sujeto a los términos y condiciones descritos
- * en el archivo licencia.txt que acompaña a este software.
+ * en el archivo LICENCIA.txt que acompaña a este software.
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
-
-/**
- * Autocargador de clases de Composer
- */
-require_once dirname(APP) . DS . 'vendor' . DS . 'autoload.php';
-
-/**
- * Autocargador de clases de CakePHP
- * https://github.com/composer/composer/commit/c80cb76b9b5082ecc3e5b53b1050f76bb27b127b
- */
-spl_autoload_unregister(array('App', 'load'));
-spl_autoload_register(array('App', 'load'), true, true);
 
 /**
  * Dependencias
@@ -79,19 +67,12 @@ CakeLog::config('error', array(
 ));
 
 /**
- * Filtros del despachador
- */
-Configure::write('Dispatcher.filters', array(
-	'AssetDispatcher'
-));
-
-/**
  * Configuración del cache
  */
 Cache::config('default', array(
-	'duration' => '+12 months',
-	'engine' => (PHP_SAPI !== 'cli' ? 'Apc' : 'File'),
-	'prefix' => APP_DIR . '_default_'
+	'duration' => '+10 seconds',
+	'engine' => 'File',
+	'prefix' => basename(ROOT) . '_default_'
 ));
 
 /**
@@ -99,11 +80,5 @@ Cache::config('default', array(
  */
 CakePlugin::load(array(
 	'CakePdf' => array('bootstrap' => true, 'routes' => true),
-	'DebugKit',
 	'Search'
 ));
-
-/**
- * Ruta de acceso a wkhtmltopdf
- */
-Configure::write('CakePdf.binary', '/usr/local/bin/wkhtmltopdf');

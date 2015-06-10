@@ -1,0 +1,61 @@
+/*!
+ * Inasistencias
+ *
+ * Sistema de Registro de Asistencia y Temas
+ *
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
+ *
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo LICENCIA.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
+ */
+
+.table-wrapper .form-inasistencia {
+	margin: 0;
+	padding: 0;
+}
+
+.table-wrapper .form-inasistencia tbody td {
+	height: 40px;
+	vertical-align: middle;
+}
+
+.table-wrapper .form-inasistencia thead th:nth-child(2),
+.table-wrapper .form-inasistencia tbody td:nth-child(2) {
+	text-align: center;
+	width: 10px;
+}
+
+.table-wrapper .form-inasistencia thead th:nth-child(3) {
+	width: 260px;
+}
+
+.table-wrapper .form-inasistencia thead th:nth-child(4),
+.table-wrapper .form-inasistencia tbody td:nth-child(4) {
+	text-align: center;
+	width: 75px;
+}
+
+.table-wrapper .form-inasistencia thead th:nth-child(5) {
+	width: 150px;
+}
+
+.table-wrapper .form-inasistencia thead th:nth-child(6),
+.table-wrapper .form-inasistencia tbody td:nth-child(6) {
+	width: 65px;
+}
+
+.table-wrapper .form-inasistencia tbody .checked td {
+	background-color: #006699;
+	color: #fff;
+}
+
+.edit-inasistencia fieldset ul {
+	list-style: none;
+	margin-left: 0;
+}
+
+.edit-inasistencia fieldset ul li {
+	line-height: 24px;
+}

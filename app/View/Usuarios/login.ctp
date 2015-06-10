@@ -7,7 +7,7 @@
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
  * Este archivo está sujeto a los términos y condiciones descritos
- * en el archivo licencia.txt que acompaña a este software.
+ * en el archivo LICENCIA.txt que acompaña a este software.
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
@@ -21,7 +21,7 @@ echo $this->Form->create('Usuario');
 echo $this->Form->input('legajo', array(
 	'autofocus',
 	'label' => 'Número de legajo',
-	'min' => 1
+	'type' => 'text'
 ));
 echo $this->Form->input('password', array(
 	'label' => 'Contraseña'

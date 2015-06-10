@@ -4,36 +4,25 @@
 	"license": "proprietary",
 	"authors": [
 		{
-			"name": "UTN - Facultad Regional Delta",
-			"homepage": "http://www.frd.utn.edu.ar/"
+			"name": "Jorge Alberto Cricelli",
+			"email": "jacricelli@gmail.com",
+			"role": "Developer"
 		}
 	],
-	"config": {
-		"vendor-dir": "vendor/"
+	"support": {
+		"issues": "https://github.com/UTN-FRD/srat/issues"
 	},
-	"repositories": [
-		{
-			"type": "pear",
-			"url": "http://pear.cakephp.org"
-		}
-	],
 	"require": {
-		"php": ">=5.4.0",
-		"cakedc/search": "2.2.*",
-		"friendsofcake/cakepdf": "1.0.*",
-		"pear-pear.cakephp.org/CakePHP": "~2.5.0"
+		"cakedc/search": "~2.5",
+		"cakephp/cakephp": "~2.6",
+		"friendsofcake/cakepdf": "~1.0"
 	},
 	"require-dev": {
-		"cakephp/debug_kit" : "2.2.*",
-		"cakephp/localized": "2.1.*",
-		"phing/phing": "2.7.0",
-		"phpunit/phpunit": "3.7.*"
+		"cakephp/cakephp-codesniffer": "~1.0"
 	},
 	"extra": {
 		"installer-paths": {
 			"app/Plugin/CakePdf": ["friendsofcake/cakepdf"],
-			"app/Plugin/DebugKit": ["cakephp/debug_kit"],
-			"app/Plugin/Localized": ["cakephp/localized"],
 			"app/Plugin/Search": ["cakedc/search"]
 		}
 	}

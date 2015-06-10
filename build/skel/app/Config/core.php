@@ -7,7 +7,7 @@
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
  * Este archivo está sujeto a los términos y condiciones descritos
- * en el archivo licencia.txt que acompaña a este software.
+ * en el archivo LICENCIA.txt que acompaña a este software.
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
@@ -34,6 +34,11 @@ Configure::write('Exception', array(
 	'log' => true,
 	'renderer' => 'AppExceptionRenderer'
 ));
+
+/**
+ * Descomentar la siguiente línea cuando no se utilice mod_rewrite
+ */
+#Configure::write('App.baseUrl', env('SCRIPT_NAME'));
 
 /**
  * Codificación de caracteres
@@ -70,36 +75,46 @@ Configure::write('Cache.check', true);
  */
 Configure::write('Session', array(
 	'cookie' => 'utn_srat',
-	'defaults' => 'cake',
-	'timeout' => 720
+	'cookieTimeout' => 0,
+	'defaults' => 'cache'
 ));
 
 /**
  * Cadena al azar usada por los métodos de seguridad
  */
-Configure::write('Security.salt', 'e41240b96a8bf79004a616257682792e4a69a9b5');
+Configure::write('Security.salt', '');
 
 /**
  * Cadena numérica al azar usada por los métodos de seguridad
  */
-Configure::write('Security.cipherSeed', '376138663337353532663361366338');
+Configure::write('Security.cipherSeed', '');
+
+/**
+ * Configuración del cache
+ */
+Configure::write('App.Cache', array(
+	'duration' => (Configure::read('debug') == 0 ? '+1 year' : '+10 seconds'),
+	'engine' => (PHP_SAPI !== 'cli' ? 'Apc' : 'File')
+));
 
 /**
  * Cache del core del framework
  */
-Cache::config('_cake_core_', array(
-	'duration' => '+10 seconds',
-	'engine' => (PHP_SAPI !== 'cli' ? 'Apc' : 'File'),
-	'path' => CACHE . 'persistent' . DS,
-	'prefix' => APP_DIR . '_cake_core_'
+Cache::config('_cake_core_', array_merge(
+	Configure::read('App.Cache'),
+	array(
+		'path' => CACHE . 'persistent' . DS,
+		'prefix' => basename(ROOT) . '_cake_core_'
+	)
 ));
 
 /**
  * Cache de modelos y orígenes de datos
  */
-Cache::config('_cake_model_', array(
-	'duration' => '+10 seconds',
-	'engine' => (PHP_SAPI !== 'cli' ? 'Apc' : 'File'),
-	'path' => CACHE . 'models' . DS,
-	'prefix' => APP_DIR . '_cake_model_'
+Cache::config('_cake_model_', array_merge(
+	Configure::read('App.Cache'),
+	array(
+		'path' => CACHE . 'models' . DS,
+		'prefix' => basename(ROOT) . '_cake_model_'
+	)
 ));

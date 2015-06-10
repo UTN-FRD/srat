@@ -5,7 +5,7 @@
  * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
  *
  * Este archivo está sujeto a los términos y condiciones descritos
- * en el archivo licencia.txt que acompaña a este software.
+ * en el archivo LICENCIA.txt que acompaña a este software.
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
@@ -28,6 +28,7 @@ class RegistrosController extends AppController {
  * @var array
  */
 	public $components = array(
+		'Search.Prg',
 		'RequestHandler',
 		'Paginator' => array(
 			'limit' => 15,
@@ -47,6 +48,79 @@ class RegistrosController extends AppController {
 	public function blackHole($type = null) {
 		$this->Session->delete('Reporte');
 		parent::blackHole($type);
+	}
+
+/**
+ * Inasistencias
+ *
+ * @return void
+ */
+	public function admin_inasistencias() {
+		$this->__setupModelAssociations();
+
+		$this->Prg->commonProcess();
+		$this->Paginator->settings += array(
+			'conditions' => array_merge(
+				$this->Registro->parseCriteria($this->Prg->parsedParams()),
+				array('Registro.tipo' => 0)
+			),
+			'fields' => array(
+				'id', 'asignatura', 'Usuario.legajo', 'Usuario.apellido', 'Usuario.nombre', 'fecha', 'obs'
+			)
+		);
+
+		$this->set(array(
+			'rows' => $this->Paginator->paginate(),
+			'title_for_layout' => 'Inasistencias - Registros',
+			'title_for_view' => 'Inasistencias'
+		));
+	}
+
+/**
+ * Editar inasistencia
+ *
+ * @return void
+ *
+ * @throws MethodNotAllowedException Si la petición no se realiza utilizando el método POST o no se reciben datos
+ */
+	public function admin_editar_inasistencia() {
+		if (!$this->request->is('post')) {
+			throw new MethodNotAllowedException;
+		}
+		$this->__setupModelAssociations();
+
+		if (isset($this->request->data['Registro'][0])) {
+			if ($this->Registro->saveMany($this->request->data['Registro'], array('fieldList' => array('obs')))) {
+				$this->_notify('record_modified', array('redirect' => array('action' => 'inasistencias')));
+			} elseif (empty($this->Registro->validationErrors)) {
+				$this->_notify('record_not_saved');
+			}
+		} elseif (!empty($this->request->data['Registro']['id'])) {
+			$max = max($this->request->data['Registro']['id']);
+			if (!$max) {
+				$this->redirect(array('action' => 'inasistencias'));
+			}
+
+			$ids = array();
+			foreach ($this->request->data['Registro']['id'] as $id => $checked) {
+				if ((bool)$checked) {
+					$ids[] = $id;
+				}
+			}
+			$this->request->data['Registro'] = array();
+
+			$rows = $this->Registro->find('all', array(
+				'conditions' => array('Registro.id' => $ids, 'Registro.tipo' => 0),
+				'fields' => array('id', 'asignatura', 'usuario', 'fecha', 'obs'),
+				'recursive' => 0
+			));
+			$this->request->data['Registro'] = Hash::extract($rows, '{n}.Registro');
+		}
+
+		$this->set(array(
+			'title_for_layout' => 'Editar - Inasistencias - Registros',
+			'title_for_view' => 'Editar registro(s)'
+		));
 	}
 
 /**
@@ -212,6 +286,9 @@ class RegistrosController extends AppController {
 	private function __generateReport($options) {
 		$this->autoRender = false;
 
+		$isWindows = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
+		$charset = (!$isWindows ? 'ASCII' : 'ISO-8859-1');
+
 		$date = preg_replace_callback(
 			"/[a-zA-Záéíóú]{3,}/u",
 			function ($m) {
@@ -219,11 +296,6 @@ class RegistrosController extends AppController {
 			},
 			CakeTime::format(time(), '%A %d de %B de %Y')
 		);
-
-		$charset = 'ASCII';
-		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-			$charset = 'ISO-8859-1';
-		}
 
 		$title = 'Asistencia';
 		if (isset($options['data']['tipo'])) {
@@ -260,6 +332,10 @@ class RegistrosController extends AppController {
 			'orientation' => 'landscape',
 			'page-size' => 'A4'
 		);
+
+		if (!Configure::check('CakePdf.binary') && !$isWindows) {
+			$this->pdfConfig['binary'] = trim(shell_exec('which wkhtmltopdf'));
+		}
 
 		$data = $options['data'];
 		$settings = $this->__getFindOptions($options);
