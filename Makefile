@@ -185,6 +185,7 @@ build: guard-VERSION clean
 		./build/tmp/app/webroot/js/bootstrap.min.js \
 		./build/tmp/app/webroot/js/select2.min.js \
 		./build/tmp/app/webroot/js/select2_locale_es.min.js \
+		./build/tmp/app/webroot/js/app.js \
 		./build/tmp/app/webroot/js/form.js \
 		./build/tmp/app/webroot/js/table.js \
 		> ./build/tmp/app/webroot/js/script.js
@@ -194,6 +195,7 @@ build: guard-VERSION clean
 		./build/tmp/app/webroot/js/bootstrap.min.js \
 		./build/tmp/app/webroot/js/select2.min.js \
 		./build/tmp/app/webroot/js/select2_locale_es.min.js \
+		./build/tmp/app/webroot/js/app.js \
 		./build/tmp/app/webroot/js/form.js \
 		./build/tmp/app/webroot/js/table.js
 
