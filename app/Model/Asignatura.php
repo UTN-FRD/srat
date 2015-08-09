@@ -97,8 +97,8 @@ class Asignatura extends AppModel {
  */
 	public $validate = array(
 		'carrera_id' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -110,8 +110,8 @@ class Asignatura extends AppModel {
 			)
 		),
 		'materia_id' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -128,8 +128,8 @@ class Asignatura extends AppModel {
 			)
 		),
 		'area_id' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -141,8 +141,8 @@ class Asignatura extends AppModel {
 			)
 		),
 		'nivel_id' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -154,8 +154,8 @@ class Asignatura extends AppModel {
 			)
 		),
 		'tipo_id' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,

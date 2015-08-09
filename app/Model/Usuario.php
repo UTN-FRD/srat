@@ -71,8 +71,8 @@ class Usuario extends AppModel {
  */
 	public $validate = array(
 		'legajo' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -89,8 +89,8 @@ class Usuario extends AppModel {
 			)
 		),
 		'old_password' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -102,8 +102,8 @@ class Usuario extends AppModel {
 			)
 		),
 		'password' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -115,8 +115,8 @@ class Usuario extends AppModel {
 			)
 		),
 		'new_password' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -140,8 +140,8 @@ class Usuario extends AppModel {
 			'message' => ''
 		),
 		'estado' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -153,8 +153,8 @@ class Usuario extends AppModel {
 			)
 		),
 		'apellido' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -166,8 +166,8 @@ class Usuario extends AppModel {
 			)
 		),
 		'nombre' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -198,26 +198,26 @@ class Usuario extends AppModel {
  */
 	public function beforeValidate($options = array()) {
 		if (!$this->id) {
-			$this->validator()->getField('new_password')->getRule('notEmpty')->required = false;
-			$this->validator()->getField('old_password')->getRule('notEmpty')->required = false;
+			$this->validator()->getField('new_password')->getRule('notBlank')->required = false;
+			$this->validator()->getField('old_password')->getRule('notBlank')->required = false;
 		} else {
 			if (!isset($this->data[$this->alias]['old_password']) && !isset($this->data[$this->alias]['new_password'])) {
-				$this->validator()->getField('new_password')->getRule('notEmpty')->required = false;
-				$this->validator()->getField('old_password')->getRule('notEmpty')->required = false;
+				$this->validator()->getField('new_password')->getRule('notBlank')->required = false;
+				$this->validator()->getField('old_password')->getRule('notBlank')->required = false;
 
 				if (empty($this->data[$this->alias]['password'])) {
-					$this->validator()->getField('password')->getRule('notEmpty')->allowEmpty = true;
+					$this->validator()->getField('password')->getRule('notBlank')->allowEmpty = true;
 				}
 			} elseif (isset($this->data[$this->alias]['old_password'])) {
-				$this->validator()->getField('new_password')->getRule('notEmpty')->required = false;
+				$this->validator()->getField('new_password')->getRule('notBlank')->required = false;
 
 				if (empty($this->data[$this->alias]['old_password']) && empty($this->data[$this->alias]['password'])) {
-					$this->validator()->getField('old_password')->getRule('notEmpty')->allowEmpty = true;
-					$this->validator()->getField('password')->getRule('notEmpty')->allowEmpty = true;
+					$this->validator()->getField('old_password')->getRule('notBlank')->allowEmpty = true;
+					$this->validator()->getField('password')->getRule('notBlank')->allowEmpty = true;
 				}
 			} else {
-				$this->validator()->getField('old_password')->getRule('notEmpty')->required = false;
-				$this->validator()->getField('password')->getRule('notEmpty')->required = false;
+				$this->validator()->getField('old_password')->getRule('notBlank')->required = false;
+				$this->validator()->getField('password')->getRule('notBlank')->required = false;
 			}
 		}
 
