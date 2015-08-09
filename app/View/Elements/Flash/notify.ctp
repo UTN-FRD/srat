@@ -12,7 +12,7 @@
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 ?>
-<div class="alert alert-<?php echo (isset($level) ? $level : 'error') ?>" data-dismiss="alert">
+<div class="alert alert-<?php echo (isset($params['level']) ? $params['level'] : 'error') ?>" data-dismiss="alert">
 	<button class="close">&times;</button>
 	<?php echo h($message) ?>
 </div>

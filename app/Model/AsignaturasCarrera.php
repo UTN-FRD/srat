@@ -61,8 +61,8 @@ class AsignaturasCarrera extends AppModel {
  */
 	public $validate = array(
 		'nombre' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,

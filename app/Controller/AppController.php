@@ -30,6 +30,7 @@ class AppController extends Controller {
 	public $components = array(
 		'Security' => array('blackHoleCallback' => 'blackHole'),
 		'Session',
+		'Flash',
 		'Auth' => array(
 			'authenticate' => array(
 				'Form' => array(
@@ -49,7 +50,8 @@ class AppController extends Controller {
 			),
 			'loginAction' => array('controller' => 'usuarios', 'action' => 'login', 'admin' => false, 'plugin' => false),
 			'loginRedirect' => array('controller' => 'usuarios', 'action' => 'dashboard', 'admin' => false, 'plugin' => false),
-			'logoutRedirect' => array('controller' => 'usuarios', 'action' => 'login', 'admin' => false, 'plugin' => false)
+			'logoutRedirect' => array('controller' => 'usuarios', 'action' => 'login', 'admin' => false, 'plugin' => false),
+			'unauthorizedRedirect' => array('controller' => 'usuarios', 'action' => 'dashboard', 'admin' => false, 'plugin' => false)
 		),
 		'Inasistencia'
 	);
@@ -60,6 +62,7 @@ class AppController extends Controller {
  * @var array
  */
 	public $helpers = array(
+		'Flash',
 		'Form' => array('className' => 'MyForm'),
 		'Html' => array('className' => 'MyHtml'),
 		'Session'
@@ -259,7 +262,10 @@ class AppController extends Controller {
 			}
 		}
 
-		$this->Session->setFlash($options['message'], 'notify', array('level' => $options['level']));
+		$this->Flash->set(
+			$options['message'],
+			array('element' => 'notify', 'params' => array('level' => $options['level']))
+		);
 
 		if ($options['redirect']) {
 			if ($options['redirect'] === true) {

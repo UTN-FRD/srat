@@ -64,8 +64,8 @@ class Registro extends AppModel {
 			'message' => 'El valor seleccionado no es válido'
 		),
 		'asignatura_id' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -77,8 +77,8 @@ class Registro extends AppModel {
 			)
 		),
 		'usuario_id' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -90,8 +90,8 @@ class Registro extends AppModel {
 			)
 		),
 		'obs' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -103,8 +103,8 @@ class Registro extends AppModel {
 			)
 		),
 		'entrada' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -116,8 +116,8 @@ class Registro extends AppModel {
 			)
 		),
 		'salida' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,

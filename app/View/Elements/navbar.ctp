@@ -32,6 +32,7 @@ $links = array(
 		'text' => 'Sistema',
 		'dropdown' => array(
 			array(
+				'options' => array('class' => 'admin-users'),
 				'text' => 'Usuarios',
 				'url' => array(
 					'controller' => 'usuarios',
@@ -169,6 +170,7 @@ $links = array(
 	),
 	array(
 		'condition' => $loggedIn,
+		'options' => array('class' => 'logout'),
 		'text' => 'Cerrar sesión',
 		'url' => array(
 			'controller' => 'usuarios',

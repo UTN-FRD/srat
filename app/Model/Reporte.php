@@ -82,8 +82,8 @@ class Reporte extends AppModel {
  */
 	public $validate = array(
 		'asignatura_id' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => true,
 				'last' => true,
@@ -95,8 +95,8 @@ class Reporte extends AppModel {
 			)
 		),
 		'usuario_id' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => true,
 				'last' => true,
@@ -108,8 +108,8 @@ class Reporte extends AppModel {
 			)
 		),
 		'desde' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => true,
 				'last' => true,
@@ -121,8 +121,8 @@ class Reporte extends AppModel {
 			)
 		),
 		'hasta' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => true,
 				'last' => true,

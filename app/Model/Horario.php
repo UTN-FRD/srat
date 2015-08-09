@@ -59,8 +59,8 @@ class Horario extends AppModel {
  */
 	public $validate = array(
 		'asignatura_id' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -72,8 +72,8 @@ class Horario extends AppModel {
 			)
 		),
 		'dia' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -90,8 +90,8 @@ class Horario extends AppModel {
 			)
 		),
 		'entrada' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -103,8 +103,8 @@ class Horario extends AppModel {
 			)
 		),
 		'salida' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,

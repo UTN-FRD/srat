@@ -75,8 +75,8 @@ class Cargo extends AppModel {
  */
 	public $validate = array(
 		'asignatura_id' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -88,8 +88,8 @@ class Cargo extends AppModel {
 			)
 		),
 		'usuario_id' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -106,8 +106,8 @@ class Cargo extends AppModel {
 			)
 		),
 		'tipo_id' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -119,8 +119,8 @@ class Cargo extends AppModel {
 			)
 		),
 		'dedicacion_id' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -132,8 +132,8 @@ class Cargo extends AppModel {
 			)
 		),
 		'grado_id' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
@@ -145,8 +145,8 @@ class Cargo extends AppModel {
 			)
 		),
 		'dedicacion' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
+			'notBlank' => array(
+				'rule' => 'notBlank',
 				'required' => true,
 				'allowEmpty' => false,
 				'last' => true,
