@@ -39,8 +39,8 @@
 			<div id="page">
 				<div class="notifications">
 					<?php
-					echo $this->Session->flash('auth');
-					echo $this->Session->flash();
+					echo $this->Flash->render('auth');
+					echo $this->Flash->render();
 					?>
 				</div>
 

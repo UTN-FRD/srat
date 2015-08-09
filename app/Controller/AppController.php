@@ -30,6 +30,7 @@ class AppController extends Controller {
 	public $components = array(
 		'Security' => array('blackHoleCallback' => 'blackHole'),
 		'Session',
+		'Flash',
 		'Auth' => array(
 			'authenticate' => array(
 				'Form' => array(
@@ -60,6 +61,7 @@ class AppController extends Controller {
  * @var array
  */
 	public $helpers = array(
+		'Flash',
 		'Form' => array('className' => 'MyForm'),
 		'Html' => array('className' => 'MyHtml'),
 		'Session'
@@ -259,7 +261,10 @@ class AppController extends Controller {
 			}
 		}
 
-		$this->Session->setFlash($options['message'], 'notify', array('level' => $options['level']));
+		$this->Flash->set(
+			$options['message'],
+			array('element' => 'notify', 'params' => array('level' => $options['level']))
+		);
 
 		if ($options['redirect']) {
 			if ($options['redirect'] === true) {
