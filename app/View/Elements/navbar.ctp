@@ -154,6 +154,7 @@ $links = array(
 	),
 	array(
 		'condition' => $loggedIn,
+		'options' => array('class' => 'strong'),
 		'text' => (isset($user['nombre_completo']) ? $user['nombre_completo'] : null),
 		'dropdown' => array(
 			array(
