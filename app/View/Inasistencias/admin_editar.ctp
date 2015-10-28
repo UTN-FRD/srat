@@ -1,6 +1,6 @@
 <?php
 /**
- * Editar inasistencia
+ * Editar
  *
  * Sistema de Registro de Asistencia y Temas
  *
@@ -25,7 +25,7 @@ $this->Html->script('inasistencias', array('inline' => false));
 /**
  * Breadcrumbs
  */
-$this->Html->addCrumb('Inasistencias', array('action' => 'inasistencias'));
+$this->Html->addCrumb('Inasistencias', array('action' => 'index'));
 $this->Html->addCrumb('Editar');
 
 /**
@@ -38,22 +38,22 @@ $this->set('tasks', array(
 	)
 ));
 ?>
-<?php echo $this->Form->create('Registro', array('class' => 'form-vertical edit-inasistencia')) ?>
+<?php echo $this->Form->create('Inasistencia', array('class' => 'form-vertical edit-inasistencia')) ?>
 <ul>
 	<li>Los campos indicados con <span class="required">*</span>son obligatorios.</li>
 </ul>
 <fieldset>
 	<?php
-	foreach ($this->request->data['Registro'] as $index => $row):
-		$field = 'Registro.' . $index . '.';
+	foreach ($this->request->data['Inasistencia'] as $index => $row):
+		$field = 'Inasistencia.' . $index . '.';
 		echo $this->Form->hidden($field . 'id');
 		echo $this->Form->hidden($field . 'asignatura');
-		echo $this->Form->hidden($field . 'usuario');
+		echo $this->Form->hidden($field . 'docente');
 		echo $this->Form->hidden($field . 'fecha');
 		?>
 		<ul>
 			<li><?php echo h($row['asignatura']) ?></li>
-			<li><?php echo h($row['usuario']) ?></li>
+			<li><?php echo h($row['docente']) ?></li>
 			<li><?php echo date('d/m/Y', strtotime($row['fecha'])) ?></li>
 		</ul>
 		<?php
@@ -69,5 +69,5 @@ $this->set('tasks', array(
 echo $this->Form->buttons(array(
 	'Guardar' => array('type' => 'submit'),
 	'Restablecer' => array('type' => 'reset'),
-	'Cancelar' => array('url' => array('action' => 'inasistencias'))
+	'Cancelar' => array('url' => array('action' => 'index'))
 ));
