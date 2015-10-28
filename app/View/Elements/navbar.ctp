@@ -110,7 +110,7 @@ $links = array(
 	array(
 		'condition' => $isAdmin,
 		'options' => array('escape' => false),
-		'text' => 'Inasistencias <span class="badge badge-info">' . (isset($totalInasistencias) ? $totalInasistencias : 0) . '</span>',
+		'text' => 'Inasistencias <span class="badge badge-info">' . (isset($totalAbsences) ? $totalAbsences : 0) . '</span>',
 		'url' => array(
 			'controller' => 'inasistencias',
 			'action' => 'index',

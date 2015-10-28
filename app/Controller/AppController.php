@@ -129,18 +129,7 @@ class AppController extends Controller {
 		}
 
 		if ($this->Auth->user('admin')) {
-			$cacheKey = 'absences' . $this->Auth->user('legajo');
-			$totalInasistencias = Cache::read($cacheKey);
-			if ($totalInasistencias === false) {
-				$totalInasistencias = ClassRegistry::init('Registro')->find('count', array(
-					'conditions' => array(
-						'Registro.tipo' => 0,
-						'Registro.fecha' => date('Y-m-d', strtotime('-1 day'))
-					)
-				));
-				Cache::write($cacheKey, $totalInasistencias);
-			}
-			$this->set(compact('totalInasistencias'));
+			$this->set('totalAbsences', ClassRegistry::init('Inasistencia')->getYesterdaysTotal());
 		}
 	}
 
