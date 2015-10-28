@@ -37,7 +37,8 @@ $this->Html->addCrumb('Editar');
 	));
 
 	echo $this->Form->input('usuario_id', array(
-		'class' => 'combobox span5'
+		'class' => 'combobox span5',
+		'label' => 'Docente'
 	));
 
 	echo $this->Form->input('grado_id', array(

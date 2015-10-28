@@ -119,7 +119,8 @@ class InasistenciaComponent extends Component {
  */
 	private function __getDaysList() {
 		$this->Registro->Usuario->Cargo->unbindModel(array(
-			'belongsTo' => array('Asignatura', 'Dedicacion', 'Grado', 'Tipo', 'Usuario')
+			'belongsTo' => array('Asignatura', 'Dedicacion', 'Grado', 'Tipo', 'Usuario'),
+			'hasOne' => array('Carrera', 'Materia')
 		));
 		$this->Registro->Usuario->Cargo->bindModel(array(
 			'hasOne' => array(

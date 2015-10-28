@@ -31,7 +31,7 @@ class CargosController extends AppController {
 		'Search.Prg',
 		'Paginator' => array(
 			'fields' => array(
-				'id', 'asignatura', 'usuario', 'dedicacion', 'resolucion',
+				'id', 'asignatura', 'docente', 'dedicacion', 'resolucion',
 				'Tipo.nombre', 'Dedicacion.nombre', 'Grado.nombre'
 			),
 			'limit' => 15,
@@ -47,26 +47,6 @@ class CargosController extends AppController {
  * @return void
  */
 	public function admin_index() {
-		$this->Cargo->virtualFields = array(
-			'asignatura' => $this->Cargo->Asignatura->virtualFields['asignatura'],
-			'usuario' => $this->Cargo->Usuario->virtualFields['nombre_completo']
-		);
-
-		$this->Cargo->bindModel(array(
-			'hasOne' => array(
-				'Carrera' => array(
-					'className' => 'AsignaturasCarrera',
-					'conditions' => 'Carrera.id = Asignatura.carrera_id',
-					'foreignKey' => false
-				),
-				'Materia' => array(
-					'className' => 'AsignaturasMateria',
-					'conditions' => 'Materia.id = Asignatura.materia_id',
-					'foreignKey' => false
-				)
-			)
-		), false);
-
 		$this->Prg->commonProcess();
 		$this->Paginator->settings += array(
 			'conditions' => $this->Cargo->parseCriteria($this->Prg->parsedParams())
