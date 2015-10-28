@@ -20,8 +20,8 @@ $this->Html->css('cargos', array('inline' => false));
 /**
  * Breadcrumbs
  */
-$this->Html->addCrumb('Asignaturas', array('controller' => 'asignaturas'));
-$this->Html->addCrumb('Usuarios', array('action' => 'index'));
+$this->Html->addCrumb('Administrar');
+$this->Html->addCrumb('Cargos', array('action' => 'index'));
 $this->Html->addCrumb('Editar');
 ?>
 <?php echo $this->Form->create('Cargo', array('class' => 'form-vertical')) ?>

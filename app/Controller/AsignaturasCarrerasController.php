@@ -50,7 +50,7 @@ class AsignaturasCarrerasController extends AppController {
 
 		$this->set(array(
 			'rows' => $this->Paginator->paginate(),
-			'title_for_layout' => 'Carreras - Asignaturas',
+			'title_for_layout' => 'Carreras - Administrar',
 			'title_for_view' => 'Carreras'
 		));
 	}
@@ -70,7 +70,7 @@ class AsignaturasCarrerasController extends AppController {
 		}
 
 		$this->set(array(
-			'title_for_layout' => 'Agregar - Carreras - Asignaturas',
+			'title_for_layout' => 'Agregar - Carreras - Administrar',
 			'title_for_view' => 'Agregar carrera'
 		));
 	}
@@ -104,7 +104,7 @@ class AsignaturasCarrerasController extends AppController {
 
 		$this->set(array(
 			'associated' => $this->AsignaturasCarrera->hasAssociations(),
-			'title_for_layout' => 'Editar - Carreras - Asignaturas',
+			'title_for_layout' => 'Editar - Carreras - Administrar',
 			'title_for_view' => 'Editar carrera'
 		));
 	}

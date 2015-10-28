@@ -74,8 +74,8 @@ class CargosController extends AppController {
 
 		$this->set(array(
 			'rows' => $this->Paginator->paginate(),
-			'title_for_layout' => 'Usuarios - Asignaturas',
-			'title_for_view' => 'Usuarios'
+			'title_for_layout' => 'Cargos - Administrar',
+			'title_for_view' => 'Cargos'
 		));
 	}
 
@@ -95,8 +95,8 @@ class CargosController extends AppController {
 
 		$this->__setFormData();
 		$this->set(array(
-			'title_for_layout' => 'Agregar - Usuarios - Asignaturas',
-			'title_for_view' => 'Agregar usuario'
+			'title_for_layout' => 'Agregar - Cargos - Administrar',
+			'title_for_view' => 'Agregar cargo'
 		));
 	}
 
@@ -135,8 +135,8 @@ class CargosController extends AppController {
 
 		$this->__setFormData();
 		$this->set(array(
-			'title_for_layout' => 'Editar - Usuarios - Asignaturas',
-			'title_for_view' => 'Editar usuario'
+			'title_for_layout' => 'Editar - Cargos - Administrar',
+			'title_for_view' => 'Editar cargo'
 		));
 	}
 

@@ -49,7 +49,7 @@ $links = array(
 	),
 	array(
 		'condition' => $isAdmin,
-		'text' => 'Asignaturas',
+		'text' => 'Administrar',
 		'dropdown' => array(
 			array(
 				'text' => 'Áreas',
@@ -64,6 +64,15 @@ $links = array(
 				'text' => 'Asignaturas',
 				'url' => array(
 					'controller' => 'asignaturas',
+					'action' => 'index',
+					'admin' => true,
+					'plugin' => false
+				)
+			),
+			array(
+				'text' => 'Cargos',
+				'url' => array(
+					'controller' => 'cargos',
 					'action' => 'index',
 					'admin' => true,
 					'plugin' => false
@@ -91,15 +100,6 @@ $links = array(
 				'text' => 'Materias',
 				'url' => array(
 					'controller' => 'asignaturas_materias',
-					'action' => 'index',
-					'admin' => true,
-					'plugin' => false
-				)
-			),
-			array(
-				'text' => 'Usuarios',
-				'url' => array(
-					'controller' => 'cargos',
 					'action' => 'index',
 					'admin' => true,
 					'plugin' => false

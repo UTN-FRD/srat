@@ -20,8 +20,8 @@ $this->Html->css('cargos', array('inline' => false));
 /**
  * Breadcrumbs
  */
-$this->Html->addCrumb('Asignaturas', array('controller' => 'asignaturas'));
-$this->Html->addCrumb('Usuarios');
+$this->Html->addCrumb('Administrar');
+$this->Html->addCrumb('Cargos');
 
 /**
  * Tareas

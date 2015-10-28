@@ -30,6 +30,7 @@ $this->Html->script('usuarios', array('inline' => false));
 /**
  * Breadcrumbs
  */
+$this->Html->addCrumb('Sistema');
 $this->Html->addCrumb('Usuarios', array('action' => 'index'));
 $this->Html->addCrumb('Editar');
 ?>
