@@ -74,6 +74,41 @@ class AppModel extends Model {
 	}
 
 /**
+ * Valida que la fecha del campo `hasta` sea igual o mayor que la del campo `desde`
+ * sólo si se han especificado ambas fechas
+ *
+ * @param array $check Nombre del campo y su valor
+ *
+ * @return bool `true` en caso exitoso o `false` en caso contrario
+ */
+	public function validateEndDate($check) {
+		if (!empty($this->data[$this->alias]['desde']) && !empty($this->data[$this->alias]['hasta'])) {
+			$fromDate = (int)strtotime($this->data[$this->alias]['desde']);
+			$toDate = (int)strtotime($this->data[$this->alias]['hasta']);
+
+			return ($fromDate <= $toDate);
+		}
+		return true;
+	}
+
+/**
+ * Valida que la hora de salida sea mayor que la hora de entrada
+ *
+ * @param array $check Nombre del campo y su valor
+ *
+ * @return bool `true` en caso exitoso o `false` en caso contrario
+ */
+	public function validateEndTime($check) {
+		if (!empty($this->data[$this->alias]['entrada']) && !empty($this->data[$this->alias]['salida'])) {
+			$startTime = (int)strtotime($this->data[$this->alias]['entrada']);
+			$endTime = (int)strtotime($this->data[$this->alias]['salida']);
+
+			return ($startTime < $endTime);
+		}
+		return false;
+	}
+
+/**
  * Comprueba si un registro se encuentra asociado examinando las asociaciones del modelo
  *
  * @param int|string|array $id Identificador del registro

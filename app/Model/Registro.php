@@ -162,23 +162,6 @@ class Registro extends AppModel {
 	}
 
 /**
- * Valida que la hora de salida sea mayor que la hora de entrada
- *
- * @param array $check Nombre del campo y su valor
- *
- * @return bool `true` en caso exitoso o `false` en caso contrario
- */
-	public function validateEndTime($check) {
-		if (!empty($this->data[$this->alias]['entrada']) && !empty($this->data[$this->alias]['salida'])) {
-			$startTime = (int)strtotime($this->data[$this->alias]['entrada']);
-			$endTime = (int)strtotime($this->data[$this->alias]['salida']);
-
-			return ($startTime < $endTime);
-		}
-		return false;
-	}
-
-/**
  * Genera condiciones de búsqueda
  *
  * @param array $data Datos a buscar

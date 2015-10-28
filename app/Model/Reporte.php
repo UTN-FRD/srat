@@ -133,29 +133,11 @@ class Reporte extends AppModel {
 				'message' => 'La fecha seleccionada no es válida'
 			),
 			'validEndDate' => array(
-				'rule' => 'validEndDate',
+				'rule' => 'validateEndDate',
 				'message' => 'La fecha seleccionada debe ser igual o mayor que la indicada en el campo previo'
 			)
 		)
 	);
-
-/**
- * Valida que la fecha del campo `hasta` sea igual o mayor que la del campo `desde`
- * sólo si se han especificado ambas fechas
- *
- * @param array $check Nombre del campo y su valor
- *
- * @return bool `true` en caso exitoso o `false` en caso contrario
- */
-	public function validEndDate($check) {
-		if (!empty($this->data[$this->alias]['desde']) && !empty($this->data[$this->alias]['hasta'])) {
-			$fromDate = (int)strtotime($this->data[$this->alias]['desde']);
-			$toDate = (int)strtotime($this->data[$this->alias]['hasta']);
-
-			return ($fromDate <= $toDate);
-		}
-		return true;
-	}
 
 /**
  * Obtiene todas las asignaturas que se encuentran en la tabla de registros
