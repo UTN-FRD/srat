@@ -104,6 +104,15 @@ $links = array(
 					'admin' => true,
 					'plugin' => false
 				)
+			),
+			array(
+				'text' => 'Períodos no laborables',
+				'url' => array(
+					'controller' => 'periodos',
+					'action' => 'index',
+					'admin' => true,
+					'plugin' => false
+				)
 			)
 		)
 	),
