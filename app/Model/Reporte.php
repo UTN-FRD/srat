@@ -41,6 +41,12 @@ class Reporte extends AppModel {
 			'null' => false,
 			'type' => 'integer'
 		),
+		'carrera_id' => array(
+			'default' => null,
+			'length' => 10,
+			'null' => false,
+			'type' => 'integer'
+		),
 		'usuario_id' => array(
 			'default' => null,
 			'length' => 10,
@@ -70,6 +76,10 @@ class Reporte extends AppModel {
 		'Asignatura' => array(
 			'foreignKey' => false
 		),
+		'Carrera' => array(
+			'className' => 'AsignaturasCarrera',
+			'foreignKey' => false
+		),
 		'Usuario' => array(
 			'foreignKey' => false
 		)
@@ -91,6 +101,19 @@ class Reporte extends AppModel {
 			),
 			'exists' => array(
 				'rule' => array('validateExists', 'Asignatura'),
+				'message' => 'El valor seleccionado no existe'
+			)
+		),
+		'carrera_id' => array(
+			'notBlank' => array(
+				'rule' => 'notBlank',
+				'required' => true,
+				'allowEmpty' => true,
+				'last' => true,
+				'message' => 'Este campo no puede estar vacío'
+			),
+			'exists' => array(
+				'rule' => array('validateExists', 'Carrera'),
 				'message' => 'El valor seleccionado no existe'
 			)
 		),
