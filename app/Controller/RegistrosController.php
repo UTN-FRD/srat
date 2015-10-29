@@ -277,7 +277,23 @@ class RegistrosController extends AppController {
 			'title_for_view' => 'Asistencia general'
 		));
 
-		$this->Session->write($this->_getSessionKey('Options'), $options);
+		if ($this->request->ext === 'pdf') {
+			$this->_setupCakePdf('Reporte de Asistencia General');
+			$this->set(array(
+				'data' => $options['data']
+			));
+
+			try {
+				$this->render();
+			} catch (Exception $e) {
+				$this->_notify(null, array(
+					'message' => 'No fue posible exportar el resultado debido a un error interno.',
+					'redirect' => array('action' => 'asistencia_general')
+				));
+			}
+		} else {
+			$this->Session->write($this->_getSessionKey('Options'), $options);
+		}
 	}
 
 /**
