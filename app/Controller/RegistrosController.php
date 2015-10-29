@@ -144,29 +144,66 @@ class RegistrosController extends AppController {
 			$findOptions['order'] = $options['paging']['order'];
 		}
 
-		$this->Paginator->settings = array_merge(
-			$this->Paginator->settings,
-			$findOptions,
-			array('limit' => 10, 'maxLimit' => 10)
-		);
+		if ($this->request->ext === 'pdf') {
+			$title = 'Asistencia';
+			if (isset($options['data']['tipo'])) {
+				if ($options['data']['tipo'] === '0') {
+					$title = 'Inasistencia';
+				} elseif ($options['data']['tipo'] === '2') {
+					$title .= ' e Inasistencia';
+				}
+			}
+			$this->_setupCakePdf('Reporte de ' . $title);
 
-		$findCondition = array();
-		if (!empty($options['data']['asignatura_id'])) {
-			$findCondition = array('asignatura_id' => $options['data']['asignatura_id']);
+			$data = $options['data'];
+			if (!empty($data['asignatura_id'])) {
+				$this->Registro->Asignatura->recursive = 0;
+				$this->Registro->Asignatura->id = $data['asignatura_id'];
+				$data['asignatura'] = $this->Registro->Asignatura->field('asignatura');
+			}
+			if (!empty($data['usuario_id'])) {
+				$this->Registro->Usuario->id = $data['usuario_id'];
+				$data['usuario'] = $this->Registro->Usuario->field('docente');
+			}
+
+			$this->set(array(
+				'data' => $data,
+				'rows' => $this->Registro->find('all', $findOptions)
+			));
+
+			try {
+				$this->render();
+			} catch (Exception $e) {
+				$this->_notify(null, array(
+					'message' => 'No fue posible exportar el resultado debido a un error interno.',
+					'redirect' => array('action' => 'generar_reporte')
+				));
+			}
+		} else {
+			$this->Paginator->settings = array_merge(
+				$this->Paginator->settings,
+				$findOptions,
+				array('limit' => 10, 'maxLimit' => 10)
+			);
+
+			$findCondition = array();
+			if (!empty($options['data']['asignatura_id'])) {
+				$findCondition = array('asignatura_id' => $options['data']['asignatura_id']);
+			}
+			$this->set(array(
+				'asignaturas' => $this->Registro->getAsignaturasList(),
+				'usuarios' => $this->Registro->getUsuariosList($findCondition),
+				'rows' => $this->Paginator->paginate(),
+				'title_for_layout' => 'Generar reporte - Reportes',
+				'title_for_view' => 'Generar reporte'
+			));
+
+			if (isset($this->params['paging']['Registro']['order'])) {
+				$options['paging']['order'] = $this->params['paging']['Registro']['order'];
+			}
+
+			$this->Session->write($this->_getSessionKey('Options'), $options);
 		}
-		$this->set(array(
-			'asignaturas' => $this->Registro->getAsignaturasList(),
-			'usuarios' => $this->Registro->getUsuariosList($findCondition),
-			'rows' => $this->Paginator->paginate(),
-			'title_for_layout' => 'Generar reporte - Reportes',
-			'title_for_view' => 'Generar reporte'
-		));
-
-		if (isset($this->params['paging']['Registro']['order'])) {
-			$options['paging']['order'] = $this->params['paging']['Registro']['order'];
-		}
-
-		$this->Session->write($this->_getSessionKey('Options'), $options);
 	}
 
 /**

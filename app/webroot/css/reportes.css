@@ -125,3 +125,88 @@
 	font-weight: bold;
 	padding-right: 3px
 }
+
+.report-builder .report-details {
+	width: 786px
+}
+
+.report-builder .report-details th,
+.report-builder .report-details td {
+	border: none
+}
+
+.report-builder .report-details tbody td:first-child {
+	font-weight: bold;
+	width: 85px
+}
+
+.report-builder .report-container .table-bordered {
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	border-left: 1px solid #ddd;
+	border-radius: 0
+}
+
+.report-builder .report-container .table-bordered th:first-child,
+.report-builder .report-container .table-bordered td:first-child {
+	border-left: none
+}
+
+.report-builder .report-container .table-bordered thead:first-child tr:first-child > th:first-child,
+.report-builder .report-container .table-bordered tbody:first-child tr:first-child > td:first-child,
+.report-builder .report-container .table-bordered tbody:first-child tr:first-child > th:first-child {
+	-moz-border-radius-topleft: 0;
+	-webkit-border-top-left-radius: 0;
+	border-top-left-radius: 0
+}
+
+.report-builder .report-container .table-bordered thead:last-child tr:last-child > th:first-child,
+.report-builder .report-container .table-bordered tbody:last-child tr:last-child > td:first-child,
+.report-builder .report-container .table-bordered tbody:last-child tr:last-child > th:first-child,
+.report-builder .report-container .table-bordered tfoot:last-child tr:last-child > td:first-child,
+.report-builder .report-container .table-bordered tfoot:last-child tr:last-child > th:first-child {
+	-moz-border-radius-bottomleft: 0;
+	-webkit-border-bottom-left-radius: 0;
+	border-bottom-left-radius: 0
+}
+
+.report-builder .report-container .table-bordered thead:first-child tr:first-child > th:last-child,
+.report-builder .report-container .table-bordered tbody:first-child tr:first-child > td:last-child,
+.report-builder .report-container .table-bordered tbody:first-child tr:first-child > th:last-child {
+	-moz-border-radius-topright: 0;
+	-webkit-border-top-right-radius: 0;
+	border-top-right-radius: 0
+}
+
+.report-builder .report-table tbody td {
+	height: 40px
+}
+
+.report-builder .report-table tbody .empty td {
+	height: 20px;
+	text-align: center
+}
+
+.report-builder .report-table .row1 {
+	width: 290px
+}
+
+.report-builder .report-table .row2 {
+	text-align: center;
+	width: 45px
+}
+
+.report-builder .report-table .row3 {
+	width: 150px
+}
+
+.report-builder .report-table .row4 {
+	text-align: right;
+	width: 75px
+}
+
+.report-builder .report-table .row5,
+.report-builder .report-table .row6 {
+	text-align: right;
+	width: 55px
+}
