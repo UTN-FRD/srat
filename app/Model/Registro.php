@@ -138,7 +138,9 @@ class Registro extends AppModel {
  * @var array
  */
 	public $virtualFields = array(
-		'solo_fecha' => 'DATE(fecha)'
+		'asignatura' => 'CONCAT(Carrera.nombre, ": ", Materia.nombre)',
+		'solo_fecha' => 'DATE(fecha)',
+		'usuario' => 'CONCAT(Usuario.apellido, ", ", Usuario.nombre)'
 	);
 
 /**
