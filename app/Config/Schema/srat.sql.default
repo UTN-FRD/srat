@@ -241,6 +241,7 @@ CREATE TABLE `registros` (
   `salida` time DEFAULT NULL,
   `obs` text,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_REGISTRO` (`tipo`,`asignatura_id`,`usuario_id`,`fecha`),
   KEY `IK_TIPO` (`tipo`),
   KEY `IK_ASIGNATURA` (`asignatura_id`),
   KEY `IK_USUARIO` (`usuario_id`),
