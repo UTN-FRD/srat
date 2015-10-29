@@ -186,6 +186,7 @@ class Usuario extends AppModel {
  * @var array
  */
 	public $virtualFields = array(
+		'docente' => 'CONCAT("(", Usuario.legajo, ")", " ", Usuario.apellido, ", ", Usuario.nombre)',
 		'nombre_completo' => 'CONCAT(Usuario.apellido, ", ", Usuario.nombre)'
 	);
 

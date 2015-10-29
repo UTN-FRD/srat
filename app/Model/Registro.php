@@ -246,7 +246,7 @@ class Registro extends AppModel {
 		));
 		return $this->Usuario->find('list', array(
 			'conditions' => array('id' => $ids),
-			'fields' => array('id', 'nombre_completo'),
+			'fields' => array('id', 'docente'),
 			'order' => array('legajo' => 'asc')
 		));
 	}
