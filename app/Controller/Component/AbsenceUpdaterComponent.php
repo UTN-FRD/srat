@@ -99,10 +99,20 @@ class AbsenceUpdaterComponent extends Component {
 
 			$excludedDates = ClassRegistry::init('Periodo')->getDatesRange();
 			if (!empty($excludedDates)) {
+				$belongsTo = $model->belongsTo;
+				$hasOne = $model->hasOne;
+				$model->unbindModel(array(
+					'belongsTo' => array_keys($belongsTo),
+					'hasOne' => array_keys($hasOne)
+				));
 				$model->updateAll(
 					array('tipo' => 2),
 					array('CAST(fecha as DATE)' => $excludedDates, 'tipo' => 0)
 				);
+				$model->bindModel(array(
+					'belongsTo' => $belongsTo,
+					'hasOne' => $hasOne,
+				));
 			}
 		}
 	}
