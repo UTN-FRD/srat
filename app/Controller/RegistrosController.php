@@ -106,6 +106,7 @@ class RegistrosController extends AppController {
 						'tipo' => 1
 					)
 				);
+				$options['data'] = $this->request->data['Reporte'];
 			}
 		}
 
@@ -129,9 +130,10 @@ class RegistrosController extends AppController {
 			$findOptions['conditions']['CAST(Registro.fecha as DATE) <='] = $options['data']['hasta'];
 		}
 		if (isset($options['data']['tipo'])) {
-			if ($options['data']['tipo'] === '0') {
+			$options['data']['tipo'] = (int)$options['data']['tipo'];
+			if ($options['data']['tipo'] == 0) {
 				$findOptions['conditions']['Registro.tipo'] = 0;
-			} elseif ($options['data']['tipo'] === '1') {
+			} elseif ($options['data']['tipo'] == 1) {
 				$findOptions['conditions']['Registro.tipo'] = 1;
 			} else {
 				$findOptions['conditions']['Registro.tipo'] = array(0, 1);
@@ -148,8 +150,8 @@ class RegistrosController extends AppController {
 		);
 
 		$findCondition = array();
-		if (!empty($this->request->data['Reporte']['asignatura_id'])) {
-			$findCondition = array('asignatura_id' => $this->request->data['Reporte']['asignatura_id']);
+		if (!empty($options['data']['asignatura_id'])) {
+			$findCondition = array('asignatura_id' => $options['data']['asignatura_id']);
 		}
 		$this->set(array(
 			'asignaturas' => $this->Registro->getAsignaturasList(),
