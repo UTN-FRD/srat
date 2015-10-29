@@ -153,4 +153,24 @@ class Registro extends AppModel {
 		));
 		return (!empty($row[$this->alias]['solo_fecha']) ? $row[$this->alias]['solo_fecha'] : false);
 	}
+
+/**
+ * Devuelve una lista con la última fecha de inasistencia para todos los cargos
+ * registrados agrupado por usuario y asignatura
+ *
+ * @return array
+ */
+	public function getLastAbsenseDateByCargo() {
+		$rows = $this->find('all', array(
+			'conditions' => array('tipo' => 0),
+			'fields' => array('asignatura_id', 'MAX(DATE(fecha)) AS fecha', 'usuario_id'),
+			'group' => array('asignatura_id', 'usuario_id')
+		));
+
+		$out = array();
+		foreach ($rows as $row) {
+			$out[$row[$this->alias]['usuario_id']][$row[$this->alias]['asignatura_id']] = current($row[0]);
+		}
+		return $out;
+	}
 }
