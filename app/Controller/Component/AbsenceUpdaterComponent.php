@@ -54,13 +54,16 @@ class AbsenceUpdaterComponent extends Component {
 
 			$daysList = $model->Asignatura->Horario->getDaysListByCargo();
 			foreach ($daysList as $user => $cargos) {
-				foreach ($cargos as $cargo => $days) {
-					$start = $oldestDate;
+				foreach ($cargos as $cargo => $data) {
 					if (isset($absences[$user][$cargo])) {
 						$start = $absences[$user][$cargo];
+					} elseif (!empty($data['created'])) {
+						$start = $data['created'];
+					} else {
+						$start = $oldestDate;
 					}
 
-					$dates = $this->_generateDatesRange($start, $today, $days);
+					$dates = $this->_generateDatesRange($start, $today, $data['days']);
 					if (!empty($dates)) {
 						$rows = $model->find('list', array(
 							'fields' => array('id', 'solo_fecha'),

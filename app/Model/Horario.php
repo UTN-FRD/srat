@@ -145,13 +145,19 @@ class Horario extends AppModel {
 			'conditions' => array(
 				'NOT' => array('Cargo.usuario_id' => null)
 			),
-			'fields' => array('Cargo.asignatura_id', 'Cargo.usuario_id', 'Horario.dia'),
+			'fields' => array('Cargo.asignatura_id', 'Cargo.usuario_id', 'Cargo.created', 'Horario.dia'),
 			'recursive' => 0
 		));
 
 		$out = array();
 		foreach ($rows as $row) {
-			$out[$row['Cargo']['usuario_id']][$row['Cargo']['asignatura_id']][] = $row['Horario']['dia'];
+			if (!isset($out[$row['Cargo']['usuario_id']][$row['Cargo']['asignatura_id']])) {
+				$out[$row['Cargo']['usuario_id']][$row['Cargo']['asignatura_id']] = array(
+					'created' => $row['Cargo']['created'],
+					'days' => array()
+				);
+			}
+			$out[$row['Cargo']['usuario_id']][$row['Cargo']['asignatura_id']]['days'][] = $row['Horario']['dia'];
 		}
 		return $out;
 	}
