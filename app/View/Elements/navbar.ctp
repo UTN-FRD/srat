@@ -130,11 +130,16 @@ $links = array(
 	array(
 		'condition' => $isAdmin,
 		'text' => 'Reportes',
-		'url' => array(
-			'controller' => 'registros',
-			'action' => 'reporte',
-			'admin' => true,
-			'plugin' => false
+		'dropdown' => array(
+			array(
+				'text' => 'Generar reporte',
+				'url' => array(
+					'controller' => 'registros',
+					'action' => 'generar_reporte',
+					'admin' => true,
+					'plugin' => false
+				)
+			)
 		)
 	),
 	array(

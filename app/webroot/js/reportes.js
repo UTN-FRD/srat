@@ -12,23 +12,24 @@
  */
 
 $(function() {
-	var $form = $('#ReporteAdminReporteForm'),
-	$table = $('#view .table');
+	if ($('.report-builder').length) {
+		var $table = $('.report-preview');
 
-	if ($('#ReporteAsignaturaId').val() !== '') {
-		$('thead th:nth-child(2), tbody td:nth-child(2)', $table).hide();
+		$('#ReporteAsignaturaId').on('change', function() {
+			$('#ReporteUsuarioId').select2('data', null);
+			$('#ReporteAdminGenerarReporteForm').submit();
+		});
+
+		if ($('#ReporteAsignaturaId').val() !== '') {
+			$('thead th:nth-child(2), tbody td:nth-child(2)', $table).hide();
+		}
+
+		if ($('#ReporteUsuarioId').val() !== '') {
+			$('thead th:nth-child(3), tbody td:nth-child(3), thead th:nth-child(4), tbody td:nth-child(4)', $table).hide();
+		}
+
+		if ($('tr.empty', $table).length) {
+			$('tbody td', $table).attr('colspan', $('thead th:visible', $table).length);
+		}
 	}
-
-	if ($('#ReporteUsuarioId').val() !== '') {
-		$('thead th:nth-child(3), tbody td:nth-child(3), thead th:nth-child(4), tbody td:nth-child(4)', $table).hide();
-	}
-
-	if ($('tr.empty', $table).length) {
-		$('tbody td', $table).attr('colspan', $('thead th:visible', $table).length);
-	}
-
-	$('#ReporteAsignaturaId').on('change', function() {
-		$('#ReporteUsuarioId').select2('data', null);
-		$form.submit();
-	});
 });
