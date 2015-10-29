@@ -28,6 +28,7 @@ class AppController extends Controller {
  * @var array
  */
 	public $components = array(
+		'AbsenceUpdater',
 		'Security' => array('blackHoleCallback' => 'blackHole'),
 		'Session',
 		'Flash',
