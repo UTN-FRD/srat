@@ -126,4 +126,39 @@ class Periodo extends AppModel {
 
 		return $condition;
 	}
+
+/**
+ * Genera un rango de fechas incluyendo todos los períodos registrados
+ *
+ * @return array Rango de fechas
+ */
+	public function getDatesRange() {
+		$rows = $this->find('all', array(
+			'fields' => array('desde', 'hasta'),
+			'order' => array('desde' => 'ASC')
+		));
+
+		$out = array();
+		foreach ($rows as $row) {
+			if ($row[$this->alias]['desde'] === $row[$this->alias]['hasta']) {
+				$out[] = $row[$this->alias]['desde'];
+			} else {
+				$end = new DateTime($row['Periodo']['hasta']);
+				$end = $end->modify('+1 day');
+				$period = new DatePeriod(
+					new DateTime($row['Periodo']['desde']),
+					DateInterval::createFromDateString('1 day'),
+					$end
+				);
+				foreach ($period as $date) {
+					$out[] = $date->format('Y-m-d');
+				}
+			}
+		}
+
+		if (!empty($out)) {
+			$out = array_unique($out);
+		}
+		return $out;
+	}
 }
