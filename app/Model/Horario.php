@@ -121,4 +121,38 @@ class Horario extends AppModel {
 			)
 		)
 	);
+
+/**
+ * Devuelve los días para todos los cargos registrados agrupado por usuario y asignatura
+ *
+ * @return array
+ */
+	public function getDaysListByCargo() {
+		$this->unbindModel(array(
+			'belongsTo' => array('Asignatura')
+		));
+		$this->bindModel(array(
+			'hasOne' => array(
+				'Cargo' => array(
+					'conditions' => 'Cargo.asignatura_id = Horario.asignatura_id',
+					'fields' => array('usuario_id', 'asignatura_id'),
+					'foreignKey' => false
+				)
+			)
+		));
+
+		$rows = $this->find('all', array(
+			'conditions' => array(
+				'NOT' => array('Cargo.usuario_id' => null)
+			),
+			'fields' => array('Cargo.asignatura_id', 'Cargo.usuario_id', 'Horario.dia'),
+			'recursive' => 0
+		));
+
+		$out = array();
+		foreach ($rows as $row) {
+			$out[$row['Cargo']['usuario_id']][$row['Cargo']['asignatura_id']][] = $row['Horario']['dia'];
+		}
+		return $out;
+	}
 }
