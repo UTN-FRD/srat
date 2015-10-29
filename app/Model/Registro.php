@@ -212,6 +212,26 @@ class Registro extends AppModel {
 	}
 
 /**
+ * Devuelve una lista de las carreras (por asignatura) que se encuentran en la tabla de registros
+ *
+ * @return array Lista de carreras
+ */
+	public function getCarrerasList() {
+		$ids = $this->find('list', array(
+			'fields' => array('id', 'asignatura_id'),
+			'group' => array('asignatura_id')
+		));
+
+		$this->Asignatura->unbindModel(array('belongsTo' => array('Area', 'Nivel', 'Materia')));
+		return $this->Asignatura->find('list', array(
+			'conditions' => array('Asignatura.id' => $ids),
+			'fields' => array('Asignatura.carrera_id', 'Carrera.nombre'),
+			'group' => array('Asignatura.carrera_id'),
+			'recursive' => 0
+		));
+	}
+
+/**
  * Devuelve una lista de los usuarios que se encuentran en la tabla de registros
  *
  * @param array $conditions Condiciones de búsqueda
