@@ -193,4 +193,41 @@ class Registro extends AppModel {
 		}
 		return $out;
 	}
+
+/**
+ * Devuelve una lista de las asignaturas que se encuentran en la tabla de registros
+ *
+ * @return array Lista de asignaturas
+ */
+	public function getAsignaturasList() {
+		$ids = $this->find('list', array(
+			'fields' => array('id', 'asignatura_id'),
+			'group' => array('asignatura_id')
+		));
+		return $this->Asignatura->find('list', array(
+			'conditions' => array('Asignatura.id' => $ids),
+			'order' => array('Materia.nombre' => 'asc'),
+			'recursive' => 0
+		));
+	}
+
+/**
+ * Devuelve una lista de los usuarios que se encuentran en la tabla de registros
+ *
+ * @param array $conditions Condiciones de búsqueda
+ *
+ * @return array Lista de usuarios
+ */
+	public function getUsuariosList($conditions = array()) {
+		$ids = $this->find('list', array(
+			'conditions' => $conditions,
+			'fields' => array('id', 'usuario_id'),
+			'group' => array('usuario_id')
+		));
+		return $this->Usuario->find('list', array(
+			'conditions' => array('id' => $ids),
+			'fields' => array('id', 'nombre_completo'),
+			'order' => array('legajo' => 'asc')
+		));
+	}
 }
