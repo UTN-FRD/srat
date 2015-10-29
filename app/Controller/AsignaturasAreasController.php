@@ -50,7 +50,7 @@ class AsignaturasAreasController extends AppController {
 
 		$this->set(array(
 			'rows' => $this->Paginator->paginate(),
-			'title_for_layout' => 'Áreas - Asignaturas',
+			'title_for_layout' => 'Áreas - Administrar',
 			'title_for_view' => 'Áreas'
 		));
 	}
@@ -70,7 +70,7 @@ class AsignaturasAreasController extends AppController {
 		}
 
 		$this->set(array(
-			'title_for_layout' => 'Agregar - Áreas - Asignaturas',
+			'title_for_layout' => 'Agregar - Áreas - Administrar',
 			'title_for_view' => 'Agregar área'
 		));
 	}
@@ -104,7 +104,7 @@ class AsignaturasAreasController extends AppController {
 
 		$this->set(array(
 			'associated' => $this->AsignaturasArea->hasAssociations(),
-			'title_for_layout' => 'Editar - Áreas - Asignaturas',
+			'title_for_layout' => 'Editar - Áreas - Administrar',
 			'title_for_view' => 'Editar área'
 		));
 	}

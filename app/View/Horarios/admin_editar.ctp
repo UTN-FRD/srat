@@ -20,7 +20,7 @@ $this->Html->css('horarios', array('inline' => false));
 /**
  * Breadcrumbs
  */
-$this->Html->addCrumb('Asignaturas', array('controller' => 'asignaturas'));
+$this->Html->addCrumb('Administrar');
 $this->Html->addCrumb('Horarios', array('action' => 'index'));
 $this->Html->addCrumb('Editar');
 ?>

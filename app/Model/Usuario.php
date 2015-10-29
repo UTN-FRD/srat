@@ -186,7 +186,8 @@ class Usuario extends AppModel {
  * @var array
  */
 	public $virtualFields = array(
-		'nombre_completo' => 'CONCAT(Usuario.nombre, " ", Usuario.apellido)'
+		'docente' => 'CONCAT("(", Usuario.legajo, ")", " ", Usuario.apellido, ", ", Usuario.nombre)',
+		'nombre_completo' => 'CONCAT(Usuario.apellido, ", ", Usuario.nombre)'
 	);
 
 /**
@@ -309,33 +310,19 @@ class Usuario extends AppModel {
 				'hasOne' => array(
 					'Registro' => array(
 						'conditions' => array(
-							'Registro.asignatura_id = Cargo.asignatura_id',
 							'DATE(Registro.fecha) = CURDATE()',
+							'Registro.asignatura_id = Cargo.asignatura_id',
 							'Registro.tipo' => 1,
 							'Registro.usuario_id = Cargo.usuario_id'
 						),
 						'foreignKey' => false
 					),
-					'Carrera' => array(
-						'className' => 'AsignaturasCarrera',
-						'conditions' => 'Carrera.id = Asignatura.carrera_id',
-						'foreignKey' => false
-					),
 					'Horario' => array(
 						'conditions' => 'Horario.asignatura_id = Asignatura.id',
-						'foreignKey' => false
-					),
-					'Materia' => array(
-						'className' => 'AsignaturasMateria',
-						'conditions' => 'Materia.id = Asignatura.materia_id',
 						'foreignKey' => false
 					)
 				)
 			));
-
-			$this->Cargo->virtualFields = array(
-				'asignatura' => $this->Cargo->Asignatura->virtualFields['asignatura']
-			);
 
 			$rows = $this->Cargo->find('all', array(
 				'fields' => array(

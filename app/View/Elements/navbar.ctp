@@ -49,7 +49,7 @@ $links = array(
 	),
 	array(
 		'condition' => $isAdmin,
-		'text' => 'Asignaturas',
+		'text' => 'Administrar',
 		'dropdown' => array(
 			array(
 				'text' => 'Áreas',
@@ -64,6 +64,15 @@ $links = array(
 				'text' => 'Asignaturas',
 				'url' => array(
 					'controller' => 'asignaturas',
+					'action' => 'index',
+					'admin' => true,
+					'plugin' => false
+				)
+			),
+			array(
+				'text' => 'Cargos',
+				'url' => array(
+					'controller' => 'cargos',
 					'action' => 'index',
 					'admin' => true,
 					'plugin' => false
@@ -97,9 +106,9 @@ $links = array(
 				)
 			),
 			array(
-				'text' => 'Usuarios',
+				'text' => 'Períodos no laborables',
 				'url' => array(
-					'controller' => 'cargos',
+					'controller' => 'periodos',
 					'action' => 'index',
 					'admin' => true,
 					'plugin' => false
@@ -110,10 +119,10 @@ $links = array(
 	array(
 		'condition' => $isAdmin,
 		'options' => array('escape' => false),
-		'text' => 'Inasistencias <span class="badge badge-info">' . (isset($totalInasistencias) ? $totalInasistencias : 0) . '</span>',
+		'text' => 'Inasistencias <span class="badge badge-info">' . (isset($totalAbsences) ? $totalAbsences : 0) . '</span>',
 		'url' => array(
-			'controller' => 'registros',
-			'action' => 'inasistencias',
+			'controller' => 'inasistencias',
+			'action' => 'index',
 			'admin' => true,
 			'plugin' => false
 		)
@@ -121,11 +130,28 @@ $links = array(
 	array(
 		'condition' => $isAdmin,
 		'text' => 'Reportes',
-		'url' => array(
-			'controller' => 'registros',
-			'action' => 'reporte',
-			'admin' => true,
-			'plugin' => false
+		'dropdown' => array(
+			array(
+				'text' => 'Generar reporte',
+				'url' => array(
+					'controller' => 'registros',
+					'action' => 'generar_reporte',
+					'admin' => true,
+					'plugin' => false
+				)
+			),
+			array(
+				'divider' => true
+			),
+			array(
+				'text' => 'Asistencia general',
+				'url' => array(
+					'controller' => 'registros',
+					'action' => 'asistencia_general',
+					'admin' => true,
+					'plugin' => false
+				)
+			)
 		)
 	),
 	array(
@@ -154,6 +180,7 @@ $links = array(
 	),
 	array(
 		'condition' => $loggedIn,
+		'options' => array('class' => 'strong'),
 		'text' => (isset($user['nombre_completo']) ? $user['nombre_completo'] : null),
 		'dropdown' => array(
 			array(

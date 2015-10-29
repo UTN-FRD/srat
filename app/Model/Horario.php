@@ -123,19 +123,42 @@ class Horario extends AppModel {
 	);
 
 /**
- * Valida que la hora de salida sea mayor que la hora de entrada
+ * Devuelve los días para todos los cargos registrados agrupado por usuario y asignatura
  *
- * @param array $check Nombre del campo y su valor
- *
- * @return bool `true` en caso exitoso o `false` en caso contrario
+ * @return array
  */
-	public function validateEndTime($check) {
-		if (!empty($this->data[$this->alias]['entrada']) && !empty($this->data[$this->alias]['salida'])) {
-			$startTime = (int)strtotime($this->data[$this->alias]['entrada']);
-			$endTime = (int)strtotime($this->data[$this->alias]['salida']);
+	public function getDaysListByCargo() {
+		$this->unbindModel(array(
+			'belongsTo' => array('Asignatura')
+		));
+		$this->bindModel(array(
+			'hasOne' => array(
+				'Cargo' => array(
+					'conditions' => 'Cargo.asignatura_id = Horario.asignatura_id',
+					'fields' => array('usuario_id', 'asignatura_id'),
+					'foreignKey' => false
+				)
+			)
+		));
 
-			return ($startTime < $endTime);
+		$rows = $this->find('all', array(
+			'conditions' => array(
+				'NOT' => array('Cargo.usuario_id' => null)
+			),
+			'fields' => array('Cargo.asignatura_id', 'Cargo.usuario_id', 'Cargo.created', 'Horario.dia'),
+			'recursive' => 0
+		));
+
+		$out = array();
+		foreach ($rows as $row) {
+			if (!isset($out[$row['Cargo']['usuario_id']][$row['Cargo']['asignatura_id']])) {
+				$out[$row['Cargo']['usuario_id']][$row['Cargo']['asignatura_id']] = array(
+					'created' => $row['Cargo']['created'],
+					'days' => array()
+				);
+			}
+			$out[$row['Cargo']['usuario_id']][$row['Cargo']['asignatura_id']]['days'][] = $row['Horario']['dia'];
 		}
-		return false;
+		return $out;
 	}
 }

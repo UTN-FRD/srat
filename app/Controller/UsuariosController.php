@@ -222,7 +222,11 @@ class UsuariosController extends AppController {
 			'fields' => array('id', 'admin', 'apellido', 'estado', 'legajo', 'nombre')
 		);
 
-		$this->set('rows', $this->Paginator->paginate());
+		$this->set(array(
+			'rows' => $this->Paginator->paginate(),
+			'title_for_layout' => 'Usuarios - Sistema',
+			'title_for_view' => 'Usuarios'
+		));
 	}
 
 /**
@@ -242,6 +246,11 @@ class UsuariosController extends AppController {
 				unset($this->request->data['Usuario']['password']);
 			}
 		}
+
+		$this->set(array(
+			'title_for_layout' => 'Agregar - Usuarios - Sistema',
+			'title_for_view' => 'Agregar usuario'
+		));
 	}
 
 /**
@@ -284,6 +293,11 @@ class UsuariosController extends AppController {
 				'id', 'admin', 'reset', 'apellido', 'estado', 'legajo', 'nombre'
 			));
 		}
+
+		$this->set(array(
+			'title_for_layout' => 'Editar - Usuarios - Sistema',
+			'title_for_view' => 'Editar usuario'
+		));
 	}
 
 /**

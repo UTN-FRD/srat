@@ -1,0 +1,35 @@
+/*!
+ * Períodos
+ *
+ * Sistema de Registro de Asistencia y Temas
+ *
+ * (c) Universidad Tecnológica Nacional - Facultad Regional Delta
+ *
+ * Este archivo está sujeto a los términos y condiciones descritos
+ * en el archivo LICENCIA.txt que acompaña a este software.
+ *
+ * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
+ */
+
+.table-wrapper thead th:nth-child(2),
+.table-wrapper tbody td:nth-child(2),
+.table-wrapper thead th:nth-child(3),
+.table-wrapper tbody td:nth-child(3) {
+	width: 65px
+}
+
+.datefield:nth-child(1) {
+	margin-right: 3px;
+	width: 60px
+}
+
+.datefield:nth-child(2) {
+	margin-left: 3px;
+	margin-right: 3px;
+	width: 115px
+}
+
+.datefield:nth-child(3) {
+	margin-left: 3px;
+	width: 75px
+}

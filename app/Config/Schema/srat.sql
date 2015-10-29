@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 5.5.40, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.6.27, for debian-linux-gnu (x86_64)
 -- ------------------------------------------------------
--- Server version	5.5.40-0ubuntu0.14.04.1
+-- Server version	5.6.27-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -12,10 +12,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-DROP DATABASE IF EXISTS `srat`;
-CREATE DATABASE `srat`;
-USE `srat`;
 
 --
 -- Table structure for table `asignaturas`
@@ -190,6 +186,7 @@ CREATE TABLE `cargos` (
   `dedicacion_id` tinyint(3) unsigned NOT NULL,
   `dedicacion` decimal(2,1) unsigned NOT NULL,
   `resolucion` smallint(5) unsigned DEFAULT NULL,
+  `created` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_CARGO` (`asignatura_id`,`usuario_id`),
   KEY `IK_ASIGNATURA` (`asignatura_id`),
@@ -317,6 +314,31 @@ LOCK TABLES `horarios` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `periodos`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `periodos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `desde` date NOT NULL,
+  `hasta` date NOT NULL,
+  `obs` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_PERIODO` (`desde`,`hasta`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `periodos`
+--
+
+LOCK TABLES `periodos` WRITE;
+/*!40000 ALTER TABLE `periodos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `periodos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `registros`
 --
 
@@ -377,7 +399,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,1,1,'$2a$10$JTFmlyWPAXBXVh.NW0azOuU1WvwL/W0q2vRQum7vM645Ote/Cy8Oq',NULL,1,'-','Administrador');
+INSERT INTO `usuarios` VALUES (1,1,1,'$2a$10$JTFmlyWPAXBXVh.NW0azOuU1WvwL/W0q2vRQum7vM645Ote/Cy8Oq',NULL,1,'-','Administrador',NULL);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

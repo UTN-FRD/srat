@@ -1,6 +1,6 @@
 <?php
 /**
- * Tabla para reportes de asistencia
+ * Tabla para reportes de asistencia y/o inasistencia
  *
  * Sistema de Registro de Asistencia y Temas
  *
@@ -21,7 +21,7 @@
 
 			<?php if (empty($data['usuario'])): ?>
 				<th class="row2">Legajo</th>
-				<th class="row3">Usuario</th>
+				<th class="row3">Docente</th>
 			<?php endif ?>
 
 			<th class="row4">Fecha</th>
@@ -43,7 +43,7 @@
 
 			<?php if (empty($data['usuario'])): ?>
 				<td class="row2"><?php echo $row['Usuario']['legajo'] ?></td>
-				<td class="row3"><?php echo h(sprintf('%s, %s', $row['Usuario']['apellido'], $row['Usuario']['nombre'])) ?></td>
+				<td class="row3"><?php echo h($row['Registro']['usuario']) ?></td>
 			<?php endif ?>
 
 			<td class="row4">

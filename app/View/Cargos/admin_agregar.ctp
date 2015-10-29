@@ -20,8 +20,8 @@ $this->Html->css('cargos', array('inline' => false));
 /**
  * Breadcrumbs
  */
-$this->Html->addCrumb('Asignaturas', array('controller' => 'asignaturas'));
-$this->Html->addCrumb('Usuarios', array('action' => 'index'));
+$this->Html->addCrumb('Administrar');
+$this->Html->addCrumb('Cargos', array('action' => 'index'));
 $this->Html->addCrumb('Agregar');
 ?>
 <?php echo $this->Form->create('Cargo', array('class' => 'form-vertical')) ?>
@@ -35,7 +35,8 @@ $this->Html->addCrumb('Agregar');
 	));
 
 	echo $this->Form->input('usuario_id', array(
-		'class' => 'combobox span5'
+		'class' => 'combobox span5',
+		'label' => 'Docente'
 	));
 
 	echo $this->Form->input('grado_id', array(

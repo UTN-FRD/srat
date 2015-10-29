@@ -28,11 +28,11 @@
 	endif;
 
 	if (!isset($search) || $search):
-		echo $this->element('table/search');
+		echo $this->element('Table/search');
 	endif;
 
 	if (!empty($rows) && (!isset($pager) || $pager)):
-		echo $this->element('table/pager');
+		echo $this->element('Table/pager');
 	endif;
 
 	$classes = 'table table-bordered table-fixed table-hover table-row-numbers table-striped';

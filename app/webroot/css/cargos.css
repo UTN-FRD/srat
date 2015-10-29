@@ -25,6 +25,16 @@
 	width: 95px
 }
 
+#view .table tbody td {
+	height: 40px;
+	vertical-align: middle
+}
+
+#view .table tbody .empty td {
+	height: 20px;
+	text-align: center
+}
+
 #CargoDedicacion,
 #CargoResolucion {
 	text-align: center;

@@ -15,7 +15,7 @@
 /**
  * Breadcrumbs
  */
-$this->Html->addCrumb('Asignaturas', array('controller' => 'asignaturas'));
+$this->Html->addCrumb('Administrar');
 $this->Html->addCrumb('Materias', array('action' => 'index'));
 $this->Html->addCrumb('Agregar');
 ?>

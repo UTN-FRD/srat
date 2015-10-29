@@ -13,27 +13,44 @@
  */
 
 /**
+ * CSS
+ */
+$this->Html->css('periodos', array('inline' => false));
+
+/**
  * Breadcrumbs
  */
 $this->Html->addCrumb('Administrar');
-$this->Html->addCrumb('Carreras', array('action' => 'index'));
+$this->Html->addCrumb('Períodos no laborables', array('action' => 'index'));
 $this->Html->addCrumb('Agregar');
 ?>
-<?php echo $this->Form->create('AsignaturasCarrera', array('class' => 'form-vertical')) ?>
+<?php echo $this->Form->create('Periodo', array('class' => 'form-vertical')) ?>
 <ul>
 	<li>Los campos indicados con <span class="required">*</span>son obligatorios.</li>
 </ul>
 <fieldset>
 	<?php
-	echo $this->Form->input('nombre', array(
-		'after' => 'Hasta 50 caracteres',
+	$currentYear = date('Y');
+	echo $this->Form->input('desde', array(
 		'autofocus',
-		'class' => 'span4'
+		'class' => 'datefield',
+		'dateFormat' => 'DMY',
+		'maxYear' => $currentYear + 1,
+		'minYear' => $currentYear - 1,
+		'orderYear' => 'asc'
+	));
+
+	echo $this->Form->input('hasta', array(
+		'class' => 'datefield',
+		'dateFormat' => 'DMY',
+		'maxYear' => $currentYear + 1,
+		'minYear' => $currentYear - 1,
+		'orderYear' => 'asc'
 	));
 
 	echo $this->Form->input('obs', array(
 		'after' => 'Hasta 255 caracteres',
-		'class' => 'span4',
+		'class' => 'span5',
 		'label' => 'Descripción',
 		'type' => 'textarea'
 	));

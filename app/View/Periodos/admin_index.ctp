@@ -13,10 +13,15 @@
  */
 
 /**
+ * CSS
+ */
+$this->Html->css('periodos', array('inline' => false));
+
+/**
  * Breadcrumbs
  */
 $this->Html->addCrumb('Administrar');
-$this->Html->addCrumb('Áreas');
+$this->Html->addCrumb('Períodos no laborables');
 
 /**
  * Tareas
@@ -35,7 +40,8 @@ $this->set('tasks', array(
  */
 $headers = array(
 	'#',
-	$this->Paginator->sort('nombre', 'Nombre'),
+	$this->Paginator->sort('desde', 'Desde'),
+	$this->Paginator->sort('hasta', 'Hasta'),
 	$this->Paginator->sort('obs', 'Descripción'),
 	'Tareas'
 );
@@ -47,18 +53,19 @@ if (!empty($rows)):
 	$start = $this->Paginator->counter(array('format' => '%start%'));
 	foreach ($rows as $rid => $row):
 		$tasks = array(
-			$this->Html->link('editar', array('action' => 'editar', $row['AsignaturasArea']['id'])),
+			$this->Html->link('editar', array('action' => 'editar', $row['Periodo']['id'])),
 			$this->Form->postLink(
 				'eliminar',
-				array('action' => 'eliminar', $row['AsignaturasArea']['id']),
+				array('action' => 'eliminar', $row['Periodo']['id']),
 				array('class' => 'delete', 'method' => 'delete')
 			)
 		);
 
 		$rows[$rid] = array(
 			$start++,
-			h($row['AsignaturasArea']['nombre']),
-			nl2br(h($row['AsignaturasArea']['obs'])),
+			date('d/m/Y', strtotime($row['Periodo']['desde'])),
+			date('d/m/Y', strtotime($row['Periodo']['hasta'])),
+			nl2br(h($row['Periodo']['obs'])),
 			implode(' ', $tasks)
 		);
 	endforeach;

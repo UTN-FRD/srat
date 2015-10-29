@@ -31,7 +31,7 @@ class CargosController extends AppController {
 		'Search.Prg',
 		'Paginator' => array(
 			'fields' => array(
-				'id', 'asignatura', 'usuario', 'dedicacion', 'resolucion',
+				'id', 'asignatura', 'docente', 'dedicacion', 'resolucion',
 				'Tipo.nombre', 'Dedicacion.nombre', 'Grado.nombre'
 			),
 			'limit' => 15,
@@ -47,26 +47,6 @@ class CargosController extends AppController {
  * @return void
  */
 	public function admin_index() {
-		$this->Cargo->virtualFields = array(
-			'asignatura' => $this->Cargo->Asignatura->virtualFields['asignatura'],
-			'usuario' => $this->Cargo->Usuario->virtualFields['nombre_completo']
-		);
-
-		$this->Cargo->bindModel(array(
-			'hasOne' => array(
-				'Carrera' => array(
-					'className' => 'AsignaturasCarrera',
-					'conditions' => 'Carrera.id = Asignatura.carrera_id',
-					'foreignKey' => false
-				),
-				'Materia' => array(
-					'className' => 'AsignaturasMateria',
-					'conditions' => 'Materia.id = Asignatura.materia_id',
-					'foreignKey' => false
-				)
-			)
-		), false);
-
 		$this->Prg->commonProcess();
 		$this->Paginator->settings += array(
 			'conditions' => $this->Cargo->parseCriteria($this->Prg->parsedParams())
@@ -74,8 +54,8 @@ class CargosController extends AppController {
 
 		$this->set(array(
 			'rows' => $this->Paginator->paginate(),
-			'title_for_layout' => 'Usuarios - Asignaturas',
-			'title_for_view' => 'Usuarios'
+			'title_for_layout' => 'Cargos - Administrar',
+			'title_for_view' => 'Cargos'
 		));
 	}
 
@@ -95,8 +75,8 @@ class CargosController extends AppController {
 
 		$this->__setFormData();
 		$this->set(array(
-			'title_for_layout' => 'Agregar - Usuarios - Asignaturas',
-			'title_for_view' => 'Agregar usuario'
+			'title_for_layout' => 'Agregar - Cargos - Administrar',
+			'title_for_view' => 'Agregar cargo'
 		));
 	}
 
@@ -135,8 +115,8 @@ class CargosController extends AppController {
 
 		$this->__setFormData();
 		$this->set(array(
-			'title_for_layout' => 'Editar - Usuarios - Asignaturas',
-			'title_for_view' => 'Editar usuario'
+			'title_for_layout' => 'Editar - Cargos - Administrar',
+			'title_for_view' => 'Editar cargo'
 		));
 	}
 

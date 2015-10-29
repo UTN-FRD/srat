@@ -16,11 +16,11 @@
 App::uses('AppController', 'Controller');
 
 /**
- * AsignaturasMaterias
+ * Períodos
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
-class AsignaturasMateriasController extends AppController {
+class PeriodosController extends AppController {
 
 /**
  * Componentes
@@ -30,10 +30,11 @@ class AsignaturasMateriasController extends AppController {
 	public $components = array(
 		'Search.Prg',
 		'Paginator' => array(
-			'fields' => array('id', 'nombre', 'obs'),
+			'fields' => array('id', 'desde', 'hasta', 'obs'),
 			'limit' => 15,
 			'maxLimit' => 15,
-			'order' => array('nombre' => 'asc')
+			'order' => array('desde' => 'asc'),
+			'recursive' => -1
 		)
 	);
 
@@ -45,13 +46,13 @@ class AsignaturasMateriasController extends AppController {
 	public function admin_index() {
 		$this->Prg->commonProcess();
 		$this->Paginator->settings += array(
-			'conditions' => $this->AsignaturasMateria->parseCriteria($this->Prg->parsedParams())
+			'conditions' => $this->Periodo->parseCriteria($this->Prg->parsedParams())
 		);
 
 		$this->set(array(
 			'rows' => $this->Paginator->paginate(),
-			'title_for_layout' => 'Materias - Administrar',
-			'title_for_view' => 'Materias'
+			'title_for_layout' => 'Períodos no laborables - Administrar',
+			'title_for_view' => 'Períodos no laborables'
 		));
 	}
 
@@ -62,16 +63,16 @@ class AsignaturasMateriasController extends AppController {
  */
 	public function admin_agregar() {
 		if ($this->request->is('post')) {
-			if ($this->AsignaturasMateria->save($this->request->data)) {
+			if ($this->Periodo->save($this->request->data)) {
 				$this->_notify('record_created');
-			} elseif (empty($this->AsignaturasMateria->validationErrors)) {
+			} elseif (empty($this->Periodo->validationErrors)) {
 				$this->_notify('record_not_saved');
 			}
 		}
 
 		$this->set(array(
-			'title_for_layout' => 'Agregar - Materias - Administrar',
-			'title_for_view' => 'Agregar materia'
+			'title_for_layout' => 'Agregar - Períodos no laborables - Administrar',
+			'title_for_view' => 'Agregar período no laborable'
 		));
 	}
 
@@ -85,27 +86,26 @@ class AsignaturasMateriasController extends AppController {
  * @throws NotFoundException Si el registro no existe
  */
 	public function admin_editar($id = null) {
-		$this->AsignaturasMateria->id = $id;
-		if (!filter_var($id, FILTER_VALIDATE_INT) || !$this->AsignaturasMateria->exists()) {
+		$this->Periodo->id = $id;
+		if (!filter_var($id, FILTER_VALIDATE_INT) || !$this->Periodo->exists()) {
 			throw new NotFoundException;
 		}
 
 		if ($this->request->is('put')) {
-			if ($this->AsignaturasMateria->save($this->request->data)) {
+			if ($this->Periodo->save($this->request->data)) {
 				$this->_notify('record_modified');
-			} elseif (empty($this->AsignaturasMateria->validationErrors)) {
+			} elseif (empty($this->Periodo->validationErrors)) {
 				$this->_notify('record_not_saved');
 			}
 		}
 
 		if (!$this->request->data) {
-			$this->request->data = $this->AsignaturasMateria->read(array('id', 'nombre', 'obs'));
+			$this->request->data = $this->Periodo->read(array('id', 'desde', 'hasta', 'obs'));
 		}
 
 		$this->set(array(
-			'associated' => $this->AsignaturasMateria->hasAssociations(),
-			'title_for_layout' => 'Editar - Materias - Administrar',
-			'title_for_view' => 'Editar materia'
+			'title_for_layout' => 'Editar - Períodos no laborables - Administrar',
+			'title_for_view' => 'Editar período no laborable'
 		));
 	}
 
@@ -124,18 +124,14 @@ class AsignaturasMateriasController extends AppController {
 			throw new MethodNotAllowedException;
 		}
 
-		$this->AsignaturasMateria->id = $id;
-		if (!filter_var($id, FILTER_VALIDATE_INT) || !$this->AsignaturasMateria->exists()) {
+		$this->Periodo->id = $id;
+		if (!filter_var($id, FILTER_VALIDATE_INT) || !$this->Periodo->exists()) {
 			throw new NotFoundException;
 		}
 
 		$notify = 'record_not_deleted';
-		if ($this->AsignaturasMateria->hasAssociations()) {
-			$notify = 'record_delete_associated';
-		} else {
-			if ($this->AsignaturasMateria->delete()) {
-				$notify = 'record_deleted';
-			}
+		if ($this->Periodo->delete()) {
+			$notify = 'record_deleted';
 		}
 		$this->_notify($notify);
 	}

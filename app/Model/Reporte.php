@@ -41,6 +41,12 @@ class Reporte extends AppModel {
 			'null' => false,
 			'type' => 'integer'
 		),
+		'carrera_id' => array(
+			'default' => null,
+			'length' => 10,
+			'null' => false,
+			'type' => 'integer'
+		),
 		'usuario_id' => array(
 			'default' => null,
 			'length' => 10,
@@ -70,6 +76,10 @@ class Reporte extends AppModel {
 		'Asignatura' => array(
 			'foreignKey' => false
 		),
+		'Carrera' => array(
+			'className' => 'AsignaturasCarrera',
+			'foreignKey' => false
+		),
 		'Usuario' => array(
 			'foreignKey' => false
 		)
@@ -91,6 +101,19 @@ class Reporte extends AppModel {
 			),
 			'exists' => array(
 				'rule' => array('validateExists', 'Asignatura'),
+				'message' => 'El valor seleccionado no existe'
+			)
+		),
+		'carrera_id' => array(
+			'notBlank' => array(
+				'rule' => 'notBlank',
+				'required' => true,
+				'allowEmpty' => true,
+				'last' => true,
+				'message' => 'Este campo no puede estar vacío'
+			),
+			'exists' => array(
+				'rule' => array('validateExists', 'Carrera'),
 				'message' => 'El valor seleccionado no existe'
 			)
 		),
@@ -133,93 +156,9 @@ class Reporte extends AppModel {
 				'message' => 'La fecha seleccionada no es válida'
 			),
 			'validEndDate' => array(
-				'rule' => 'validEndDate',
+				'rule' => 'validateEndDate',
 				'message' => 'La fecha seleccionada debe ser igual o mayor que la indicada en el campo previo'
 			)
 		)
 	);
-
-/**
- * Valida que la fecha del campo `hasta` sea igual o mayor que la del campo `desde`
- * sólo si se han especificado ambas fechas
- *
- * @param array $check Nombre del campo y su valor
- *
- * @return bool `true` en caso exitoso o `false` en caso contrario
- */
-	public function validEndDate($check) {
-		if (!empty($this->data[$this->alias]['desde']) && !empty($this->data[$this->alias]['hasta'])) {
-			$fromDate = (int)strtotime($this->data[$this->alias]['desde']);
-			$toDate = (int)strtotime($this->data[$this->alias]['hasta']);
-
-			return ($fromDate <= $toDate);
-		}
-		return true;
-	}
-
-/**
- * Obtiene todas las asignaturas que se encuentran en la tabla de registros
- *
- * @return array Asignaturas
- */
-	public function getAsignaturas() {
-		$result = $this->Asignatura->Registro->find('list', array(
-			'fields' => array('Registro.id', 'Registro.asignatura_id'),
-			'group' => array('Registro.asignatura_id'),
-			'recursive' => 0
-		));
-
-		$id = array();
-		if (!empty($result) && is_array($result)) {
-			$id = array_values($result);
-		}
-
-		$this->Asignatura->unbindModel(array(
-			'belongsTo' => array('Area', 'Nivel', 'Tipo')
-		));
-		return $this->Asignatura->find('list', array(
-			'conditions' => array('Asignatura.id' => $id),
-			'order' => array('Materia.nombre' => 'asc'),
-			'recursive' => 0
-		));
-	}
-
-/**
- * Obtiene todos los usuarios que se encuentran en la tabla de registros
- *
- * @param int|null $aid Identificador de la asignatura
- *
- * @return array Usuarios
- */
-	public function getUsuarios($aid = null) {
-		$conditions = array();
-		if ($aid) {
-			$conditions = array('Registro.asignatura_id' => $aid);
-		}
-
-		$result = $this->Usuario->Registro->find('list', array(
-			'conditions' => $conditions,
-			'fields' => array('Registro.id', 'Registro.usuario_id'),
-			'group' => array('Registro.usuario_id'),
-			'recursive' => 0
-		));
-
-		$id = array();
-		if (!empty($result) && is_array($result)) {
-			$id = array_values($result);
-		}
-
-		$virtualFields = $this->Usuario->virtualFields;
-		$this->Usuario->virtualFields = array(
-			'nombre_completo' => 'CONCAT("(", Usuario.legajo, ")", " ", Usuario.nombre, " ", Usuario.apellido)'
-		);
-
-		$result = $this->Usuario->find('list', array(
-			'conditions' => array('Usuario.id' => $id),
-			'order' => array('Usuario.legajo' => 'asc')
-		));
-
-		$this->Usuario->virtualFields = $virtualFields;
-		return $result;
-	}
 }

@@ -23,15 +23,6 @@ App::uses('AppModel', 'Model');
 class Registro extends AppModel {
 
 /**
- * Comportamientos
- *
- * @var array
- */
-	public $actsAs = array(
-		'Search.Searchable'
-	);
-
-/**
  * belongsTo
  *
  * @var array
@@ -42,14 +33,20 @@ class Registro extends AppModel {
 	);
 
 /**
- * Campos de búsqueda
+ * hasOne
  *
  * @var array
  */
-	public $filterArgs = array(
-		'buscar' => array(
-			'method' => 'orConditions',
-			'type' => 'query'
+	public $hasOne = array(
+		'Carrera' => array(
+			'className' => 'AsignaturasCarrera',
+			'conditions' => 'Carrera.id = Asignatura.carrera_id',
+			'foreignKey' => false
+		),
+		'Materia' => array(
+			'className' => 'AsignaturasMateria',
+			'conditions' => 'Materia.id = Asignatura.materia_id',
+			'foreignKey' => false
 		)
 	);
 
@@ -141,7 +138,9 @@ class Registro extends AppModel {
  * @var array
  */
 	public $virtualFields = array(
-		'solo_fecha' => 'DATE(fecha)'
+		'asignatura' => 'CONCAT(Carrera.nombre, ": ", Materia.nombre)',
+		'solo_fecha' => 'DATE(fecha)',
+		'usuario' => 'CONCAT(Usuario.apellido, ", ", Usuario.nombre)'
 	);
 
 /**
@@ -162,49 +161,93 @@ class Registro extends AppModel {
 	}
 
 /**
- * Valida que la hora de salida sea mayor que la hora de entrada
+ * Devuelve la fecha del primer registro de asistencia
  *
- * @param array $check Nombre del campo y su valor
- *
- * @return bool `true` en caso exitoso o `false` en caso contrario
+ * @return string|bool Fecha o `false` en caso contrario
  */
-	public function validateEndTime($check) {
-		if (!empty($this->data[$this->alias]['entrada']) && !empty($this->data[$this->alias]['salida'])) {
-			$startTime = (int)strtotime($this->data[$this->alias]['entrada']);
-			$endTime = (int)strtotime($this->data[$this->alias]['salida']);
-
-			return ($startTime < $endTime);
-		}
-		return false;
+	public function getFirstPresenceDate() {
+		$row = $this->find('first', array(
+			'conditions' => array('tipo' => 1),
+			'fields' => array('solo_fecha'),
+			'order' => array('fecha' => 'asc')
+		));
+		return (!empty($row[$this->alias]['solo_fecha']) ? $row[$this->alias]['solo_fecha'] : false);
 	}
 
 /**
- * Genera condiciones de búsqueda
- *
- * @param array $data Datos a buscar
+ * Devuelve una lista con la última fecha de inasistencia para todos los cargos
+ * registrados agrupado por usuario y asignatura
  *
  * @return array
  */
-	public function orConditions($data = array()) {
-		$value = current($data);
-		$condition = array(
-			'OR' => array(
-				'Carrera.nombre LIKE' => '%' . $value . '%',
-				'Materia.nombre LIKE' => '%' . $value . '%',
-				'Usuario.apellido LIKE' => '%' . $value . '%',
-				'Usuario.nombre LIKE' => '%' . $value . '%'
-			)
-		);
+	public function getLastAbsenseDateByCargo() {
+		$rows = $this->find('all', array(
+			'conditions' => array('tipo' => 0),
+			'fields' => array('asignatura_id', 'MAX(DATE(fecha)) AS fecha', 'usuario_id'),
+			'group' => array('asignatura_id', 'usuario_id')
+		));
 
-		if (preg_match('/^[0-9\/]+$/', $value)) {
-			$date = date_create_from_format('d/m/Y', $value);
-			if ($date) {
-				$condition['OR']['Registro.fecha LIKE'] = '%' . $date->format('Y-m-d') . '%';
-			} else {
-				$condition['OR']['Registro.fecha LIKE'] = '%' . $value . '%';
-			}
+		$out = array();
+		foreach ($rows as $row) {
+			$out[$row[$this->alias]['usuario_id']][$row[$this->alias]['asignatura_id']] = current($row[0]);
 		}
+		return $out;
+	}
 
-		return $condition;
+/**
+ * Devuelve una lista de las asignaturas que se encuentran en la tabla de registros
+ *
+ * @return array Lista de asignaturas
+ */
+	public function getAsignaturasList() {
+		$ids = $this->find('list', array(
+			'fields' => array('id', 'asignatura_id'),
+			'group' => array('asignatura_id')
+		));
+		return $this->Asignatura->find('list', array(
+			'conditions' => array('Asignatura.id' => $ids),
+			'order' => array('Materia.nombre' => 'asc'),
+			'recursive' => 0
+		));
+	}
+
+/**
+ * Devuelve una lista de las carreras (por asignatura) que se encuentran en la tabla de registros
+ *
+ * @return array Lista de carreras
+ */
+	public function getCarrerasList() {
+		$ids = $this->find('list', array(
+			'fields' => array('id', 'asignatura_id'),
+			'group' => array('asignatura_id')
+		));
+
+		$this->Asignatura->unbindModel(array('belongsTo' => array('Area', 'Nivel', 'Materia')));
+		return $this->Asignatura->find('list', array(
+			'conditions' => array('Asignatura.id' => $ids),
+			'fields' => array('Asignatura.carrera_id', 'Carrera.nombre'),
+			'group' => array('Asignatura.carrera_id'),
+			'recursive' => 0
+		));
+	}
+
+/**
+ * Devuelve una lista de los usuarios que se encuentran en la tabla de registros
+ *
+ * @param array $conditions Condiciones de búsqueda
+ *
+ * @return array Lista de usuarios
+ */
+	public function getUsuariosList($conditions = array()) {
+		$ids = $this->find('list', array(
+			'conditions' => $conditions,
+			'fields' => array('id', 'usuario_id'),
+			'group' => array('usuario_id')
+		));
+		return $this->Usuario->find('list', array(
+			'conditions' => array('id' => $ids),
+			'fields' => array('id', 'docente'),
+			'order' => array('legajo' => 'asc')
+		));
 	}
 }
