@@ -139,4 +139,18 @@ class Registro extends AppModel {
 
 		return true;
 	}
+
+/**
+ * Devuelve la fecha del primer registro de asistencia
+ *
+ * @return string|bool Fecha o `false` en caso contrario
+ */
+	public function getFirstPresenceDate() {
+		$row = $this->find('first', array(
+			'conditions' => array('tipo' => 1),
+			'fields' => array('solo_fecha'),
+			'order' => array('fecha' => 'asc')
+		));
+		return (!empty($row[$this->alias]['solo_fecha']) ? $row[$this->alias]['solo_fecha'] : false);
+	}
 }
