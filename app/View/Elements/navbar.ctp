@@ -139,6 +139,18 @@ $links = array(
 					'admin' => true,
 					'plugin' => false
 				)
+			),
+			array(
+				'divider' => true
+			),
+			array(
+				'text' => 'Asistencia general',
+				'url' => array(
+					'controller' => 'registros',
+					'action' => 'asistencia_general',
+					'admin' => true,
+					'plugin' => false
+				)
 			)
 		)
 	),

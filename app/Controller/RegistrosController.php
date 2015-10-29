@@ -167,6 +167,80 @@ class RegistrosController extends AppController {
 	}
 
 /**
+ * Genera un reporte de asistencia general
+ *
+ * @return void
+ */
+	public function admin_asistencia_general() {
+		if (!empty($this->request->named['reset'])) {
+			$this->Session->delete($this->_getSessionKey());
+			$this->redirect(array('action' => 'asistencia_general'));
+		}
+
+		$options = $this->Session->read($this->_getSessionKey('Options'));
+		if (!$options) {
+			$options = array(
+				'data' => array()
+			);
+		}
+
+		if ($this->request->is('post')) {
+			$this->Reporte->create($this->request->data);
+			$fieldList = array('carrera_id', 'desde', 'hasta');
+			if ($this->Reporte->validates(compact('fieldList'))) {
+				$options['data'] = $this->Reporte->data['Reporte'];
+			} else {
+				$options['data'] = array();
+			}
+		}
+
+		$carreras = $this->Registro->getCarrerasList();
+		if (!$this->request->data) {
+			if ($options['data']) {
+				$this->request->data['Reporte'] = $options['data'];
+			} else {
+				$this->request->data = array(
+					'Reporte' => array(
+						'carrera_id' => key($carreras),
+						'desde' => null,
+						'hasta' => null,
+					)
+				);
+				$options['data'] = $this->request->data['Reporte'];
+			}
+		}
+
+		$findOptions = array(
+			'conditions' => array(
+				'Asignatura.carrera_id' => $options['data']['carrera_id']
+			),
+			'fields' => array(
+				'asignatura_id', 'usuario_id', 'Materia.nombre', 'usuario',
+				'SUM(Registro.tipo = 1) as asistencia',
+				'SUM(Registro.tipo = 0) as inasistencia',
+				'SUM(Registro.tipo = 2) as sin_actividad'
+			),
+			'group' => array('asignatura_id', 'usuario_id'),
+			'recursive' => 0
+		);
+		if (!empty($options['data']['desde'])) {
+			$findOptions['conditions']['CAST(Registro.fecha as DATE) >='] = $options['data']['desde'];
+		}
+		if (!empty($options['data']['hasta'])) {
+			$findOptions['conditions']['CAST(Registro.fecha as DATE) <='] = $options['data']['hasta'];
+		}
+
+		$this->set(array(
+			'carreras' => $carreras,
+			'rows' => $this->Registro->find('all', $findOptions),
+			'title_for_layout' => 'Asistencia general - Reportes',
+			'title_for_view' => 'Asistencia general'
+		));
+
+		$this->Session->write($this->_getSessionKey('Options'), $options);
+	}
+
+/**
  * Genera una clave de sesión incluyendo el nombre de la acción actual como prefijo
  *
  * @param string $key Clave

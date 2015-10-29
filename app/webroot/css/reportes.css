@@ -66,6 +66,10 @@
 	padding-left: 145px
 }
 
+.report-general .report-filter .form-actions {
+	margin-top: 15px
+}
+
 .report-builder .report-preview tbody td {
 	height: 40px
 }
@@ -100,4 +104,24 @@
 .report-builder .report-preview tbody td:nth-child(6),
 .report-builder .report-preview tbody td:nth-child(7) {
 	text-align: right
+}
+
+.report-general .report-preview thead th:nth-child(3),
+.report-general .report-preview thead th:nth-child(4),
+.report-general .report-preview thead th:nth-child(5),
+.report-general .report-preview tbody td:nth-child(3),
+.report-general .report-preview tbody td:nth-child(4),
+.report-general .report-preview tbody td:nth-child(5) {
+	text-align: right;
+	width: 120px
+}
+
+.report-general .report-preview th {
+	cursor: pointer
+}
+
+.report-general .arrow {
+	color: blue;
+	font-weight: bold;
+	padding-right: 3px
 }
