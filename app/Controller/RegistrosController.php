@@ -278,6 +278,13 @@ class RegistrosController extends AppController {
 		));
 
 		if ($this->request->ext === 'pdf') {
+			if (empty($options['data']['carrera_id'])) {
+				$this->_notify(null, array(
+					'message' => 'No es posible crear un reporte vacío.',
+					'level' => 'info',
+					'redirect' => array('action' => 'asistencia_general')
+				));
+			}
 			$this->_setupCakePdf('Reporte de Asistencia General');
 			$this->set(array(
 				'data' => $options['data']
