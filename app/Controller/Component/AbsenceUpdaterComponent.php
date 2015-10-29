@@ -93,6 +93,14 @@ class AbsenceUpdaterComponent extends Component {
 					}
 				}
 			}
+
+			$excludedDates = ClassRegistry::init('Periodo')->getDatesRange();
+			if (!empty($excludedDates)) {
+				$model->updateAll(
+					array('tipo' => 2),
+					array('CAST(fecha as DATE)' => $excludedDates, 'tipo' => 0)
+				);
+			}
 		}
 	}
 
