@@ -33,6 +33,24 @@ class Registro extends AppModel {
 	);
 
 /**
+ * hasOne
+ *
+ * @var array
+ */
+	public $hasOne = array(
+		'Carrera' => array(
+			'className' => 'AsignaturasCarrera',
+			'conditions' => 'Carrera.id = Asignatura.carrera_id',
+			'foreignKey' => false
+		),
+		'Materia' => array(
+			'className' => 'AsignaturasMateria',
+			'conditions' => 'Materia.id = Asignatura.materia_id',
+			'foreignKey' => false
+		)
+	);
+
+/**
  * Reglas de validación
  *
  * @var array
