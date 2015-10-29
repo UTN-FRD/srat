@@ -28,7 +28,8 @@ class RegistrosController extends AppController {
  * @var array
  */
 	public $components = array(
-		'Paginator'
+		'Paginator',
+		'RequestHandler'
 	);
 
 /**
@@ -254,5 +255,58 @@ class RegistrosController extends AppController {
 			Inflector::camelize($this->request->action),
 			(!empty($key) ? ".$key" : "")
 		);
+	}
+
+/**
+ * Establece la configuración inicial de CakePdf y opciones comunes para los reportes
+ *
+ * @param string $title Título
+ * @param string $orientation Orientación
+ *
+ * @return void
+ */
+	protected function _setupCakePdf($title = 'Reporte', $orientation = 'landscape') {
+		$this->autoRender = false;
+
+		$isWindows = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
+		$charset = (!$isWindows ? 'ASCII' : 'ISO-8859-1');
+		$date = preg_replace_callback(
+			"/[a-zA-Záéíóú]{3,}/u",
+			function ($m) {
+				return ucfirst($m[0]);
+			},
+			CakeTime::format(time(), '%A %d de %B de %Y')
+		);
+
+		$this->pdfConfig = array(
+			'engine' => 'CakePdf.WkHtmlToPdf',
+			'options' => array(
+				'dpi' => 96,
+				'footer-center' => iconv('UTF-8', $charset . '//TRANSLIT', 'Página [frompage] de [topage]'),
+				'footer-font-name' => 'Arial',
+				'footer-font-size' => '9',
+				'footer-line' => false,
+				'header-center' => $title,
+				'header-font-name' => 'Arial',
+				'header-font-size' => '9',
+				'header-left' => 'Sistema de Registro de Asistencia y Temas',
+				'header-line' => true,
+				'header-right' => iconv('UTF-8', $charset . '//TRANSLIT', $date),
+				'outline' => true,
+				'print-media-type' => false
+			),
+			'margin' => array(
+				'bottom' => 5,
+				'left' => 3,
+				'right' => 3,
+				'top' => 5
+			),
+			'orientation' => $orientation,
+			'page-size' => 'A4'
+		);
+
+		if (!Configure::check('CakePdf.binary') && !$isWindows) {
+			$this->pdfConfig['binary'] = trim(shell_exec('which wkhtmltopdf'));
+		}
 	}
 }
