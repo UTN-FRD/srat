@@ -12,60 +12,68 @@
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 ?>
-<div class="report-builder">
-	<table class="table table-condensed report-details">
-		<tbody>
-			<?php if (!empty($data['asignatura'])): ?>
-				<tr>
-					<td>Asignatura:</td>
-					<td><?php echo h($data['asignatura']) ?></td>
-				</tr>
-			<?php endif ?>
-
-			<?php if (!empty($data['usuario'])): ?>
-				<tr>
-					<td>Usuario:</td>
-					<td><?php echo h($data['usuario']) ?></td>
-				</tr>
-			<?php endif ?>
-
-			<?php if (!empty($data['desde'])): ?>
-				<tr>
-					<td>Desde:</td>
-					<td><?php echo date('d/m/Y', strtotime($data['desde'])) ?></td>
-				</tr>
-			<?php endif ?>
-
-			<?php if (!empty($data['hasta'])): ?>
-				<tr>
-					<td>Hasta:</td>
-					<td><?php echo date('d/m/Y', strtotime($data['hasta'])) ?></td>
-				</tr>
-			<?php endif ?>
-		</tbody>
-	</table>
-	<div class="report-container">
-		<?php
-		$rows = array_chunk($rows, 10);
-		$chunks = count($rows);
-		if ($chunks):
-			foreach ($rows as $cid => $chunk):
-				if ($cid > 0):
-					echo '<br />';
-				endif;
-
-				echo $this->element(
-					'Report/table',
-					compact('chunk', 'data')
-				);
-
-				if ($cid < ($chunks - 1)):
-					echo '<div class="page-break"></div>';
-				endif;
-			endforeach;
-		else:
-			echo $this->element('Report/table');
+<table class="details">
+	<tbody>
+		<tr>
+			<td>
+				<div>
+					<span>Asignatura:</span>
+					<?php if (!empty($data['asignatura'])): ?>
+						<?php echo h($data['asignatura']) ?>
+					<?php else: ?>
+						-
+					<?php endif ?>
+				</div>
+				<div>
+					<span>Desde:</span>
+					<?php if (!empty($data['desde'])): ?>
+						<?php echo date('d/m/Y', strtotime($data['desde'])) ?>
+					<?php else: ?>
+						-
+					<?php endif ?>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div>
+					<span>Docente:</span>
+					<?php if (!empty($data['usuario'])): ?>
+						<?php echo h($data['usuario']) ?>
+					<?php else: ?>
+						-
+					<?php endif ?>
+				</div>
+				<div>
+					<span>Hasta:</span>
+					<?php if (!empty($data['hasta'])): ?>
+						<?php echo date('d/m/Y', strtotime($data['hasta'])) ?>
+					<?php else: ?>
+						<?php echo date('d/m/Y', time()) ?>
+					<?php endif ?>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<?php
+$rows = array_chunk($rows, 10);
+$chunks = count($rows);
+if ($chunks):
+	foreach ($rows as $cid => $chunk):
+		if ($cid):
+			echo '<br />';
 		endif;
-		?>
-	</div>
-</div>
+
+		echo $this->element(
+			'Report/table',
+			compact('chunk', 'data')
+		);
+
+		if ($cid < ($chunks - 1)):
+			echo '<div class="page-break"></div>';
+		endif;
+	endforeach;
+else:
+	echo $this->element('Report/table');
+endif;

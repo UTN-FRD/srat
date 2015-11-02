@@ -147,9 +147,9 @@ class RegistrosController extends AppController {
 		if ($this->request->ext === 'pdf') {
 			$title = 'Asistencia';
 			if (isset($options['data']['tipo'])) {
-				if ($options['data']['tipo'] === '0') {
+				if ($options['data']['tipo'] == 0) {
 					$title = 'Inasistencia';
-				} elseif ($options['data']['tipo'] === '2') {
+				} elseif ($options['data']['tipo'] == 2) {
 					$title .= ' e Inasistencia';
 				}
 			}
@@ -164,6 +164,9 @@ class RegistrosController extends AppController {
 			if (!empty($data['usuario_id'])) {
 				$this->Registro->Usuario->id = $data['usuario_id'];
 				$data['usuario'] = $this->Registro->Usuario->field('docente');
+			}
+			if (empty($data['desde'])) {
+				$data['desde'] = $this->Registro->getFirstPresenceDate();
 			}
 
 			$this->set(array(
@@ -284,6 +287,9 @@ class RegistrosController extends AppController {
 					'level' => 'info',
 					'redirect' => array('action' => 'asistencia_general')
 				));
+			}
+			if (empty($options['data']['desde'])) {
+				$options['data']['desde'] = $this->Registro->getFirstPresenceDate();
 			}
 			$this->_setupCakePdf('Reporte de Asistencia General');
 			$this->set(array(

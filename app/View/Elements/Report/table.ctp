@@ -12,7 +12,7 @@
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 ?>
-<table class="table table-bordered table-condensed report-table">
+<table class="report">
 	<thead>
 		<tr>
 			<?php if (empty($data['asignatura'])): ?>
@@ -31,7 +31,7 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?php
+		<?php
 		if (!empty($chunk)):
 			foreach ($chunk as $rid => $row):
 				$asistencia = ($row['Registro']['tipo'] === '1');

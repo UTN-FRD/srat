@@ -12,7 +12,7 @@
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 ?>
-<table class="table table-bordered table-condensed report-table">
+<table class="report-general">
 	<thead>
 		<tr>
 			<th class="row1">Materia</th>

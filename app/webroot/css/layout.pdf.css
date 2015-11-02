@@ -11,10 +11,99 @@
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 
-#wrapper {
+body {
+	color: #000;
+	font-family: sans-serif;
+	font-size: 10pt;
 	padding: 10px 5px
 }
 
 .page-break {
-	page-break-after: always;
+	page-break-after: always
+}
+
+table {
+	border-collapse: collapse;
+	border: 1px solid #000;
+	width: 100%
+}
+
+th, td {
+	border: 1px solid #000;
+	padding: 4px
+}
+
+.details {
+	margin-bottom: 20px
+}
+
+.details,
+.details td,
+.details th {
+	border: none
+}
+
+td div:first-child {
+	float: left;
+	text-align: left;
+	width: 49%
+}
+
+td div:last-child {
+	float: right;
+	text-align: right;
+	width: 49%
+}
+
+td div span {
+	font-weight: bold
+}
+
+.report tbody td {
+	height: 40px;
+	vertical-align: top
+}
+
+.report tbody .empty td {
+	height: 20px;
+	text-align: center;
+	vertical-align: middle
+}
+
+.report .row1 {
+	text-align: left;
+	width: 290px
+}
+
+.report .row2 {
+	text-align: center;
+	width: 45px
+}
+
+.report .row3 {
+	text-align: left;
+	width: 150px
+}
+
+.report .row4 {
+	text-align: right;
+	width: 75px
+}
+
+.report .row5,
+.report .row6 {
+	text-align: right;
+	width: 55px
+}
+
+.report-general .row1,
+.report-general .row2 {
+	text-align: left
+}
+
+.report-general .row3,
+.report-general .row4,
+.report-general .row5 {
+	text-align: right;
+	width: 120px
 }

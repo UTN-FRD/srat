@@ -12,79 +12,81 @@
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 ?>
-<div class="report-general">
-	<table class="table table-condensed report-details">
-		<tbody>
-			<tr>
-				<td>Carrera:</td>
-				<td><?php echo h($carreras[$data['carrera_id']]) ?></td>
-			</tr>
+<table class="details">
+	<tbody>
+		<tr>
+			<td>
+				<div>
+					<span>Carrera:</span>
+					<?php echo h($carreras[$data['carrera_id']]) ?>
+				</div>
+				<div>
+					<span>Desde:</span>
+					<?php echo date('d/m/Y', strtotime($data['desde'])) ?>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div>
+				</div>
+				<div>
+					<span>Hasta:</span>
+					<?php if (!empty($data['hasta'])): ?>
+						<?php echo date('d/m/Y', strtotime($data['hasta'])) ?>
+					<?php else: ?>
+						<?php echo date('d/m/Y', time()) ?>
+					<?php endif ?>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<?php
+$records = array();
+foreach($rows as $row):
+	$records[$row['Materia']['nombre']][$row['Registro']['usuario']] = $row[0];
+endforeach;
+unset($rows, $row);
+ksort($records);
+foreach ($records as &$record):
+	ksort($record);
+endforeach;
 
-			<?php if (!empty($data['desde'])): ?>
-				<tr>
-					<td>Desde:</td>
-					<td><?php echo date('d/m/Y', strtotime($data['desde'])) ?></td>
-				</tr>
-			<?php endif ?>
+$pushRow = function ($row) use (&$rows) {
+	if (empty($rows)):
+		$rows[] = array();
+	endif;
+	$index = count($rows) - 1;
+	if (count($rows[$index]) == 20):
+		$rows[] = array();
+		$index++;
+	endif;
+	$rows[$index][] = $row;
+};
 
-			<?php if (!empty($data['hasta'])): ?>
-				<tr>
-					<td>Hasta:</td>
-					<td><?php echo date('d/m/Y', strtotime($data['hasta'])) ?></td>
-				</tr>
-			<?php endif ?>
-		</tbody>
-	</table>
+$rows = array();
+foreach ($records as $materia => $docentes):
+	foreach ($docentes as $docente => $values):
+		$pushRow(array_merge(
+			array(h($materia), h($docente)),
+			$values
+		));
+	endforeach;
+endforeach;
 
-	<div class="report-container">
-		<?php
-		$records = array();
-		foreach($rows as $row):
-			$records[$row['Materia']['nombre']][$row['Registro']['usuario']] = $row[0];
-		endforeach;
-		unset($rows, $row);
-		ksort($records);
-		foreach ($records as &$record):
-			ksort($record);
-		endforeach;
+$count = count($rows);
+foreach ($rows as $rid => $chunk):
+	if ($rid):
+		echo '<br />';
+	endif;
 
-		$pushRow = function ($row) use (&$rows) {
-			if (empty($rows)):
-				$rows[] = array();
-			endif;
-			$index = count($rows) - 1;
-			if (count($rows[$index]) == 20):
-				$rows[] = array();
-				$index++;
-			endif;
-			$rows[$index][] = $row;
-		};
+	echo $this->element(
+		'Report/table_general',
+		compact('chunk')
+	);
 
-		$rows = array();
-		foreach ($records as $materia => $docentes):
-			foreach ($docentes as $docente => $values):
-				$pushRow(array_merge(
-					array(h($materia), h($docente)),
-					$values
-				));
-			endforeach;
-		endforeach;
-
-		$count = count($rows);
-		foreach ($rows as $rid => $chunk):
-			if ($rid > 0):
-				echo '<br />';
-			endif;
-
-			echo $this->element(
-				'Report/table_general',
-				compact('chunk')
-			);
-
-			if ($rid < ($count - 1)):
-				echo '<div class="page-break"></div>';
-			endif;
-		endforeach;
-		?>
-	</div>
-</div>
+	if ($rid < ($count - 1)):
+		echo '<div class="page-break"></div>';
+	endif;
+endforeach;
