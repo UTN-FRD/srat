@@ -106,6 +106,10 @@ class AbsenceUpdaterComponent extends Component {
 					'hasOne' => array_keys($hasOne)
 				));
 				$model->updateAll(
+					array('tipo' => 0),
+					array('tipo' => 2)
+				);
+				$model->updateAll(
 					array('tipo' => 2),
 					array('CAST(fecha as DATE)' => $excludedDates, 'tipo' => 0)
 				);
