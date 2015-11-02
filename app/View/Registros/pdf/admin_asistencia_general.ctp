@@ -11,14 +11,6 @@
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
-
-/**
- * CSS
- */
-$this->Html->css(
-	array('bootstrap.min', 'reportes'),
-	array('fullBase' => true, 'inline' => false)
-);
 ?>
 <div class="report-general">
 	<table class="table table-condensed report-details">

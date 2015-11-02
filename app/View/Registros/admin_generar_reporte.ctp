@@ -28,9 +28,9 @@ $this->Html->script('reportes', array('inline' => false));
 $this->Html->addCrumb('Reportes');
 $this->Html->addCrumb('Generar reporte');
 ?>
-<div class="report-builder">
-	<?php echo $this->Form->create('Reporte', array('class' => 'form-horizontal report-filter')) ?>
-	<div class="report-filter-howto">
+<div class="report-container">
+	<?php echo $this->Form->create('Reporte', array('class' => 'form-horizontal')) ?>
+	<div class="howto">
 		<ul>
 			<li>Puede utilizar el formulario ubicado a la izquierda para filtrar el resultado y generar condiciones más específicas.</li>
 			<li>Recuerde actualizar la consulta antes de exportar el resultado para que todos los cambios sean tenidos en cuenta.</li>
@@ -55,7 +55,7 @@ $this->Html->addCrumb('Generar reporte');
 
 		$currentYear = date('Y');
 		echo $this->Form->input('desde', array(
-			'class' => 'datefield',
+			'class' => 'field-date',
 			'dateFormat' => 'DMY',
 			'empty' => true,
 			'maxYear' => $currentYear,
@@ -65,7 +65,7 @@ $this->Html->addCrumb('Generar reporte');
 		));
 
 		echo $this->Form->input('hasta', array(
-			'class' => 'datefield',
+			'class' => 'field-date',
 			'dateFormat' => 'DMY',
 			'empty' => true,
 			'maxYear' => $currentYear,
@@ -75,7 +75,7 @@ $this->Html->addCrumb('Generar reporte');
 		));
 
 		echo $this->Form->input('tipo', array(
-			'class' => 'reporttype span2',
+			'class' => 'field-type span2',
 			'default' => 1,
 			'options' => array('Inasistencia', 'Asistencia', 'Ambos'),
 			'type' => 'select'

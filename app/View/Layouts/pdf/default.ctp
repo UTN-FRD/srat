@@ -17,16 +17,14 @@
 	<head>
 		<meta charset="utf-8" />
 
-		<title><?php echo h($title_for_layout) ?> :: Sistema de Registro de Asistencia y Temas</title>
+		<title>Sistema de Registro de Asistencia y Temas</title>
 
 		<meta name="application-name" content="Sistema de Registro de Asistencia y Temas" />
 		<meta name="author" content="Facultad Regional Delta" />
 
-		<?php
-		echo $this->fetch('css');
-		echo $this->fetch('script');
-		echo $this->Html->css('layout.pdf', array('fullBase' => true));
-		?>
+		<style type="text/css">
+			<?php echo file_get_contents(CSS . 'layout.pdf.css') ?>
+		</style>
 	</head>
 	<body>
 		<div id="wrapper">

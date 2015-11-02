@@ -28,9 +28,9 @@ $this->Html->script(array('reportes', 'stupidtable.min'), array('inline' => fals
 $this->Html->addCrumb('Reportes');
 $this->Html->addCrumb('Asistencia general');
 ?>
-<div class="report-general">
+<div class="report-container report-general">
 	<?php echo $this->Form->create('Reporte', array('class' => 'form-horizontal report-filter')) ?>
-	<div class="report-filter-howto">
+	<div class="howto">
 		<ul>
 			<li>Puede utilizar el formulario ubicado a la izquierda para filtrar el resultado y generar condiciones más específicas.</li>
 			<li>Recuerde actualizar la consulta antes de exportar el resultado para que todos los cambios sean tenidos en cuenta.</li>
@@ -48,7 +48,7 @@ $this->Html->addCrumb('Asistencia general');
 
 		$currentYear = date('Y');
 		echo $this->Form->input('desde', array(
-			'class' => 'datefield',
+			'class' => 'field-date',
 			'dateFormat' => 'DMY',
 			'empty' => true,
 			'maxYear' => $currentYear,
@@ -58,7 +58,7 @@ $this->Html->addCrumb('Asistencia general');
 		));
 
 		echo $this->Form->input('hasta', array(
-			'class' => 'datefield',
+			'class' => 'field-date',
 			'dateFormat' => 'DMY',
 			'empty' => true,
 			'maxYear' => $currentYear,

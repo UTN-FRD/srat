@@ -13,7 +13,7 @@
 
 $(function() {
 	var $table = $('.report-preview');
-	if ($('.report-builder').length) {
+	if ($('.report-container').length) {
 		$('#ReporteAsignaturaId').on('change', function() {
 			$('#ReporteUsuarioId').select2('data', null);
 			$('#ReporteAdminGenerarReporteForm').submit();
@@ -23,7 +23,7 @@ $(function() {
 			$('thead th:nth-child(2), tbody td:nth-child(2)', $table).hide();
 		}
 
-		if ($('#ReporteUsuarioId').val() !== '') {
+		if ($('#ReporteUsuarioId').length && $('#ReporteUsuarioId').val() !== '') {
 			$('thead th:nth-child(3), tbody td:nth-child(3), thead th:nth-child(4), tbody td:nth-child(4)', $table).hide();
 		}
 
