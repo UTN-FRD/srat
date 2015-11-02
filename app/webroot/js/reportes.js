@@ -52,5 +52,9 @@ $(function() {
 	        th.find('.arrow').remove();
 	        th.eq(data.column).prepend('<span class="arrow">' + arrow +'</span>');
 		});
+
+		$('#ReporteCarreraId:enabled').on('change', function() {
+			$('#ReporteAdminAsistenciaGeneralForm').submit();
+		});
 	}
 });
