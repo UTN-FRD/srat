@@ -19,7 +19,7 @@
 				<th class="row1">Asignatura</th>
 			<?php endif ?>
 
-			<?php if (empty($data['usuario'])): ?>
+			<?php if (PHP_SAPI !== 'cli' && empty($data['usuario'])): ?>
 				<th class="row2">Legajo</th>
 				<th class="row3">Docente</th>
 			<?php endif ?>
@@ -41,7 +41,7 @@
 				<td class="row1"><?php echo str_replace(':', ':<br />', h($row['Registro']['asignatura'])) ?></td>
 			<?php endif ?>
 
-			<?php if (empty($data['usuario'])): ?>
+			<?php if (PHP_SAPI !== 'cli' && empty($data['usuario'])): ?>
 				<td class="row2"><?php echo $row['Usuario']['legajo'] ?></td>
 				<td class="row3"><?php echo h($row['Registro']['usuario']) ?></td>
 			<?php endif ?>

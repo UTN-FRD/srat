@@ -153,4 +153,17 @@ class BackupShell extends AppShell {
 		}
 		return false;
 	}
+
+/**
+ * getOptionParser
+ *
+ * @return ConsoleOptionParser
+ */
+	public function getOptionParser() {
+		$parser = parent::getOptionParser();
+		$parser->description(
+			"Crea copias de seguridad de la base de datos.\nConsultar '<info>APP\Config\backup.php</info>' para más información."
+		);
+		return $parser;
+	}
 }
