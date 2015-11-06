@@ -252,7 +252,7 @@ class ReportesShell extends AppShell {
  */
 	protected function _validateOptionOutput() {
 		$this->_options['output'] = rtrim($this->param('dir'), '\\/') . DS;
-		if (empty($this->_options['output'])) {
+		if (empty($this->_options['output']) === DS) {
 			$this->error('Especifique la ruta de acceso al directorio donde se van a guardar los archivos.');
 		} elseif (!is_dir($this->_options['output']) || !is_writable($this->_options['output'])) {
 			$this->error('La ruta de acceso especificada no existe o no posee permisos de escritura.');
