@@ -49,7 +49,11 @@ class AsignaturasController extends AppController {
 			'conditions' => $this->Asignatura->parseCriteria($this->Prg->parsedParams())
 		);
 
-		$this->set('rows', $this->Paginator->paginate());
+		$this->set(array(
+			'rows' => $this->Paginator->paginate(),
+			'title_for_layout' => 'Asignaturas - Administrar',
+			'title_for_view' => 'Asignaturas'
+		));
 	}
 
 /**
@@ -71,7 +75,9 @@ class AsignaturasController extends AppController {
 			'carreras' => $this->Asignatura->Carrera->find('list', array('order' => array('nombre' => 'asc'))),
 			'materias' => $this->Asignatura->Materia->find('list', array('order' => array('nombre' => 'asc'))),
 			'niveles' => $this->Asignatura->Nivel->find('list', array('order' => array('id' => 'asc'))),
-			'tipos' => $this->Asignatura->Tipo->find('list', array('order' => array('nombre' => 'asc')))
+			'tipos' => $this->Asignatura->Tipo->find('list', array('order' => array('nombre' => 'asc'))),
+			'title_for_layout' => 'Agregar - Asignaturas - Administrar',
+			'title_for_view' => 'Agregar asignatura'
 		));
 	}
 
@@ -110,7 +116,9 @@ class AsignaturasController extends AppController {
 			'carreras' => $this->Asignatura->Carrera->find('list', array('order' => array('nombre' => 'asc'))),
 			'materias' => $this->Asignatura->Materia->find('list', array('order' => array('nombre' => 'asc'))),
 			'niveles' => $this->Asignatura->Nivel->find('list', array('order' => array('id' => 'asc'))),
-			'tipos' => $this->Asignatura->Tipo->find('list', array('order' => array('nombre' => 'asc')))
+			'tipos' => $this->Asignatura->Tipo->find('list', array('order' => array('nombre' => 'asc'))),
+			'title_for_layout' => 'Editar - Asignaturas - Administrar',
+			'title_for_view' => 'Editar asignatura'
 		));
 	}
 

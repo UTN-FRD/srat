@@ -20,6 +20,7 @@ $this->Html->css('asignaturas', array('inline' => false));
 /**
  * Breadcrumbs
  */
+$this->Html->addCrumb('Administrar');
 $this->Html->addCrumb('Asignaturas');
 
 /**

@@ -20,8 +20,8 @@ $this->Html->css('cargos', array('inline' => false));
 /**
  * Breadcrumbs
  */
-$this->Html->addCrumb('Asignaturas', array('controller' => 'asignaturas'));
-$this->Html->addCrumb('Usuarios');
+$this->Html->addCrumb('Administrar');
+$this->Html->addCrumb('Cargos');
 
 /**
  * Tareas
@@ -41,7 +41,7 @@ $this->set('tasks', array(
 $headers = array(
 	'#',
 	$this->Paginator->sort('Materia.nombre', 'Asignatura'),
-	$this->Paginator->sort('Usuario.nombre', 'Usuario'),
+	$this->Paginator->sort('Usuario.nombre', 'Docente'),
 	$this->Paginator->sort('Grado.nombre', 'Grado'),
 	$this->Paginator->sort('dedicacion', 'Dedicación'),
 	$this->Paginator->sort('resolucion', 'Resolución'),
@@ -65,10 +65,10 @@ if (!empty($rows)):
 
 		$rows[$rid] = array(
 			$start++,
-			h($row['Cargo']['asignatura']),
-			h($row['Cargo']['usuario']),
-			sprintf('%s (%s)', h($row['Grado']['nombre']), h($row['Tipo']['nombre'])),
-			sprintf('%g (%s)', round($row['Cargo']['dedicacion'], 1), h($row['Dedicacion']['nombre'])),
+			str_replace(':', ':<br />', h($row['Cargo']['asignatura'])),
+			h($row['Cargo']['docente']),
+			sprintf('%s<br />(%s)', h($row['Grado']['nombre']), h($row['Tipo']['nombre'])),
+			sprintf('%g<br />(%s)', round($row['Cargo']['dedicacion'], 1), h($row['Dedicacion']['nombre'])),
 			$row['Cargo']['resolucion'],
 			implode(' ', $tasks)
 		);

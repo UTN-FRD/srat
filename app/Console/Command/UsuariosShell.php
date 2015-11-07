@@ -32,10 +32,17 @@ class UsuariosShell extends AppShell {
 /**
  * Habilita un usuario
  *
+ * Uso:
+ * cake usuarios habilitar [-l]
+ *
+ * Opciones:
+ *
+ * --legajo, -l   Número de legajo
+ *
  * @return void
  */
 	public function habilitar() {
-		$user = $this->_findUser(current($this->args));
+		$user = $this->_findUser($this->param('legajo'));
 		if (!$user) {
 			$this->error('El número de legajo especificado no es válido.');
 		}
@@ -64,10 +71,17 @@ class UsuariosShell extends AppShell {
 /**
  * Deshabilita un usuario
  *
+ * Uso:
+ * cake usuarios deshabilitar [-l]
+ *
+ * Opciones:
+ *
+ * --legajo, -l   Número de legajo
+ *
  * @return void
  */
 	public function deshabilitar() {
-		$user = $this->_findUser(current($this->args));
+		$user = $this->_findUser($this->param('legajo'));
 		if (!$user) {
 			$this->error('El número de legajo especificado no es válido.');
 		}
@@ -96,10 +110,17 @@ class UsuariosShell extends AppShell {
 /**
  * Restablece la contraseña de un usuario
  *
+ * Uso:
+ * cake usuarios restablecer [-l]
+ *
+ * Opciones:
+ *
+ * --legajo, -l   Número de legajo
+ *
  * @return void
  */
 	public function restablecer() {
-		$user = $this->_findUser(current($this->args));
+		$user = $this->_findUser($this->param('legajo'));
 		if (!$user) {
 			$this->error('El número de legajo especificado no es válido.');
 		}
@@ -140,7 +161,39 @@ class UsuariosShell extends AppShell {
 		if (empty($legajo) || !filter_var($legajo, FILTER_VALIDATE_INT)) {
 			return false;
 		}
-
 		return $this->Usuario->findByLegajo($legajo);
+	}
+
+/**
+ * getOptionParser
+ *
+ * @return ConsoleOptionParser
+ */
+	public function getOptionParser() {
+		$legajo = array(
+			'short' => 'l',
+			'help' => 'Número de legajo'
+		);
+
+		$parser = parent::getOptionParser();
+		$parser->addSubcommand('habilitar', array(
+			'help' => 'Habilita un usuario',
+			'parser' => array(
+				'options' => compact('legajo')
+			)
+		))->addSubcommand('deshabilitar', array(
+			'help' => 'Deshabilita un usuario',
+			'parser' => array(
+				'options' => compact('legajo')
+			)
+		))->addSubcommand('restablecer', array(
+			'help' => 'Restablece la contraseña de un usuario',
+			'parser' => array(
+				'options' => compact('legajo')
+			)
+		))->description(
+			'Gestión de usuarios'
+		);
+		return $parser;
 	}
 }

@@ -14,7 +14,7 @@
 	},
 	"require": {
 		"cakedc/search": "~2.5",
-		"cakephp/cakephp": "~2.6",
+		"cakephp/cakephp": "~2.7",
 		"friendsofcake/cakepdf": "~1.0"
 	},
 	"require-dev": {

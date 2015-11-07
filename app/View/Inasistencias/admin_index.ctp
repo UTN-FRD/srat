@@ -1,6 +1,6 @@
 <?php
 /**
- * Inasistencias
+ * Índice
  *
  * Sistema de Registro de Asistencia y Temas
  *
@@ -49,7 +49,7 @@ $headers = array(
 	'<input type="checkbox" />',
 	$this->Paginator->sort('Materia.nombre', 'Asignatura'),
 	$this->Paginator->sort('Usuario.legajo', 'Legajo'),
-	$this->Paginator->sort('Usuario.apellido', 'Usuario'),
+	$this->Paginator->sort('Usuario.apellido', 'Docente'),
 	$this->Paginator->sort('fecha', 'Fecha'),
 	'Observaciones'
 );
@@ -57,9 +57,9 @@ $headers = array(
 /**
  * Comienzo del formulario
  */
-$formStart = $this->Form->create('Registro', array(
+$formStart = $this->Form->create('Inasistencia', array(
 	'class' => 'form-inasistencia',
-	'url' => array('action' => 'editar_inasistencia')
+	'url' => array('action' => 'editar')
 ));
 
 /**
@@ -70,12 +70,12 @@ if (!empty($rows)):
 	foreach ($rows as $rid => $row):
 		$rows[$rid] = array(
 			$start++,
-			$this->Form->checkbox(sprintf('Registro.id.%d', $row['Registro']['id'])),
-			str_replace(':', ':<br />', h($row['Registro']['asignatura'])),
+			$this->Form->checkbox(sprintf('Inasistencia.id.%d', $row['Inasistencia']['id'])),
+			str_replace(':', ':<br />', h($row['Inasistencia']['asignatura'])),
 			$row['Usuario']['legajo'],
-			h(sprintf('%s, %s', $row['Usuario']['apellido'], $row['Usuario']['nombre'])),
-			date('d/m/Y', strtotime($row['Registro']['fecha'])),
-			nl2br(h($row['Registro']['obs']))
+			h($row['Inasistencia']['docente']),
+			date('d/m/Y', strtotime($row['Inasistencia']['fecha'])),
+			nl2br(h($row['Inasistencia']['obs']))
 		);
 	endforeach;
 endif;

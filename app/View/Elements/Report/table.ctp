@@ -1,6 +1,6 @@
 <?php
 /**
- * Tabla para reportes de asistencia
+ * Tabla para reportes de asistencia y/o inasistencia
  *
  * Sistema de Registro de Asistencia y Temas
  *
@@ -12,16 +12,16 @@
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 ?>
-<table class="table table-bordered table-condensed report-table">
+<table class="report">
 	<thead>
 		<tr>
 			<?php if (empty($data['asignatura'])): ?>
 				<th class="row1">Asignatura</th>
 			<?php endif ?>
 
-			<?php if (empty($data['usuario'])): ?>
+			<?php if (PHP_SAPI !== 'cli' && empty($data['usuario'])): ?>
 				<th class="row2">Legajo</th>
-				<th class="row3">Usuario</th>
+				<th class="row3">Docente</th>
 			<?php endif ?>
 
 			<th class="row4">Fecha</th>
@@ -31,7 +31,7 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?php
+		<?php
 		if (!empty($chunk)):
 			foreach ($chunk as $rid => $row):
 				$asistencia = ($row['Registro']['tipo'] === '1');
@@ -41,9 +41,9 @@
 				<td class="row1"><?php echo str_replace(':', ':<br />', h($row['Registro']['asignatura'])) ?></td>
 			<?php endif ?>
 
-			<?php if (empty($data['usuario'])): ?>
+			<?php if (PHP_SAPI !== 'cli' && empty($data['usuario'])): ?>
 				<td class="row2"><?php echo $row['Usuario']['legajo'] ?></td>
-				<td class="row3"><?php echo h(sprintf('%s, %s', $row['Usuario']['apellido'], $row['Usuario']['nombre'])) ?></td>
+				<td class="row3"><?php echo h($row['Registro']['usuario']) ?></td>
 			<?php endif ?>
 
 			<td class="row4">

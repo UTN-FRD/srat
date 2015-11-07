@@ -37,6 +37,10 @@ body {
 	background: #eef2ea
 }
 
+.strong {
+	font-weight: bold
+}
+
 @media (max-width: 979px) {
 	body .navbar .navbar-inner .brand {
 		margin-left: -20px

@@ -28,15 +28,20 @@ class RegistrosController extends AppController {
  * @var array
  */
 	public $components = array(
-		'Search.Prg',
-		'RequestHandler',
-		'Paginator' => array(
-			'limit' => 15,
-			'maxLimit' => 15,
-			'order' => array('Registro.fecha' => 'desc'),
-			'recursive' => 0
-		)
+		'Paginator',
+		'RequestHandler'
 	);
+
+/**
+ * beforeFilter
+ *
+ * @return void
+ */
+	public function beforeFilter() {
+		parent::beforeFilter();
+
+		$this->loadModel('Reporte');
+	}
 
 /**
  * Responde a solicitudes invalidadas por el componente Security
@@ -46,97 +51,32 @@ class RegistrosController extends AppController {
  * @return void
  */
 	public function blackHole($type = null) {
-		$this->Session->delete('Reporte');
+		$this->Session->delete($this->_getSessionKey());
+
 		parent::blackHole($type);
 	}
 
 /**
- * Inasistencias
+ * Índice
  *
  * @return void
  */
-	public function admin_inasistencias() {
-		$this->__setupModelAssociations();
-
-		$this->Prg->commonProcess();
-		$this->Paginator->settings += array(
-			'conditions' => array_merge(
-				$this->Registro->parseCriteria($this->Prg->parsedParams()),
-				array('Registro.tipo' => 0)
-			),
-			'fields' => array(
-				'id', 'asignatura', 'Usuario.legajo', 'Usuario.apellido', 'Usuario.nombre', 'fecha', 'obs'
-			)
-		);
-
-		$this->set(array(
-			'rows' => $this->Paginator->paginate(),
-			'title_for_layout' => 'Inasistencias - Registros',
-			'title_for_view' => 'Inasistencias'
-		));
+	public function admin_index() {
+		$this->redirect(array('action' => 'generar_reporte'));
 	}
 
 /**
- * Editar inasistencia
- *
- * @return void
- *
- * @throws MethodNotAllowedException Si la petición no se realiza utilizando el método POST o no se reciben datos
- */
-	public function admin_editar_inasistencia() {
-		if (!$this->request->is('post')) {
-			throw new MethodNotAllowedException;
-		}
-		$this->__setupModelAssociations();
-
-		if (isset($this->request->data['Registro'][0])) {
-			if ($this->Registro->saveMany($this->request->data['Registro'], array('fieldList' => array('obs')))) {
-				$this->_notify('record_modified', array('redirect' => array('action' => 'inasistencias')));
-			} elseif (empty($this->Registro->validationErrors)) {
-				$this->_notify('record_not_saved');
-			}
-		} elseif (!empty($this->request->data['Registro']['id'])) {
-			$max = max($this->request->data['Registro']['id']);
-			if (!$max) {
-				$this->redirect(array('action' => 'inasistencias'));
-			}
-
-			$ids = array();
-			foreach ($this->request->data['Registro']['id'] as $id => $checked) {
-				if ((bool)$checked) {
-					$ids[] = $id;
-				}
-			}
-			$this->request->data['Registro'] = array();
-
-			$rows = $this->Registro->find('all', array(
-				'conditions' => array('Registro.id' => $ids, 'Registro.tipo' => 0),
-				'fields' => array('id', 'asignatura', 'usuario', 'fecha', 'obs'),
-				'recursive' => 0
-			));
-			$this->request->data['Registro'] = Hash::extract($rows, '{n}.Registro');
-		}
-
-		$this->set(array(
-			'title_for_layout' => 'Editar - Inasistencias - Registros',
-			'title_for_view' => 'Editar registro(s)'
-		));
-	}
-
-/**
- * Reporte
+ * Genera reportes
  *
  * @return void
  */
-	public function admin_reporte() {
-		$this->loadModel('Reporte');
-
+	public function admin_generar_reporte() {
 		if (!empty($this->request->named['reset'])) {
-			$this->Session->delete('Reporte');
-			$this->redirect(array('action' => 'reporte'));
+			$this->Session->delete($this->_getSessionKey());
+			$this->redirect(array('action' => 'generar_reporte'));
 		}
 
-		$options = (array)$this->Session->read('Reporte');
+		$options = $this->Session->read($this->_getSessionKey('Options'));
 		if (!$options) {
 			$options = array(
 				'data' => array(),
@@ -144,13 +84,10 @@ class RegistrosController extends AppController {
 			);
 		}
 
-		if ($this->request->ext === 'pdf') {
-			return $this->__generateReport($options);
-		}
-
 		if ($this->request->is('post')) {
 			$this->Reporte->create($this->request->data);
-			if ($this->Reporte->validates()) {
+			$fieldList = array('asignatura_id', 'usuario_id', 'desde', 'hasta', 'tipo');
+			if ($this->Reporte->validates(compact('fieldList'))) {
 				$options['data'] = $this->Reporte->data['Reporte'];
 			} else {
 				$options['data'] = array();
@@ -170,125 +107,235 @@ class RegistrosController extends AppController {
 						'tipo' => 1
 					)
 				);
+				$options['data'] = $this->request->data['Reporte'];
 			}
 		}
 
-		$this->Paginator->settings = array_merge(
-			$this->Paginator->settings,
-			$this->__getFindOptions($options),
-			array('limit' => 10, 'maxLimit' => 10)
-		);
-
-		$asignaturas = $this->Reporte->getAsignaturas();
-		$usuarios = $this->Reporte->getUsuarios($this->request->data['Reporte']['asignatura_id']);
-
-		$this->__setupModelAssociations();
-		$this->set(array(
-			'asignaturas' => $asignaturas,
-			'usuarios' => $usuarios,
-			'rows' => $this->Paginator->paginate(),
-			'title_for_layout' => 'Reportes - Registros',
-			'title_for_view' => 'Reportes'
-		));
-
-		if (isset($this->params['paging']['Registro']['order'])) {
-			$options['paging']['order'] = $this->params['paging']['Registro']['order'];
-		}
-
-		$this->Session->write('Reporte', $options);
-	}
-
-/**
- * Establece asociaciones entre modelos necesarias para realizar búsquedas
- *
- * @return void
- */
-	private function __setupModelAssociations() {
-		$this->Registro->virtualFields = array(
-			'asignatura' => $this->Registro->Asignatura->virtualFields['asignatura'],
-			'usuario' => $this->Registro->Usuario->virtualFields['nombre_completo']
-		);
-
-		$this->Registro->bindModel(array(
-			'hasOne' => array(
-				'Carrera' => array(
-					'className' => 'AsignaturasCarrera',
-					'conditions' => 'Carrera.id = Asignatura.carrera_id',
-					'foreignKey' => false
-				),
-				'Materia' => array(
-					'className' => 'AsignaturasMateria',
-					'conditions' => 'Materia.id = Asignatura.materia_id',
-					'foreignKey' => false
-				)
-			)
-		), false);
-	}
-
-/**
- * Obtiene las opciones de búsqueda para el reporte
- *
- * @param array $options Opciones
- *
- * @return array
- */
-	private function __getFindOptions($options) {
-		$result = array(
-			'conditions' => array(
-				'Registro.tipo' => 1
-			),
+		$findOptions = array(
 			'fields' => array(
-				'asignatura', 'Usuario.legajo', 'Usuario.apellido',
-				'Usuario.nombre', 'tipo', 'fecha', 'entrada', 'salida', 'obs'
+				'asignatura', 'Usuario.legajo', 'usuario', 'tipo', 'fecha', 'entrada', 'salida', 'obs'
 			),
 			'order' => array('Registro.fecha' => 'desc'),
 			'recursive' => 0
 		);
-
 		if (!empty($options['data']['asignatura_id'])) {
-			$result['conditions']['Registro.asignatura_id'] = $options['data']['asignatura_id'];
+			$findOptions['conditions']['Registro.asignatura_id'] = $options['data']['asignatura_id'];
 		}
-
 		if (!empty($options['data']['usuario_id'])) {
-			$result['conditions']['Registro.usuario_id'] = $options['data']['usuario_id'];
+			$findOptions['conditions']['Registro.usuario_id'] = $options['data']['usuario_id'];
 		}
-
 		if (!empty($options['data']['desde'])) {
-			$result['conditions']['Registro.fecha >='] = $options['data']['desde'];
+			$findOptions['conditions']['CAST(Registro.fecha as DATE) >='] = $options['data']['desde'];
 		}
-
 		if (!empty($options['data']['hasta'])) {
-			$result['conditions']['Registro.fecha <='] = $options['data']['hasta'];
+			$findOptions['conditions']['CAST(Registro.fecha as DATE) <='] = $options['data']['hasta'];
 		}
-
 		if (isset($options['data']['tipo'])) {
-			if ($options['data']['tipo'] === '0') {
-				$result['conditions']['Registro.tipo'] = 0;
-			} elseif ($options['data']['tipo'] === '2') {
-				unset($result['conditions']['Registro.tipo']);
+			$options['data']['tipo'] = (int)$options['data']['tipo'];
+			if ($options['data']['tipo'] == 0) {
+				$findOptions['conditions']['Registro.tipo'] = 0;
+			} elseif ($options['data']['tipo'] == 1) {
+				$findOptions['conditions']['Registro.tipo'] = 1;
+			} else {
+				$findOptions['conditions']['Registro.tipo'] = array(0, 1);
 			}
 		}
-
 		if (!empty($options['paging']['order'])) {
-			$result['order'] = $options['paging']['order'];
+			$findOptions['order'] = $options['paging']['order'];
 		}
 
-		return $result;
+		if ($this->request->ext === 'pdf') {
+			$title = 'Asistencia';
+			if (isset($options['data']['tipo'])) {
+				if ($options['data']['tipo'] == 0) {
+					$title = 'Inasistencia';
+				} elseif ($options['data']['tipo'] == 2) {
+					$title .= ' e Inasistencia';
+				}
+			}
+			$this->_setupCakePdf('Reporte de ' . $title);
+
+			$data = $options['data'];
+			if (!empty($data['asignatura_id'])) {
+				$this->Registro->Asignatura->recursive = 0;
+				$this->Registro->Asignatura->id = $data['asignatura_id'];
+				$data['asignatura'] = $this->Registro->Asignatura->field('asignatura');
+			}
+			if (!empty($data['usuario_id'])) {
+				$this->Registro->Usuario->id = $data['usuario_id'];
+				$data['usuario'] = $this->Registro->Usuario->field('docente');
+			}
+			if (empty($data['desde'])) {
+				$data['desde'] = $this->Registro->getFirstPresenceDate();
+			}
+
+			$this->set(array(
+				'data' => $data,
+				'rows' => $this->Registro->find('all', $findOptions)
+			));
+
+			try {
+				$this->render();
+			} catch (Exception $e) {
+				$this->_notify(null, array(
+					'message' => 'No fue posible exportar el resultado debido a un error interno.',
+					'redirect' => array('action' => 'generar_reporte')
+				));
+			}
+		} else {
+			$this->Paginator->settings = array_merge(
+				$this->Paginator->settings,
+				$findOptions,
+				array('limit' => 10, 'maxLimit' => 10)
+			);
+
+			$findCondition = array();
+			if (!empty($options['data']['asignatura_id'])) {
+				$findCondition = array('asignatura_id' => $options['data']['asignatura_id']);
+			}
+			$this->set(array(
+				'asignaturas' => $this->Registro->getAsignaturasList(),
+				'usuarios' => $this->Registro->getUsuariosList($findCondition),
+				'rows' => $this->Paginator->paginate(),
+				'title_for_layout' => 'Generar reporte - Reportes',
+				'title_for_view' => 'Generar reporte'
+			));
+
+			if (isset($this->params['paging']['Registro']['order'])) {
+				$options['paging']['order'] = $this->params['paging']['Registro']['order'];
+			}
+
+			$this->Session->write($this->_getSessionKey('Options'), $options);
+		}
 	}
 
 /**
- * Genera un reporte en formato PDF
- *
- * @param array $options Condiciones de búsqueda y opciones de ordenamiento
+ * Genera un reporte de asistencia general
  *
  * @return void
  */
-	private function __generateReport($options) {
+	public function admin_asistencia_general() {
+		if (!empty($this->request->named['reset'])) {
+			$this->Session->delete($this->_getSessionKey());
+			$this->redirect(array('action' => 'asistencia_general'));
+		}
+
+		$options = $this->Session->read($this->_getSessionKey('Options'));
+		if (!$options) {
+			$options = array(
+				'data' => array()
+			);
+		}
+
+		if ($this->request->is('post')) {
+			$this->Reporte->create($this->request->data);
+			$fieldList = array('carrera_id', 'desde', 'hasta');
+			if ($this->Reporte->validates(compact('fieldList'))) {
+				$options['data'] = $this->Reporte->data['Reporte'];
+			} else {
+				$options['data'] = array();
+			}
+		}
+
+		$carreras = $this->Registro->getCarrerasList();
+		if (!$this->request->data) {
+			if ($options['data']) {
+				$this->request->data['Reporte'] = $options['data'];
+			} else {
+				$this->request->data = array(
+					'Reporte' => array(
+						'carrera_id' => key($carreras),
+						'desde' => null,
+						'hasta' => null,
+					)
+				);
+				$options['data'] = $this->request->data['Reporte'];
+			}
+		}
+
+		$findOptions = array(
+			'conditions' => array(
+				'Asignatura.carrera_id' => $options['data']['carrera_id']
+			),
+			'fields' => array(
+				'asignatura_id', 'usuario_id', 'Materia.nombre', 'usuario',
+				'SUM(Registro.tipo = 1) as asistencia',
+				'SUM(Registro.tipo = 0) as inasistencia',
+				'SUM(Registro.tipo = 2) as sin_actividad'
+			),
+			'group' => array('asignatura_id', 'usuario_id'),
+			'recursive' => 0
+		);
+		if (!empty($options['data']['desde'])) {
+			$findOptions['conditions']['CAST(Registro.fecha as DATE) >='] = $options['data']['desde'];
+		}
+		if (!empty($options['data']['hasta'])) {
+			$findOptions['conditions']['CAST(Registro.fecha as DATE) <='] = $options['data']['hasta'];
+		}
+
+		$this->set(array(
+			'carreras' => $carreras,
+			'rows' => $this->Registro->find('all', $findOptions),
+			'title_for_layout' => 'Asistencia general - Reportes',
+			'title_for_view' => 'Asistencia general'
+		));
+
+		if ($this->request->ext === 'pdf') {
+			if (empty($options['data']['carrera_id'])) {
+				$this->_notify(null, array(
+					'message' => 'No es posible crear un reporte vacío.',
+					'level' => 'info',
+					'redirect' => array('action' => 'asistencia_general')
+				));
+			}
+			if (empty($options['data']['desde'])) {
+				$options['data']['desde'] = $this->Registro->getFirstPresenceDate();
+			}
+			$this->_setupCakePdf('Reporte de Asistencia General');
+			$this->set(array(
+				'data' => $options['data']
+			));
+
+			try {
+				$this->render();
+			} catch (Exception $e) {
+				$this->_notify(null, array(
+					'message' => 'No fue posible exportar el resultado debido a un error interno.',
+					'redirect' => array('action' => 'asistencia_general')
+				));
+			}
+		} else {
+			$this->Session->write($this->_getSessionKey('Options'), $options);
+		}
+	}
+
+/**
+ * Genera una clave de sesión incluyendo el nombre de la acción actual como prefijo
+ *
+ * @param string $key Clave
+ *
+ * @return string Clave
+ */
+	protected function _getSessionKey($key = '') {
+		return sprintf('Reporte.%s%s',
+			Inflector::camelize($this->request->action),
+			(!empty($key) ? ".$key" : "")
+		);
+	}
+
+/**
+ * Establece la configuración inicial de CakePdf y opciones comunes para los reportes
+ *
+ * @param string $title Título
+ * @param string $orientation Orientación
+ *
+ * @return void
+ */
+	protected function _setupCakePdf($title = 'Reporte', $orientation = 'landscape') {
 		$this->autoRender = false;
 
 		$isWindows = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
 		$charset = (!$isWindows ? 'ASCII' : 'ISO-8859-1');
-
 		$date = preg_replace_callback(
 			"/[a-zA-Záéíóú]{3,}/u",
 			function ($m) {
@@ -296,15 +343,6 @@ class RegistrosController extends AppController {
 			},
 			CakeTime::format(time(), '%A %d de %B de %Y')
 		);
-
-		$title = 'Asistencia';
-		if (isset($options['data']['tipo'])) {
-			if ($options['data']['tipo'] === '0') {
-				$title = 'Inasistencia';
-			} elseif ($options['data']['tipo'] === '2') {
-				$title .= ' e Inasistencia';
-			}
-		}
 
 		$this->pdfConfig = array(
 			'engine' => 'CakePdf.WkHtmlToPdf',
@@ -314,7 +352,7 @@ class RegistrosController extends AppController {
 				'footer-font-name' => 'Arial',
 				'footer-font-size' => '9',
 				'footer-line' => false,
-				'header-center' => 'Reporte de ' . $title,
+				'header-center' => $title,
 				'header-font-name' => 'Arial',
 				'header-font-size' => '9',
 				'header-left' => 'Sistema de Registro de Asistencia y Temas',
@@ -329,50 +367,12 @@ class RegistrosController extends AppController {
 				'right' => 3,
 				'top' => 5
 			),
-			'orientation' => 'landscape',
+			'orientation' => $orientation,
 			'page-size' => 'A4'
 		);
 
 		if (!Configure::check('CakePdf.binary') && !$isWindows) {
 			$this->pdfConfig['binary'] = trim(shell_exec('which wkhtmltopdf'));
-		}
-
-		$data = $options['data'];
-		$settings = $this->__getFindOptions($options);
-		$this->__setupModelAssociations();
-
-		if (!empty($data['asignatura_id'])) {
-			$row = $this->Registro->Asignatura->find('first', array(
-				'conditions' => array('Asignatura.id' => $data['asignatura_id']),
-				'fields' => array('asignatura'),
-				'recursive' => 0
-			));
-			$data['asignatura'] = $row['Asignatura']['asignatura'];
-		}
-
-		if (!empty($data['usuario_id'])) {
-			$this->Registro->Usuario->virtualFields = array(
-				'nombre_completo' => 'CONCAT("(", Usuario.legajo, ")", " ", Usuario.apellido, ", ", Usuario.nombre)'
-			);
-			$row = $this->Registro->Usuario->find('first', array(
-				'conditions' => array('Usuario.id' => $data['usuario_id']),
-				'fields' => array('nombre_completo')
-			));
-			$data['usuario'] = $row['Usuario']['nombre_completo'];
-		}
-
-		$this->set(array(
-			'data' => $data,
-			'rows' => $this->Registro->find('all', $settings)
-		));
-
-		try {
-			$this->render();
-		} catch (Exception $e) {
-			$this->_notify(null, array(
-				'message' => 'No fue posible exportar el resultado debido a un error interno.',
-				'redirect' => array('action' => 'reporte')
-			));
 		}
 	}
 }

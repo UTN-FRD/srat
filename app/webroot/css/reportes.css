@@ -11,36 +11,49 @@
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 
-.report-filter {
+.report-container .form-horizontal {
 	margin-top: 10px
 }
 
-.report-filter .control-label {
+.report-container .control-label {
 	text-align: left;
 	width: 125px
 }
 
-.report-filter .controls {
+.report-container .controls {
 	margin-left: 50px
 }
 
-.report-filter .datefield:nth-child(1) {
+.report-container .field-date:nth-child(1) {
 	margin-right: 3px;
 	width: 60px
 }
 
-.report-filter .datefield:nth-child(2) {
+.report-container .field-date:nth-child(2) {
 	margin-left: 3px;
 	margin-right: 3px;
 	width: 115px
 }
 
-.report-filter .datefield:nth-child(3) {
+.report-container .field-date:nth-child(3) {
 	margin-left: 3px;
 	width: 75px
 }
 
-.report-filter .report-filter-howto {
+.report-container .help-inline {
+	display: block
+}
+
+.field-date + .help-inline {
+	margin-top: 5px
+}
+
+.field-date + .help-inline,
+.field-type + .help-inline {
+	margin-left: 72px
+}
+
+.report-container .howto {
 	float: right;
 	font-size: 1em;
 	position: relative;
@@ -48,128 +61,68 @@
 	width: 512px
 }
 
-.report-filter .form-actions {
-	margin-top: 0;
+.report-container .form-actions {
+	margin-top: 5px;
 	padding-left: 145px
 }
 
-.report-preview tbody td {
-	height: 40px;
+.report-general .form-actions {
+	margin-top: 15px
 }
 
-.report-preview tbody .empty td {
+.report-container .report-preview tbody td {
+	height: 40px
+}
+
+.report-general .report-preview tbody td {
+	height: auto
+}
+
+.report-container .report-preview tbody .empty td {
 	height: 20px;
 	text-align: center
 }
 
-.report-preview thead th:nth-child(2) {
-	width: 260px;
+.report-container .report-preview thead th:nth-child(2) {
+	width: 260px
 }
 
-.report-preview thead th:nth-child(3),
-.report-preview tbody td:nth-child(3) {
+.report-container .report-preview thead th:nth-child(3),
+.report-container .report-preview tbody td:nth-child(3) {
 	text-align: center;
-	width: 85px;
-}
-
-.report-preview thead th:nth-child(4) {
-	width: 150px;
-}
-
-.report-preview thead th:nth-child(5),
-.report-preview thead th:nth-child(6),
-.report-preview thead th:nth-child(7) {
-	text-align: right;
-	width: 65px;
-}
-
-.report-preview tbody td:nth-child(5),
-.report-preview tbody td:nth-child(6),
-.report-preview tbody td:nth-child(7) {
-	text-align: right;
-}
-
-.report-details {
-	width: 786px
-}
-
-.report-details th,
-.report-details td {
-	border: none
-}
-
-.report-details tbody td:first-child {
-	font-weight: bold;
 	width: 85px
 }
 
-.report-container .table-bordered {
-	-moz-border-radius: 0;
-	-webkit-border-radius: 0;
-	border-left: 1px solid #ddd;
-	border-radius: 0
-}
-
-.report-container .table-bordered th:first-child,
-.report-container .table-bordered td:first-child {
-	border-left: none
-}
-
-.report-container .table-bordered thead:first-child tr:first-child > th:first-child,
-.report-container .table-bordered tbody:first-child tr:first-child > td:first-child,
-.report-container .table-bordered tbody:first-child tr:first-child > th:first-child {
-	-moz-border-radius-topleft: 0;
-	-webkit-border-top-left-radius: 0;
-	border-top-left-radius: 0
-}
-
-.report-container .table-bordered thead:last-child tr:last-child > th:first-child,
-.report-container .table-bordered tbody:last-child tr:last-child > td:first-child,
-.report-container .table-bordered tbody:last-child tr:last-child > th:first-child,
-.report-container .table-bordered tfoot:last-child tr:last-child > td:first-child,
-.report-container .table-bordered tfoot:last-child tr:last-child > th:first-child {
-	-moz-border-radius-bottomleft: 0;
-	-webkit-border-bottom-left-radius: 0;
-	border-bottom-left-radius: 0
-}
-
-.report-container .table-bordered thead:first-child tr:first-child > th:last-child,
-.report-container .table-bordered tbody:first-child tr:first-child > td:last-child,
-.report-container .table-bordered tbody:first-child tr:first-child > th:last-child {
-	-moz-border-radius-topright: 0;
-	-webkit-border-top-right-radius: 0;
-	border-top-right-radius: 0
-}
-
-.report-table tbody td {
-	height: 40px;
-}
-
-.report-table tbody .empty td {
-	height: 20px;
-	text-align: center
-}
-
-.report-table .row1 {
-	width: 290px;
-}
-
-.report-table .row2 {
-	text-align: center;
-	width: 45px;
-}
-
-.report-table .row3 {
+.report-container .report-preview thead th:nth-child(4) {
 	width: 150px
 }
 
-.report-table .row4 {
+.report-container .report-preview thead th:nth-child(5),
+.report-container .report-preview thead th:nth-child(6),
+.report-container .report-preview thead th:nth-child(7),
+.report-container .report-preview tbody td:nth-child(5),
+.report-container .report-preview tbody td:nth-child(6),
+.report-container .report-preview tbody td:nth-child(7) {
 	text-align: right;
-	width: 75px;
+	width: 65px
 }
 
-.report-table .row5,
-.report-table .row6 {
+.report-general .report-preview thead th:nth-child(3),
+.report-general .report-preview thead th:nth-child(4),
+.report-general .report-preview thead th:nth-child(5),
+.report-general .report-preview tbody td:nth-child(3),
+.report-general .report-preview tbody td:nth-child(4),
+.report-general .report-preview tbody td:nth-child(5) {
 	text-align: right;
-	width: 55px;
+	width: 120px
+}
+
+.report-general .report-preview th {
+	cursor: pointer
+}
+
+.report-general .arrow {
+	color: blue;
+	font-weight: bold;
+	padding-right: 3px
 }

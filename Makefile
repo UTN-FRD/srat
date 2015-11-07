@@ -163,6 +163,7 @@ build: guard-VERSION clean
 	@echo "Optimizando hojas de estilos en cascada..."
 	find ./build/tmp/app/webroot/css -type f -name "*.css" -not -name "*.min.css" -exec yuglify -w -s {} \;
 	cat \
+		./build/tmp/app/webroot/css/bootstrap.min.css \
 		./build/tmp/app/webroot/css/select2.min.css \
 		./build/tmp/app/webroot/css/layout.css \
 		./build/tmp/app/webroot/css/notify.css \
@@ -171,6 +172,7 @@ build: guard-VERSION clean
 		> ./build/tmp/app/webroot/css/style.css
 
 	rm \
+		./build/tmp/app/webroot/css/bootstrap.min.css \
 		./build/tmp/app/webroot/css/select2.min.css \
 		./build/tmp/app/webroot/css/layout.css \
 		./build/tmp/app/webroot/css/notify.css \

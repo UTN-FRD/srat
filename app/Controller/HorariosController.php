@@ -70,7 +70,7 @@ class HorariosController extends AppController {
 
 		$this->set(array(
 			'rows' => $this->Paginator->paginate(),
-			'title_for_layout' => 'Horarios - Asignaturas',
+			'title_for_layout' => 'Horarios - Administrar',
 			'title_for_view' => 'Horarios'
 		));
 	}
@@ -94,7 +94,7 @@ class HorariosController extends AppController {
 				'order' => array('Materia.nombre' => 'asc'),
 				'recursive' => 0
 			)),
-			'title_for_layout' => 'Agregar - Horarios - Asignaturas',
+			'title_for_layout' => 'Agregar - Horarios - Administrar',
 			'title_for_view' => 'Agregar horario'
 		));
 	}
@@ -131,7 +131,7 @@ class HorariosController extends AppController {
 				'order' => array('Materia.nombre' => 'asc'),
 				'recursive' => 0
 			)),
-			'title_for_layout' => 'Editar - Horarios - Asignaturas',
+			'title_for_layout' => 'Editar - Horarios - Administrar',
 			'title_for_view' => 'Editar horario'
 		));
 	}

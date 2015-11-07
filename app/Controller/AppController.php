@@ -28,6 +28,7 @@ class AppController extends Controller {
  * @var array
  */
 	public $components = array(
+		'AbsenceUpdater',
 		'Security' => array('blackHoleCallback' => 'blackHole'),
 		'Session',
 		'Flash',
@@ -52,8 +53,7 @@ class AppController extends Controller {
 			'loginRedirect' => array('controller' => 'usuarios', 'action' => 'dashboard', 'admin' => false, 'plugin' => false),
 			'logoutRedirect' => array('controller' => 'usuarios', 'action' => 'login', 'admin' => false, 'plugin' => false),
 			'unauthorizedRedirect' => array('controller' => 'usuarios', 'action' => 'dashboard', 'admin' => false, 'plugin' => false)
-		),
-		'Inasistencia'
+		)
 	);
 
 /**
@@ -130,30 +130,8 @@ class AppController extends Controller {
 		}
 
 		if ($this->Auth->user('admin')) {
-			$cacheKey = 'absences' . $this->Auth->user('legajo');
-			$totalInasistencias = Cache::read($cacheKey);
-			if ($totalInasistencias === false) {
-				$totalInasistencias = ClassRegistry::init('Registro')->find('count', array(
-					'conditions' => array(
-						'Registro.tipo' => 0,
-						'Registro.fecha' => date('Y-m-d', strtotime('-1 day'))
-					)
-				));
-				Cache::write($cacheKey, $totalInasistencias);
-			}
-			$this->set(compact('totalInasistencias'));
+			$this->set('totalAbsences', ClassRegistry::init('Inasistencia')->getYesterdaysTotal());
 		}
-	}
-
-/**
- * beforeRender
- *
- * @return void
- */
-	public function beforeRender() {
-		parent::beforeRender();
-
-		$this->_generateTitle();
 	}
 
 /**
@@ -179,38 +157,6 @@ class AppController extends Controller {
  */
 	public function blackHole($type = null) {
 		$this->_notify(__FUNCTION__);
-	}
-
-/**
- * Establece el título para el diseño y/o la vista en caso que no se haya definido
- *
- * @return void
- */
-	protected function _generateTitle() {
-		$action = $this->request->action;
-		if ($this->request->prefix) {
-			$action = str_replace($this->request->prefix . '_', '', $action);
-		}
-
-		foreach (array('title_for_layout', 'title_for_view') as $key) {
-			if (!isset($this->viewVars[$key])) {
-				if ($action === 'index') {
-					$this->viewVars[$key] = Inflector::humanize($this->request->controller);
-				} else {
-					if ($key === 'title_for_layout') {
-						$this->viewVars[$key] = sprintf('%s - %s',
-							Inflector::humanize($action),
-							Inflector::humanize($this->request->controller)
-						);
-					} else {
-						$this->viewVars[$key] = sprintf('%s %s',
-							Inflector::humanize($action),
-							mb_strtolower(Inflector::singularize($this->request->controller))
-						);
-					}
-				}
-			}
-		}
 	}
 
 /**
