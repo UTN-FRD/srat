@@ -72,13 +72,13 @@ bump-version: guard-VERSION
 	@echo "Actualizando VERSION.txt to $(VERSION)"
 	sed -i s'/^[0-9]\.[0-9]\.[0-9].*/$(VERSION)/' VERSION.txt
 	git add VERSION.txt
-	git commit -S -m "Actualizado número de versión a $(VERSION)"
+	git commit -m "Actualizado número de versión a $(VERSION)"
 
 
 # Etiqueta un lanzamiento
 tag-release: guard-VERSION bump-version
 	@echo "Etiquetando $(VERSION)"
-	git tag -s $(VERSION) -m "$(APP_TITLE) $(VERSION)"
+	git tag -a $(VERSION) -m "$(APP_TITLE) $(VERSION)"
 	git push --tags $(REMOTE) $(CURRENT_BRANCH)
 
 
