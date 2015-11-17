@@ -48,10 +48,13 @@ class AbsenceUpdaterComponent extends Component {
 		$model = ClassRegistry::init('Registro');
 		$oldestDate = $model->getFirstPresenceDate();
 		if ($oldestDate) {
+			$model->query(
+				sprintf('UPDATE `%s` SET `tipo` = 0 WHERE `tipo` = 2', $model->useTable)
+			);
+
 			$absences = $model->getLastAbsenseDateByCargo();
 			$oldestDate = date('Y-m-d', strtotime($oldestDate . ' -1 day'));
 			$today = date('Y-m-d');
-
 			$daysList = $model->Asignatura->Horario->getDaysListByCargo();
 			foreach ($daysList as $user => $cargos) {
 				foreach ($cargos as $cargo => $data) {
@@ -99,24 +102,13 @@ class AbsenceUpdaterComponent extends Component {
 
 			$excludedDates = ClassRegistry::init('Periodo')->getDatesRange();
 			if (!empty($excludedDates)) {
-				$belongsTo = $model->belongsTo;
-				$hasOne = $model->hasOne;
-				$model->unbindModel(array(
-					'belongsTo' => array_keys($belongsTo),
-					'hasOne' => array_keys($hasOne)
-				));
-				$model->updateAll(
-					array('tipo' => 0),
-					array('tipo' => 2)
+				$model->query(
+					sprintf(
+						'UPDATE `%s` SET tipo = 2 WHERE CAST(fecha as DATE) IN (%s) AND `tipo` = 0',
+						$model->useTable,
+						implode(',', $model->getDataSource()->value($excludedDates))
+					)
 				);
-				$model->updateAll(
-					array('tipo' => 2),
-					array('CAST(fecha as DATE)' => $excludedDates, 'tipo' => 0)
-				);
-				$model->bindModel(array(
-					'belongsTo' => $belongsTo,
-					'hasOne' => $hasOne,
-				));
 			}
 		}
 	}

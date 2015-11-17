@@ -25,7 +25,7 @@
 		echo $this->fetch('meta');
 		echo $this->Html->meta('icon');
 
-		echo $this->Html->css(array('bootstrap.min', 'style'));
+		echo $this->Html->css('style');
 		echo $this->Html->script('script');
 
 		echo $this->fetch('css');
