@@ -171,11 +171,12 @@ class Inasistencia extends AppModel {
  * @return int Total de inasistencias
  */
 	public function getYesterdaysTotal() {
-		$cacheKey = 'absences_total';
+		$yesterday = date('Y-m-d', strtotime('-1 day'));
+		$cacheKey = 'absences_' . $yesterday;
 		$result = Cache::read($cacheKey);
 		if ($result === false) {
 			$result = $this->find('count', array(
-				'conditions' => array('CAST(fecha as DATE)' => date('Y-m-d', strtotime('-1 day'))),
+				'conditions' => array('CAST(fecha as DATE)' => $yesterday),
 				'recursive' => -1
 			));
 			Cache::write($cacheKey, $result);
