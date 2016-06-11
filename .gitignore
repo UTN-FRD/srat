@@ -6,7 +6,6 @@
 # Composer
 /app/Plugin/CakePdf
 /app/Plugin/Search
-/composer.lock
 /vendor
 
 # Editores
