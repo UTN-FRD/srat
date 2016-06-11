@@ -1,4 +1,5 @@
 # Generador de la aplicación
+# Basado en https://github.com/cakephp/cakephp/blob/master/Makefile
 
 # Las siguientes variables de entorno deben establecerse
 # - VERSION
@@ -12,7 +13,7 @@ APP_TITLE=Sistema de Registro de Asistencia y Temas
 
 # Ajustes de GitHub
 API_HOST=https://api.github.com
-OWNER=jacricelli
+OWNER=UTN-FRD
 REMOTE=origin
 REPO=srat
 UPLOAD_HOST=https://uploads.github.com
