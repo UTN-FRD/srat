@@ -1,7 +1,8 @@
 {
 	"name": "utn/srat",
 	"description": "Sistema de Registro de Asistencia y Temas",
-	"license": "proprietary",
+	"type": "project",
+	"license": "MIT",
 	"authors": [
 		{
 			"name": "Jorge Alberto Cricelli",
