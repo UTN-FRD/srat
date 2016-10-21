@@ -348,7 +348,7 @@ class RegistrosController extends AppController {
 			'engine' => 'CakePdf.WkHtmlToPdf',
 			'options' => array(
 				'dpi' => 96,
-				'footer-center' => iconv('UTF-8', $charset . '//TRANSLIT', 'Página [frompage] de [topage]'),
+				'footer-center' => iconv('UTF-8', $charset . '//TRANSLIT', 'Página [page] de [topage]'),
 				'footer-font-name' => 'Arial',
 				'footer-font-size' => '9',
 				'footer-line' => false,
