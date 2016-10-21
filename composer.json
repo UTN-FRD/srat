@@ -19,7 +19,7 @@
 		"friendsofcake/cakepdf": "~1.0"
 	},
 	"require-dev": {
-		"cakephp/cakephp-codesniffer": "~1.0"
+		"cakephp/cakephp-codesniffer": "1.*"
 	},
 	"extra": {
 		"installer-paths": {
