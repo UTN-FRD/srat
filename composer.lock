@@ -4,7 +4,6 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f2ca289a1ce07e802dd420c9a5bbf5e1",
     "content-hash": "e6a8a57c6a01dda351dbb92ed8d1785b",
     "packages": [
         {
@@ -49,20 +48,20 @@
                 "prg",
                 "search"
             ],
-            "time": "2014-08-07 18:13:40"
+            "time": "2014-08-07T18:13:40+00:00"
         },
         {
             "name": "cakephp/cakephp",
-            "version": "2.9.1",
+            "version": "2.9.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "6cdf38c2ef5798692ed9fb22221527b9f4210d19"
+                "reference": "95cafaec3b4ea6ecfb4560ba539374d7de6e2c00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/6cdf38c2ef5798692ed9fb22221527b9f4210d19",
-                "reference": "6cdf38c2ef5798692ed9fb22221527b9f4210d19",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/95cafaec3b4ea6ecfb4560ba539374d7de6e2c00",
+                "reference": "95cafaec3b4ea6ecfb4560ba539374d7de6e2c00",
                 "shasum": ""
             },
             "require": {
@@ -92,7 +91,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-10-11 01:36:32"
+            "time": "2016-12-23T18:27:15+00:00"
         },
         {
             "name": "composer/installers",
@@ -199,7 +198,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2016-08-13 20:53:52"
+            "time": "2016-08-13T20:53:52+00:00"
         },
         {
             "name": "friendsofcake/cakepdf",
@@ -235,22 +234,22 @@
             ],
             "description": "CakePHP plugin for creating and/or rendering Pdf, several Pdf engines supported.",
             "homepage": "https://github.com/FriendsOfCake/CakePdf",
-            "time": "2015-05-31 18:06:35"
+            "time": "2015-05-31T18:06:35+00:00"
         }
     ],
     "packages-dev": [
         {
             "name": "cakephp/cakephp-codesniffer",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp-codesniffer.git",
-                "reference": "4d39c519966f071fa52e63623cbb74f84d7beb99"
+                "reference": "63c50599bc28341519e9a0f3522056d3bc1feb4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp-codesniffer/zipball/4d39c519966f071fa52e63623cbb74f84d7beb99",
-                "reference": "4d39c519966f071fa52e63623cbb74f84d7beb99",
+                "url": "https://api.github.com/repos/cakephp/cakephp-codesniffer/zipball/63c50599bc28341519e9a0f3522056d3bc1feb4b",
+                "reference": "63c50599bc28341519e9a0f3522056d3bc1feb4b",
                 "shasum": ""
             },
             "require": {
@@ -276,7 +275,7 @@
                 "codesniffer",
                 "framework"
             ],
-            "time": "2015-09-25 21:59:23"
+            "time": "2016-10-23T18:11:16+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -351,7 +350,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2014-12-04 22:32:15"
+            "time": "2014-12-04T22:32:15+00:00"
         }
     ],
     "aliases": [],
