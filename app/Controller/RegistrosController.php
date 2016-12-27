@@ -261,7 +261,7 @@ class RegistrosController extends AppController {
 				'asignatura_id', 'usuario_id', 'Materia.nombre', 'usuario',
 				'SUM(Registro.tipo = 1) as asistencia',
 				'SUM(Registro.tipo = 0) as inasistencia',
-				'SUM(Registro.tipo = 2) as sin_actividad'
+				'SUM(Registro.tipo = 2 OR (Registro.tipo = 1 AND Registro.computable = 0)) as sin_actividad'
 			),
 			'group' => array('asignatura_id', 'usuario_id'),
 			'recursive' => 0

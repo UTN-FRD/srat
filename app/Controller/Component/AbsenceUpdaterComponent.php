@@ -48,9 +48,8 @@ class AbsenceUpdaterComponent extends Component {
 		$model = ClassRegistry::init('Registro');
 		$oldestDate = $model->getFirstPresenceDate();
 		if ($oldestDate) {
-			$model->query(
-				sprintf('UPDATE `%s` SET `tipo` = 0 WHERE `tipo` = 2', $model->useTable)
-			);
+			$model->query(sprintf('UPDATE `%s` SET `tipo` = 0 WHERE `tipo` = 2', $model->useTable));
+			$model->query(sprintf('UPDATE `%s` SET `computable` = 1 WHERE `tipo` = 1', $model->useTable));
 
 			$absences = $model->getLastAbsenseDateByCargo();
 			$oldestDate = date('Y-m-d', strtotime($oldestDate . ' -1 day'));
@@ -102,11 +101,19 @@ class AbsenceUpdaterComponent extends Component {
 
 			$excludedDates = ClassRegistry::init('Periodo')->getDatesRange();
 			if (!empty($excludedDates)) {
+				$excludedDates = implode(',', $model->getDataSource()->value($excludedDates));
 				$model->query(
 					sprintf(
 						'UPDATE `%s` SET tipo = 2 WHERE CAST(fecha as DATE) IN (%s) AND `tipo` = 0',
 						$model->useTable,
-						implode(',', $model->getDataSource()->value($excludedDates))
+						$excludedDates
+					)
+				);
+				$model->query(
+					sprintf(
+						'UPDATE `%s` SET computable = 0 WHERE CAST(fecha as DATE) IN (%s) AND `tipo` = 1',
+						$model->useTable,
+						$excludedDates
 					)
 				);
 			}
