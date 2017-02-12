@@ -32,6 +32,12 @@ $this->set('tasks', array(
 		'url' => array(
 			'action' => 'agregar'
 		)
+	),
+	array(
+		'text' => 'Exportar',
+		'url' => array(
+			'action' => 'exportar'
+		)
 	)
 ));
 

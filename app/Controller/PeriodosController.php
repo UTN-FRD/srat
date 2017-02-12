@@ -14,6 +14,7 @@
  * Dependencias
  */
 App::uses('AppController', 'Controller');
+App::uses('Hash', 'Utility');
 
 /**
  * Períodos
@@ -134,5 +135,23 @@ class PeriodosController extends AppController {
 			$notify = 'record_deleted';
 		}
 		$this->_notify($notify);
+	}
+
+/**
+ * Exporta los períodos en formato JSON
+ *
+ * @return CakeResponse
+ */
+	public function admin_exportar() {
+		$rows = $this->Periodo->find('all', array(
+			'fields' => array('desde', 'hasta', 'obs'),
+			'order' => array('desde' => 'ASC')
+		));
+
+		$this->response->body(json_encode(Hash::extract($rows, '{n}.Periodo')));
+		$this->response->type('Content-Type: application/json');
+		$this->response->download('periodos.json');
+
+		return $this->response;
 	}
 }
