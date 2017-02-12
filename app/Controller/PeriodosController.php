@@ -154,4 +154,29 @@ class PeriodosController extends AppController {
 
 		return $this->response;
 	}
+
+/**
+ * Importa períodos desde un archivo en formato JSON
+ *
+ * @return void
+ *
+ * @throws MethodNotAllowedException Si el método es diferente de POST
+ * @throws RuntimeException Si los datos recibidos no pueden validarse
+ */
+	public function admin_importar() {
+		if (!$this->request->is('post')) {
+			throw new MethodNotAllowedException;
+		}
+
+		$data = $this->request->data('Periodo.archivo');
+		if (!$this->Periodo->isUploadedFile($data)) {
+			throw new RuntimeException;
+		}
+
+		if ($this->Periodo->importarArchivo($data['tmp_name'])) {
+			$this->_notify('record_modified');
+		} else {
+			$this->_notify('record_not_saved', array('redirect' => array('action' => 'index')));
+		}
+	}
 }

@@ -161,4 +161,78 @@ class Periodo extends AppModel {
 		}
 		return $out;
 	}
+
+/**
+ * Valida la subida de un archivo
+ *
+ * @param array $data Datos
+ *
+ * @return bool
+ *
+ * @link https://book.cakephp.org/2.0/en/core-libraries/helpers/form.html#validating-uploads
+ */
+	public function isUploadedFile($data) {
+		if (isset($data[$this->alias])) {
+			$data = $data[$this->alias];
+		}
+
+		if (!isset($data['tmp_error'])) {
+			$key = key($data);
+			if (isset($data[$key]['tmp_name'])) {
+				$data = $data[$key];
+			}
+		}
+
+		if ((isset($data['error']) && $data['error'] == 0) ||
+			(!empty($data['tmp_name']) && $data['tmp_name'] != 'none')
+		) {
+			return is_uploaded_file($data['tmp_name']);
+		}
+
+		return false;
+	}
+
+/**
+ * Importa períodos desde un archivo en formato JSON
+ *
+ * @param string $file Ruta de acceso al archivo
+ *
+ * @return bool
+ */
+	public function importarArchivo($file) {
+		if (empty($file) || !file_exists($file) || !is_readable($file)) {
+			return false;
+		}
+
+		$rows = json_decode(file_get_contents($file));
+		if (!is_array($rows)) {
+			return false;
+		}
+
+		if (!empty($rows)) {
+			$dboSource = $this->getDataSource();
+			$dboSource->begin();
+
+			if (!$dboSource->truncate($this->table)) {
+				$dboSource->rollback();
+
+				return false;
+			}
+
+			foreach ($rows as $row) {
+				$this->create($row);
+				if (!$this->save()) {
+					$dboSource->rollback();
+
+					return false;
+				}
+			}
+
+			$dboSource->commit();
+		}
+
+		unlink($file);
+
+		return true;
+	}
 }

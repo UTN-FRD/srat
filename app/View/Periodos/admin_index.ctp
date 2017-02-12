@@ -18,6 +18,11 @@
 $this->Html->css('periodos', array('inline' => false));
 
 /**
+ * Scripts
+ */
+$this->Html->script('periodos', array('inline' => false));
+
+/**
  * Breadcrumbs
  */
 $this->Html->addCrumb('Administrar');
@@ -31,6 +36,13 @@ $this->set('tasks', array(
 		'text' => 'Agregar',
 		'url' => array(
 			'action' => 'agregar'
+		)
+	),
+	array(
+		'text' => 'Importar',
+		'attribs' => array('class' => 'upload-link'),
+		'url' => array(
+			'action' => 'importar'
 		)
 	),
 	array(
@@ -81,3 +93,10 @@ endif;
  * Tabla
  */
 echo $this->element('table', compact('headers', 'rows'));
+
+/**
+ * Importar períodos
+ */
+echo $this->Form->create('Periodo', array('type' => 'file', 'url' => array('action' => 'importar')));
+echo $this->Form->file('archivo');
+echo $this->Form->end();

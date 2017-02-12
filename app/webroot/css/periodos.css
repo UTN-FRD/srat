@@ -33,3 +33,7 @@
 	margin-left: 3px;
 	width: 75px
 }
+
+#PeriodoImportarForm {
+	display: none
+}
