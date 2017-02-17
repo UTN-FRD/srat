@@ -234,6 +234,7 @@ CREATE TABLE `periodos` (
 CREATE TABLE `registros` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `tipo` tinyint(2) unsigned NOT NULL,
+  `computable` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `asignatura_id` int(10) unsigned NOT NULL,
   `usuario_id` int(10) unsigned NOT NULL,
   `fecha` datetime NOT NULL,
