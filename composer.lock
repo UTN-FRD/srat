@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e6a8a57c6a01dda351dbb92ed8d1785b",
+    "content-hash": "8fe24b2c8f31d6a18da8f3b1b0fabf8f",
     "packages": [
         {
             "name": "cakedc/search",
@@ -52,25 +52,28 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "2.9.4",
+            "version": "2.10.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "95cafaec3b4ea6ecfb4560ba539374d7de6e2c00"
+                "reference": "c4a51509c554a0762e8b4d9b3985fe042b445fe7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/95cafaec3b4ea6ecfb4560ba539374d7de6e2c00",
-                "reference": "95cafaec3b4ea6ecfb4560ba539374d7de6e2c00",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/c4a51509c554a0762e8b4d9b3985fe042b445fe7",
+                "reference": "c4a51509c554a0762e8b4d9b3985fe042b445fe7",
                 "shasum": ""
             },
             "require": {
-                "ext-mcrypt": "*",
                 "php": ">=5.3.0"
             },
             "require-dev": {
                 "cakephp/cakephp-codesniffer": "^1.0.0",
-                "phpunit/phpunit": "3.7.*"
+                "phpunit/phpunit": "^3.7"
+            },
+            "suggest": {
+                "ext-mcrypt": "You need to install ext-openssl or ext-mcrypt to use AES-256 encryption",
+                "ext-openssl": "You need to install ext-openssl or ext-mcrypt to use AES-256 encryption"
             },
             "bin": [
                 "lib/Cake/Console/cake"
@@ -87,24 +90,24 @@
                 }
             ],
             "description": "The CakePHP framework",
-            "homepage": "http://cakephp.org",
+            "homepage": "https://cakephp.org",
             "keywords": [
                 "framework"
             ],
-            "time": "2016-12-23T18:27:15+00:00"
+            "time": "2019-03-01T02:45:41+00:00"
         },
         {
             "name": "composer/installers",
-            "version": "v1.2.0",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "d78064c68299743e0161004f2de3a0204e33b804"
+                "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/d78064c68299743e0161004f2de3a0204e33b804",
-                "reference": "d78064c68299743e0161004f2de3a0204e33b804",
+                "url": "https://api.github.com/repos/composer/installers/zipball/cfcca6b1b60bc4974324efb5783c13dca6932b5b",
+                "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b",
                 "shasum": ""
             },
             "require": {
@@ -116,7 +119,7 @@
             },
             "require-dev": {
                 "composer/composer": "1.0.*@dev",
-                "phpunit/phpunit": "4.1.*"
+                "phpunit/phpunit": "^4.8.36"
             },
             "type": "composer-plugin",
             "extra": {
@@ -146,12 +149,17 @@
             "keywords": [
                 "Craft",
                 "Dolibarr",
+                "Eliasis",
                 "Hurad",
                 "ImageCMS",
+                "Kanboard",
+                "Lan Management System",
                 "MODX Evo",
                 "Mautic",
+                "Maya",
                 "OXID",
                 "Plentymarkets",
+                "Porto",
                 "RadPHP",
                 "SMF",
                 "Thelia",
@@ -169,28 +177,36 @@
                 "croogo",
                 "dokuwiki",
                 "drupal",
+                "eZ Platform",
                 "elgg",
                 "expressionengine",
                 "fuelphp",
                 "grav",
                 "installer",
+                "itop",
                 "joomla",
                 "kohana",
                 "laravel",
+                "lavalite",
                 "lithium",
                 "magento",
+                "majima",
                 "mako",
                 "mediawiki",
                 "modulework",
+                "modx",
                 "moodle",
+                "osclass",
                 "phpbb",
                 "piwik",
                 "ppi",
                 "puppet",
+                "pxcms",
                 "reindex",
                 "roundcube",
                 "shopware",
                 "silverstripe",
+                "sydes",
                 "symfony",
                 "typo3",
                 "wordpress",
@@ -198,7 +214,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2016-08-13T20:53:52+00:00"
+            "time": "2018-08-27T06:10:37+00:00"
         },
         {
             "name": "friendsofcake/cakepdf",
@@ -239,21 +255,21 @@
     ],
     "packages-dev": [
         {
-            "name": "cakephp/cakephp-codesniffer",
-            "version": "1.0.2",
+            "name": "jacricelli/cakephp-codesniffer",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/cakephp/cakephp-codesniffer.git",
-                "reference": "63c50599bc28341519e9a0f3522056d3bc1feb4b"
+                "url": "https://github.com/jacricelli/cakephp-codesniffer.git",
+                "reference": "5e4bf4769a5da3f4a979b729f8bca1c3c39039ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp-codesniffer/zipball/63c50599bc28341519e9a0f3522056d3bc1feb4b",
-                "reference": "63c50599bc28341519e9a0f3522056d3bc1feb4b",
+                "url": "https://api.github.com/repos/jacricelli/cakephp-codesniffer/zipball/5e4bf4769a5da3f4a979b729f8bca1c3c39039ae",
+                "reference": "5e4bf4769a5da3f4a979b729f8bca1c3c39039ae",
                 "shasum": ""
             },
             "require": {
-                "squizlabs/php_codesniffer": "^1.4.0"
+                "jacricelli/php_codesniffer": "1.5.7"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.1.0"
@@ -275,20 +291,20 @@
                 "codesniffer",
                 "framework"
             ],
-            "time": "2016-10-23T18:11:16+00:00"
+            "time": "2019-04-10T14:41:51+00:00"
         },
         {
-            "name": "squizlabs/php_codesniffer",
-            "version": "1.5.6",
+            "name": "jacricelli/php_codesniffer",
+            "version": "1.5.7",
             "source": {
                 "type": "git",
-                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "6f3e42d311b882b25b4d409d23a289f4d3b803d5"
+                "url": "https://github.com/jacricelli/PHP_CodeSniffer.git",
+                "reference": "dad04d008f30b6c84403471375ffb78981135bbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/6f3e42d311b882b25b4d409d23a289f4d3b803d5",
-                "reference": "6f3e42d311b882b25b4d409d23a289f4d3b803d5",
+                "url": "https://api.github.com/repos/jacricelli/PHP_CodeSniffer/zipball/dad04d008f30b6c84403471375ffb78981135bbc",
+                "reference": "dad04d008f30b6c84403471375ffb78981135bbc",
                 "shasum": ""
             },
             "require": {
@@ -350,7 +366,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2014-12-04T22:32:15+00:00"
+            "time": "2019-04-10T14:07:58+00:00"
         }
     ],
     "aliases": [],
