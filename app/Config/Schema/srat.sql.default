@@ -27,7 +27,7 @@ CREATE TABLE `asignaturas` (
   `nivel_id` tinyint(3) unsigned NOT NULL,
   `tipo_id` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_ASIGNATURA` (`carrera_id`,`materia_id`),
+  UNIQUE KEY `UK_ASIGNATURA` (`carrera_id`,`materia_id`,`area_id`,`nivel_id`,`tipo_id`),
   KEY `IK_AREA` (`area_id`),
   KEY `IK_MATERIA` (`materia_id`),
   KEY `IK_NIVEL` (`nivel_id`),

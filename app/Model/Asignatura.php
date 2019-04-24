@@ -123,7 +123,7 @@ class Asignatura extends AppModel {
 				'message' => 'El valor seleccionado no existe'
 			),
 			'isUnique' => array(
-				'rule' => array('validateUnique', array('carrera_id')),
+				'rule' => array('validateUnique', array('carrera_id', 'area_id', 'nivel_id', 'tipo_id')),
 				'message' => 'La materia seleccionada ya se encuentra asociada a la carrera seleccionada'
 			)
 		),
