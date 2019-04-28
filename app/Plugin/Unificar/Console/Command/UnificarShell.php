@@ -25,7 +25,7 @@ class UnificarShell extends Shell {
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
 		$parser->description(
-			'Unifica las bases de datos de las distintas carreras en una sola.'
+			'Unifica las bases de datos de las distintas carreras.'
 		);
 		return $parser;
 	}
