@@ -82,3 +82,7 @@ CakePlugin::load(array(
 	'CakePdf' => array('bootstrap' => true, 'routes' => true),
 	'Search'
 ));
+
+if (PHP_SAPI === 'cli') {
+	CakePlugin::load('Unificar', array('bootstrap' => true));
+}
