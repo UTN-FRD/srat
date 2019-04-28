@@ -9,3 +9,13 @@
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
+
+/**
+ * Dependencias
+ */
+App::uses('ConnectionManager', 'Model');
+
+$defaultConfig = ConnectionManager::getDataSource('default')->config;
+foreach (array('basicas', 'electrica', 'mecanica', 'sistemas') as $nombre) {
+	ConnectionManager::create($nombre, array('database' => 'srat_' . $nombre) + $defaultConfig);
+}
