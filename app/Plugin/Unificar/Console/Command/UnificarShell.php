@@ -28,7 +28,7 @@ class UnificarShell extends Shell {
  *
  * @var array
  */
-	public $uses = array('Asignatura');
+	public $uses = array('Asignatura', 'Cargo');
 
 /**
  * Unifica las bases de datos de las distintas carreras
@@ -38,6 +38,7 @@ class UnificarShell extends Shell {
 	public function main() {
 		$this->_combinarTablas();
 		$this->_unificarAsignaturas();
+		$this->_unificarCargos();
 	}
 
 /**
@@ -68,6 +69,27 @@ class UnificarShell extends Shell {
 				throw new Exception(
 					'No se unificaron asignaturas debido a un ' .
 					($this->Asignatura->validationErrors ? 'error en la validación de los datos.' : 'error interno.')
+				);
+			}
+		} catch (Exception $e) {
+			$this->error($e->getMessage());
+		}
+	}
+
+/**
+ * Unifica los cargos
+ *
+ * @return void
+ *
+ * @throws Exception Cuando se produce un error al guardar los registros
+ */
+	protected function _unificarCargos() {
+		try {
+			$registros = $this->_obtenerRegistrosCargos();
+			if (!$this->Cargo->saveMany($registros)) {
+				throw new Exception(
+					'No se unificaron cargos debido a un ' .
+					($this->Cargo->validationErrors ? 'error en la validación de los datos.' : 'error interno.')
 				);
 			}
 		} catch (Exception $e) {
@@ -152,6 +174,124 @@ class UnificarShell extends Shell {
 	}
 
 /**
+ * Obtiene los registros de los cargos de todas las carreras
+ *
+ * @return array
+ */
+	protected function _obtenerRegistrosCargos() {
+		$mapa = $this->_generarMapaCargos();
+		$registros = array();
+
+		$hasOne = $this->Cargo->hasOne;
+		$virtualFields = $this->Cargo->virtualFields;
+
+		$this->Cargo->hasOne = array();
+		$this->Cargo->virtualFields = array();
+
+		foreach ($this->_obtenerConexiones() as $conexion => $base) {
+			$this->Cargo->setDataSource($conexion);
+			$this->Cargo->Asignatura->setDataSource($conexion);
+			$this->Cargo->Dedicacion->setDataSource($conexion);
+			$this->Cargo->Grado->setDataSource($conexion);
+			$this->Cargo->Tipo->setDataSource($conexion);
+			$this->Cargo->Usuario->setDataSource($conexion);
+
+			$filas = $this->Cargo->find('all', array(
+				'recursive' => 0,
+				'fields' => array(
+					'id', 'asignatura.carrera_id', 'asignatura.materia_id', 'dedicacion', 'resolucion',
+					'Carrera.nombre', 'Dedicacion.nombre', 'Grado.nombre', 'Materia.nombre', 'Tipo.nombre',
+					'Usuario.legajo'
+				),
+				'joins' => array(
+					array(
+						'table' => 'asignaturas_carreras',
+						'alias' => 'Carrera',
+						'type' => 'INNER',
+						'conditions' => array(
+							'Carrera.id = Asignatura.carrera_id'
+						)
+					),
+					array(
+						'table' => 'asignaturas_materias',
+						'alias' => 'Materia',
+						'type' => 'INNER',
+						'conditions' => array(
+							'Materia.id = Asignatura.materia_id'
+						)
+					)
+				)
+			));
+
+			$this->Cargo->setDataSource('default');
+			$this->Cargo->Asignatura->setDataSource('default');
+			$this->Cargo->Dedicacion->setDataSource('default');
+			$this->Cargo->Grado->setDataSource('default');
+			$this->Cargo->Tipo->setDataSource('default');
+			$this->Cargo->Usuario->setDataSource('default');
+
+			foreach ($filas as $fila) {
+				unset($fila['Cargo']['id'], $fila['Asignatura']);
+				$clave = sha1(serialize($fila));
+				if (!isset($registros[$clave])) {
+					$asignaturaId = null;
+					$usuarioId = null;
+					$tipoId = null;
+					$gradoId = null;
+					$dedicacionId = null;
+					$dedicacion = $fila['Cargo']['dedicacion'];
+					$resolucion = $fila['Cargo']['resolucion'];
+
+					$asignatura = sprintf(
+						'%s: %s',
+						$fila['Carrera']['nombre'],
+						$fila['Materia']['nombre']
+					);
+					if (isset($mapa['Asignatura'][$asignatura])) {
+						$asignaturaId = $mapa['Asignatura'][$asignatura];
+					} else {
+						$this->out("> La asignatura '" . $asignatura . "' no se encuentra definida.");
+					}
+					if (isset($mapa['Usuario'][$fila['Usuario']['legajo']])) {
+						$usuarioId = $mapa['Usuario'][$fila['Usuario']['legajo']];
+					} else {
+						$this->out("> El legajo de usuario '" . $fila['Usuario']['legajo'] . "' no se encuentra definido.");
+					}
+					if (isset($mapa['Tipo'][$fila['Tipo']['nombre']])) {
+						$tipoId = $mapa['Tipo'][$fila['Tipo']['nombre']];
+					} else {
+						$this->out("> El tipo de cargo '" . $fila['Tipo']['nombre'] . "' no se encuentra definido.");
+					}
+					if (isset($mapa['Grado'][$fila['Grado']['nombre']])) {
+						$gradoId = $mapa['Grado'][$fila['Grado']['nombre']];
+					} else {
+						$this->out("> El grado '" . $fila['Grado']['nombre'] . "' no se encuentra definido.");
+					}
+					if (isset($mapa['Dedicacion'][$fila['Dedicacion']['nombre']])) {
+						$dedicacionId = $mapa['Dedicacion'][$fila['Dedicacion']['nombre']];
+					} else {
+						$this->out("> La dedicacion '" . $fila['Dedicacion']['nombre'] . "' no se encuentra definida.");
+					}
+					$registros[$clave] = array(
+						'asignatura_id' => $asignaturaId,
+						'usuario_id' => $usuarioId,
+						'tipo_id' => $tipoId,
+						'grado_id' => $gradoId,
+						'dedicacion_id' => $dedicacionId,
+						'dedicacion' => (float)$dedicacion,
+						'resolucion' => $resolucion
+					);
+				}
+			}
+		}
+
+		$this->Cargo->hasOne = $hasOne;
+		$this->Cargo->virtualFields = $this->Cargo->virtualFields;
+
+		return array_values($registros);
+	}
+
+/**
  * Genera un mapa de datos de las tablas Áreas, Carreras, Materias, Niveles y Tipos de niveles
  *
  * @return array
@@ -161,6 +301,28 @@ class UnificarShell extends Shell {
 
 		foreach (array('Area', 'Carrera', 'Materia', 'Tipo', 'Nivel') as $modelo) {
 			$registros[$modelo] = array_flip($this->Asignatura->{$modelo}->find('list'));
+		}
+
+		return $registros;
+	}
+
+/**
+ * Genera un mapa de datos de las tablas Asignaturas, Dedicaciones, Grados y Tipos de cargos
+ *
+ * @return array
+ */
+	protected function _generarMapaCargos() {
+		$registros = array();
+
+		foreach (array('Asignatura', 'Dedicacion', 'Grado', 'Tipo', 'Usuario') as $modelo) {
+			$opciones = array();
+			if ($modelo === 'Asignatura') {
+				$opciones['recursive'] = 0;
+			} elseif ($modelo === 'Usuario') {
+				$opciones['fields'] = array('id', 'legajo');
+			}
+
+			$registros[$modelo] = array_flip($this->Cargo->{$modelo}->find('list', $opciones));
 		}
 
 		return $registros;
