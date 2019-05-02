@@ -11,11 +11,39 @@
  */
 
 /**
- * Unifica las bases de datos de las distintas carreras en una sola
+ * Dependencias
+ */
+App::uses('ConnectionManager', 'Model');
+
+/**
+ * Unificación de bases de datos
  *
  * @author Jorge Alberto Cricelli <jacricelli@gmail.com>
  */
 class UnificarShell extends Shell {
+
+/**
+ * Unifica las bases de datos de las distintas carreras
+ *
+ * @return void
+ */
+	public function main() {
+		$this->_combinarTablas();
+	}
+
+/**
+ * Ejecuta el procedimiento almacenado CombinarTablas()
+ *
+ * @return void
+ */
+	protected function _combinarTablas() {
+		try {
+			$conexion = ConnectionManager::getDataSource('default');
+			$conexion->query(sprintf('CALL %s.CombinarTablas()', $conexion->getSchemaName()));
+		} catch (Exception $e) {
+			$this->error($e->getMessage());
+		}
+	}
 
 /**
  * getOptionParser
