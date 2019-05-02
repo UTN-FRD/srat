@@ -28,7 +28,7 @@ class UnificarShell extends Shell {
  *
  * @var array
  */
-	public $uses = array('Asignatura', 'Cargo');
+	public $uses = array('Asignatura', 'Cargo', 'Horario');
 
 /**
  * Unifica las bases de datos de las distintas carreras
@@ -39,6 +39,7 @@ class UnificarShell extends Shell {
 		$this->_combinarTablas();
 		$this->_unificarAsignaturas();
 		$this->_unificarCargos();
+		$this->_unificarHorarios();
 	}
 
 /**
@@ -90,6 +91,27 @@ class UnificarShell extends Shell {
 				throw new Exception(
 					'No se unificaron cargos debido a un ' .
 					($this->Cargo->validationErrors ? 'error en la validación de los datos.' : 'error interno.')
+				);
+			}
+		} catch (Exception $e) {
+			$this->error($e->getMessage());
+		}
+	}
+
+/**
+ * Unifica los horarios
+ *
+ * @return void
+ *
+ * @throws Exception Cuando se produce un error al guardar los registros
+ */
+	protected function _unificarHorarios() {
+		try {
+			$registros = $this->_obtenerRegistrosHorarios();
+			if (!$this->Horario->saveMany($registros)) {
+				throw new Exception(
+					'No se unificaron cargos debido a un ' .
+					($this->Horario->validationErrors ? 'error en la validación de los datos.' : 'error interno.')
 				);
 			}
 		} catch (Exception $e) {
@@ -292,6 +314,77 @@ class UnificarShell extends Shell {
 	}
 
 /**
+ * Obtiene los registros de los horarios de todas las carreras
+ *
+ * @return array
+ */
+	protected function _obtenerRegistrosHorarios() {
+		$mapa = $this->_generarMapaHorarios();
+		$registros = array();
+
+		foreach ($this->_obtenerConexiones() as $conexion => $base) {
+			$this->Horario->setDataSource($conexion);
+			$this->Horario->Asignatura->setDataSource($conexion);
+
+			$filas = $this->Horario->find('all', array(
+				'recursive' => 0,
+				'fields' => array(
+					'id', 'asignatura_id', 'dia', 'entrada', 'salida', 'Carrera.nombre', 'Materia.nombre'
+				),
+				'joins' => array(
+					array(
+						'table' => 'asignaturas_carreras',
+						'alias' => 'Carrera',
+						'type' => 'INNER',
+						'conditions' => array(
+							'Carrera.id = Asignatura.carrera_id'
+						)
+					),
+					array(
+						'table' => 'asignaturas_materias',
+						'alias' => 'Materia',
+						'type' => 'INNER',
+						'conditions' => array(
+							'Materia.id = Asignatura.materia_id'
+						)
+					)
+				)
+			));
+
+			$this->Horario->setDataSource('default');
+			$this->Horario->Asignatura->setDataSource('default');
+
+			foreach ($filas as $fila) {
+				unset($fila['Horario']['id'], $fila['Horario']['asignatura_id']);
+				$clave = sha1(serialize($fila));
+				if (!isset($registros[$clave])) {
+					$asignaturaId = null;
+
+					$asignatura = sprintf(
+						'%s: %s',
+						$fila['Carrera']['nombre'],
+						$fila['Materia']['nombre']
+					);
+					if (isset($mapa['Asignatura'][$asignatura])) {
+						$asignaturaId = $mapa['Asignatura'][$asignatura];
+					} else {
+						$this->out("> La asignatura '" . $asignatura . "' no se encuentra definida.");
+					}
+
+					$registros[$clave] = array(
+						'asignatura_id' => $asignaturaId,
+						'dia' => $fila['Horario']['dia'],
+						'entrada' => $fila['Horario']['entrada'],
+						'salida' => $fila['Horario']['salida']
+					);
+				}
+			}
+		}
+
+		return array_values($registros);
+	}
+
+/**
  * Genera un mapa de datos de las tablas Áreas, Carreras, Materias, Niveles y Tipos de niveles
  *
  * @return array
@@ -326,6 +419,17 @@ class UnificarShell extends Shell {
 		}
 
 		return $registros;
+	}
+
+/**
+ * Genera un mapa de datos de la tabla Asignaturas
+ *
+ * @return array
+ */
+	protected function _generarMapaHorarios() {
+		return array(
+			'Asignatura' => array_flip($this->Horario->Asignatura->find('list', array('recursive' => 0)))
+		);
 	}
 
 /**
