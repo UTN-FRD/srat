@@ -188,7 +188,7 @@ CREATE TABLE `cargos` (
   `resolucion` smallint(5) unsigned DEFAULT NULL,
   `created` date DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_CARGO` (`asignatura_id`,`usuario_id`),
+  UNIQUE KEY `UK_CARGO` (`asignatura_id`,`usuario_id`,`tipo_id`,`grado_id`,`dedicacion_id`),
   KEY `IK_ASIGNATURA` (`asignatura_id`),
   KEY `IK_USUARIO` (`usuario_id`),
   KEY `IK_TIPO` (`tipo_id`),
