@@ -261,8 +261,6 @@ class UnificarShell extends Shell {
 					$tipoId = null;
 					$gradoId = null;
 					$dedicacionId = null;
-					$dedicacion = $fila['Cargo']['dedicacion'];
-					$resolucion = $fila['Cargo']['resolucion'];
 
 					$asignatura = sprintf(
 						'%s: %s',
@@ -300,8 +298,8 @@ class UnificarShell extends Shell {
 						'tipo_id' => $tipoId,
 						'grado_id' => $gradoId,
 						'dedicacion_id' => $dedicacionId,
-						'dedicacion' => (float)$dedicacion,
-						'resolucion' => $resolucion
+						'dedicacion' => (float)$fila['Cargo']['dedicacion'],
+						'resolucion' => $fila['Cargo']['resolucion']
 					);
 				}
 			}
