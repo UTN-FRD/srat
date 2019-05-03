@@ -221,7 +221,7 @@ class UnificarShell extends Shell {
 			$filas = $this->Cargo->find('all', array(
 				'recursive' => 0,
 				'fields' => array(
-					'id', 'asignatura.carrera_id', 'asignatura.materia_id', 'dedicacion', 'resolucion',
+					'id', 'Asignatura.carrera_id', 'Asignatura.materia_id', 'dedicacion', 'resolucion',
 					'Carrera.nombre', 'Dedicacion.nombre', 'Grado.nombre', 'Materia.nombre', 'Tipo.nombre',
 					'Usuario.legajo'
 				),
