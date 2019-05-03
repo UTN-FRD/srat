@@ -266,6 +266,7 @@ CREATE TABLE `usuarios` (
   `estado` tinyint(1) unsigned NOT NULL,
   `apellido` varchar(25) NOT NULL,
   `nombre` varchar(40) NOT NULL,
+  `email` VARCHAR(60) DEFAULT NULL,
   `acceso` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_LEGAJO` (`legajo`)
