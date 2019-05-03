@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.25, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.44, for Win64 (x86_64)
 --
 -- Host: localhost    Database: srat
 -- ------------------------------------------------------
--- Server version	5.7.25-0ubuntu0.18.04.2
+-- Server version	5.6.44-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -141,7 +141,7 @@ CREATE TABLE `cargos` (
   `resolucion` smallint(5) unsigned DEFAULT NULL,
   `created` date DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_CARGO` (`asignatura_id`,`usuario_id`),
+  UNIQUE KEY `UK_CARGO` (`asignatura_id`,`usuario_id`,`tipo_id`,`grado_id`,`dedicacion_id`),
   KEY `IK_ASIGNATURA` (`asignatura_id`),
   KEY `IK_USUARIO` (`usuario_id`),
   KEY `IK_TIPO` (`tipo_id`),
@@ -282,6 +282,7 @@ CREATE TABLE `usuarios` (
   `estado` tinyint(1) unsigned NOT NULL,
   `apellido` varchar(25) NOT NULL,
   `nombre` varchar(40) NOT NULL,
+  `email` varchar(60) DEFAULT NULL,
   `acceso` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_LEGAJO` (`legajo`)
@@ -417,6 +418,7 @@ SET character_set_client = utf8;
  1 AS `estado`,
  1 AS `apellido`,
  1 AS `nombre`,
+ 1 AS `email`,
  1 AS `acceso`*/;
 SET character_set_client = @saved_cs_client;
 
@@ -424,41 +426,45 @@ SET character_set_client = @saved_cs_client;
 -- Dumping routines for database 'srat'
 --
 /*!50003 DROP PROCEDURE IF EXISTS `CombinarTablas` */;
-ALTER DATABASE `srat` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'IGNORE_SPACE,STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `CombinarTablas`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CombinarTablas`()
 BEGIN
+
   CALL CorregirInconsistencias();
+
   CALL LimpiarTablas();
+
   CALL ImportarRegistros();
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-ALTER DATABASE `srat` CHARACTER SET utf8 COLLATE utf8_general_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `CorregirInconsistencias` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'IGNORE_SPACE,STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `CorregirInconsistencias`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CorregirInconsistencias`()
 BEGIN
+
   SELECT NULL;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -466,74 +472,101 @@ DELIMITER ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `ImportarRegistros` */;
-ALTER DATABASE `srat` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'IGNORE_SPACE,STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `ImportarRegistros`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ImportarRegistros`()
 BEGIN
+
    INSERT INTO asignaturas_areas SELECT NULL, nombre, NULL FROM v_asignatura_areas GROUP BY nombre;
+
    INSERT INTO asignaturas_carreras SELECT NULL, nombre, NULL FROM v_asignatura_carreras GROUP BY nombre;
+
    INSERT INTO asignaturas_materias SELECT NULL, nombre, NULL FROM v_asignatura_materias GROUP BY nombre;
+
    INSERT INTO asignaturas_niveles SELECT NULL, nombre, NULL FROM v_asignatura_niveles GROUP BY nombre;
+
    INSERT INTO asignaturas_tipos SELECT NULL, nombre, NULL FROM v_asignatura_tipos GROUP BY nombre;
 
+
+
    INSERT INTO cargos_dedicaciones SELECT NULL, nombre, NULL FROM v_cargo_dedicaciones GROUP BY nombre;
+
    INSERT INTO cargos_grados SELECT NULL, nombre, NULL FROM v_cargo_grados GROUP BY nombre;
+
    INSERT INTO cargos_tipos SELECT NULL, nombre, NULL FROM v_cargo_tipos GROUP BY nombre;
 
-   INSERT INTO usuarios SELECT NULL, admin, legajo, '$2a$10$Pq7YuD.I4eew98tICSNv9u5keD5WxFSfyybjoPy7WtJPBPLMlhNsm', 1, 1, apellido, nombre, NULL FROM v_usuarios GROUP BY legajo;
+
+
+   INSERT INTO usuarios SELECT NULL, admin, legajo, '$2a$10$Pq7YuD.I4eew98tICSNv9u5keD5WxFSfyybjoPy7WtJPBPLMlhNsm', 1, 1, apellido, nombre, email, NULL FROM v_usuarios GROUP BY legajo;
+
    END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-ALTER DATABASE `srat` CHARACTER SET utf8 COLLATE utf8_general_ci ;
 /*!50003 DROP PROCEDURE IF EXISTS `LimpiarTablas` */;
-ALTER DATABASE `srat` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'IGNORE_SPACE,STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `LimpiarTablas`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `LimpiarTablas`()
 BEGIN
+
    SET FOREIGN_KEY_CHECKS = 0;
 
+
+
    TRUNCATE TABLE asignaturas;
+
    TRUNCATE TABLE asignaturas_areas;
+
    TRUNCATE TABLE asignaturas_carreras;
+
    TRUNCATE TABLE asignaturas_materias;
+
    TRUNCATE TABLE asignaturas_niveles;
+
    TRUNCATE TABLE asignaturas_tipos;
+
    TRUNCATE TABLE cargos;
+
    TRUNCATE TABLE cargos_dedicaciones;
+
    TRUNCATE TABLE cargos_grados;
+
    TRUNCATE TABLE cargos_tipos;
+
    TRUNCATE TABLE horarios;
+
    TRUNCATE TABLE periodos;
+
    TRUNCATE TABLE registros;
+
    TRUNCATE TABLE usuarios;
 
+
+
    SET FOREIGN_KEY_CHECKS = 1;
+
    END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-ALTER DATABASE `srat` CHARACTER SET utf8 COLLATE utf8_general_ci ;
 
 --
 -- Final view structure for view `v_asignatura_areas`
@@ -547,7 +580,7 @@ ALTER DATABASE `srat` CHARACTER SET utf8 COLLATE utf8_general_ci ;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_asignatura_areas` AS select `srat_basicas`.`asignaturas_areas`.`id` AS `id`,`srat_basicas`.`asignaturas_areas`.`nombre` AS `nombre`,`srat_basicas`.`asignaturas_areas`.`obs` AS `obs` from `srat_basicas`.`asignaturas_areas` union all select `srat_electrica`.`asignaturas_areas`.`id` AS `id`,`srat_electrica`.`asignaturas_areas`.`nombre` AS `nombre`,`srat_electrica`.`asignaturas_areas`.`obs` AS `obs` from `srat_electrica`.`asignaturas_areas` union all select `srat_mecanica`.`asignaturas_areas`.`id` AS `id`,`srat_mecanica`.`asignaturas_areas`.`nombre` AS `nombre`,`srat_mecanica`.`asignaturas_areas`.`obs` AS `obs` from `srat_mecanica`.`asignaturas_areas` union all select `srat_quimica`.`asignaturas_areas`.`id` AS `id`,`srat_quimica`.`asignaturas_areas`.`nombre` AS `nombre`,`srat_quimica`.`asignaturas_areas`.`obs` AS `obs` from `srat_quimica`.`asignaturas_areas` union all select `srat_sistemas`.`asignaturas_areas`.`id` AS `id`,`srat_sistemas`.`asignaturas_areas`.`nombre` AS `nombre`,`srat_sistemas`.`asignaturas_areas`.`obs` AS `obs` from `srat_sistemas`.`asignaturas_areas` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -565,7 +598,7 @@ ALTER DATABASE `srat` CHARACTER SET utf8 COLLATE utf8_general_ci ;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_asignatura_carreras` AS select `srat_basicas`.`asignaturas_carreras`.`id` AS `id`,`srat_basicas`.`asignaturas_carreras`.`nombre` AS `nombre`,`srat_basicas`.`asignaturas_carreras`.`obs` AS `obs` from `srat_basicas`.`asignaturas_carreras` union all select `srat_electrica`.`asignaturas_carreras`.`id` AS `id`,`srat_electrica`.`asignaturas_carreras`.`nombre` AS `nombre`,`srat_electrica`.`asignaturas_carreras`.`obs` AS `obs` from `srat_electrica`.`asignaturas_carreras` union all select `srat_mecanica`.`asignaturas_carreras`.`id` AS `id`,`srat_mecanica`.`asignaturas_carreras`.`nombre` AS `nombre`,`srat_mecanica`.`asignaturas_carreras`.`obs` AS `obs` from `srat_mecanica`.`asignaturas_carreras` union all select `srat_quimica`.`asignaturas_carreras`.`id` AS `id`,`srat_quimica`.`asignaturas_carreras`.`nombre` AS `nombre`,`srat_quimica`.`asignaturas_carreras`.`obs` AS `obs` from `srat_quimica`.`asignaturas_carreras` union all select `srat_sistemas`.`asignaturas_carreras`.`id` AS `id`,`srat_sistemas`.`asignaturas_carreras`.`nombre` AS `nombre`,`srat_sistemas`.`asignaturas_carreras`.`obs` AS `obs` from `srat_sistemas`.`asignaturas_carreras` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -583,7 +616,7 @@ ALTER DATABASE `srat` CHARACTER SET utf8 COLLATE utf8_general_ci ;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_asignatura_materias` AS select `srat_basicas`.`asignaturas_materias`.`id` AS `id`,`srat_basicas`.`asignaturas_materias`.`nombre` AS `nombre`,`srat_basicas`.`asignaturas_materias`.`obs` AS `obs` from `srat_basicas`.`asignaturas_materias` union all select `srat_electrica`.`asignaturas_materias`.`id` AS `id`,`srat_electrica`.`asignaturas_materias`.`nombre` AS `nombre`,`srat_electrica`.`asignaturas_materias`.`obs` AS `obs` from `srat_electrica`.`asignaturas_materias` union all select `srat_mecanica`.`asignaturas_materias`.`id` AS `id`,`srat_mecanica`.`asignaturas_materias`.`nombre` AS `nombre`,`srat_mecanica`.`asignaturas_materias`.`obs` AS `obs` from `srat_mecanica`.`asignaturas_materias` union all select `srat_quimica`.`asignaturas_materias`.`id` AS `id`,`srat_quimica`.`asignaturas_materias`.`nombre` AS `nombre`,`srat_quimica`.`asignaturas_materias`.`obs` AS `obs` from `srat_quimica`.`asignaturas_materias` union all select `srat_sistemas`.`asignaturas_materias`.`id` AS `id`,`srat_sistemas`.`asignaturas_materias`.`nombre` AS `nombre`,`srat_sistemas`.`asignaturas_materias`.`obs` AS `obs` from `srat_sistemas`.`asignaturas_materias` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -601,7 +634,7 @@ ALTER DATABASE `srat` CHARACTER SET utf8 COLLATE utf8_general_ci ;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_asignatura_niveles` AS select `srat_basicas`.`asignaturas_niveles`.`id` AS `id`,`srat_basicas`.`asignaturas_niveles`.`nombre` AS `nombre`,`srat_basicas`.`asignaturas_niveles`.`obs` AS `obs` from `srat_basicas`.`asignaturas_niveles` union all select `srat_electrica`.`asignaturas_niveles`.`id` AS `id`,`srat_electrica`.`asignaturas_niveles`.`nombre` AS `nombre`,`srat_electrica`.`asignaturas_niveles`.`obs` AS `obs` from `srat_electrica`.`asignaturas_niveles` union all select `srat_mecanica`.`asignaturas_niveles`.`id` AS `id`,`srat_mecanica`.`asignaturas_niveles`.`nombre` AS `nombre`,`srat_mecanica`.`asignaturas_niveles`.`obs` AS `obs` from `srat_mecanica`.`asignaturas_niveles` union all select `srat_quimica`.`asignaturas_niveles`.`id` AS `id`,`srat_quimica`.`asignaturas_niveles`.`nombre` AS `nombre`,`srat_quimica`.`asignaturas_niveles`.`obs` AS `obs` from `srat_quimica`.`asignaturas_niveles` union all select `srat_sistemas`.`asignaturas_niveles`.`id` AS `id`,`srat_sistemas`.`asignaturas_niveles`.`nombre` AS `nombre`,`srat_sistemas`.`asignaturas_niveles`.`obs` AS `obs` from `srat_sistemas`.`asignaturas_niveles` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -619,7 +652,7 @@ ALTER DATABASE `srat` CHARACTER SET utf8 COLLATE utf8_general_ci ;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_asignatura_tipos` AS select `srat_basicas`.`asignaturas_tipos`.`id` AS `id`,`srat_basicas`.`asignaturas_tipos`.`nombre` AS `nombre`,`srat_basicas`.`asignaturas_tipos`.`obs` AS `obs` from `srat_basicas`.`asignaturas_tipos` union all select `srat_electrica`.`asignaturas_tipos`.`id` AS `id`,`srat_electrica`.`asignaturas_tipos`.`nombre` AS `nombre`,`srat_electrica`.`asignaturas_tipos`.`obs` AS `obs` from `srat_electrica`.`asignaturas_tipos` union all select `srat_mecanica`.`asignaturas_tipos`.`id` AS `id`,`srat_mecanica`.`asignaturas_tipos`.`nombre` AS `nombre`,`srat_mecanica`.`asignaturas_tipos`.`obs` AS `obs` from `srat_mecanica`.`asignaturas_tipos` union all select `srat_quimica`.`asignaturas_tipos`.`id` AS `id`,`srat_quimica`.`asignaturas_tipos`.`nombre` AS `nombre`,`srat_quimica`.`asignaturas_tipos`.`obs` AS `obs` from `srat_quimica`.`asignaturas_tipos` union all select `srat_sistemas`.`asignaturas_tipos`.`id` AS `id`,`srat_sistemas`.`asignaturas_tipos`.`nombre` AS `nombre`,`srat_sistemas`.`asignaturas_tipos`.`obs` AS `obs` from `srat_sistemas`.`asignaturas_tipos` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -637,7 +670,7 @@ ALTER DATABASE `srat` CHARACTER SET utf8 COLLATE utf8_general_ci ;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_cargo_dedicaciones` AS select `srat_basicas`.`cargos_dedicaciones`.`id` AS `id`,`srat_basicas`.`cargos_dedicaciones`.`nombre` AS `nombre`,`srat_basicas`.`cargos_dedicaciones`.`obs` AS `obs` from `srat_basicas`.`cargos_dedicaciones` union all select `srat_electrica`.`cargos_dedicaciones`.`id` AS `id`,`srat_electrica`.`cargos_dedicaciones`.`nombre` AS `nombre`,`srat_electrica`.`cargos_dedicaciones`.`obs` AS `obs` from `srat_electrica`.`cargos_dedicaciones` union all select `srat_mecanica`.`cargos_dedicaciones`.`id` AS `id`,`srat_mecanica`.`cargos_dedicaciones`.`nombre` AS `nombre`,`srat_mecanica`.`cargos_dedicaciones`.`obs` AS `obs` from `srat_mecanica`.`cargos_dedicaciones` union all select `srat_quimica`.`cargos_dedicaciones`.`id` AS `id`,`srat_quimica`.`cargos_dedicaciones`.`nombre` AS `nombre`,`srat_quimica`.`cargos_dedicaciones`.`obs` AS `obs` from `srat_quimica`.`cargos_dedicaciones` union all select `srat_sistemas`.`cargos_dedicaciones`.`id` AS `id`,`srat_sistemas`.`cargos_dedicaciones`.`nombre` AS `nombre`,`srat_sistemas`.`cargos_dedicaciones`.`obs` AS `obs` from `srat_sistemas`.`cargos_dedicaciones` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -655,7 +688,7 @@ ALTER DATABASE `srat` CHARACTER SET utf8 COLLATE utf8_general_ci ;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_cargo_grados` AS select `srat_basicas`.`cargos_grados`.`id` AS `id`,`srat_basicas`.`cargos_grados`.`nombre` AS `nombre`,`srat_basicas`.`cargos_grados`.`obs` AS `obs` from `srat_basicas`.`cargos_grados` union all select `srat_electrica`.`cargos_grados`.`id` AS `id`,`srat_electrica`.`cargos_grados`.`nombre` AS `nombre`,`srat_electrica`.`cargos_grados`.`obs` AS `obs` from `srat_electrica`.`cargos_grados` union all select `srat_mecanica`.`cargos_grados`.`id` AS `id`,`srat_mecanica`.`cargos_grados`.`nombre` AS `nombre`,`srat_mecanica`.`cargos_grados`.`obs` AS `obs` from `srat_mecanica`.`cargos_grados` union all select `srat_quimica`.`cargos_grados`.`id` AS `id`,`srat_quimica`.`cargos_grados`.`nombre` AS `nombre`,`srat_quimica`.`cargos_grados`.`obs` AS `obs` from `srat_quimica`.`cargos_grados` union all select `srat_sistemas`.`cargos_grados`.`id` AS `id`,`srat_sistemas`.`cargos_grados`.`nombre` AS `nombre`,`srat_sistemas`.`cargos_grados`.`obs` AS `obs` from `srat_sistemas`.`cargos_grados` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -673,7 +706,7 @@ ALTER DATABASE `srat` CHARACTER SET utf8 COLLATE utf8_general_ci ;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_cargo_tipos` AS select `srat_basicas`.`cargos_tipos`.`id` AS `id`,`srat_basicas`.`cargos_tipos`.`nombre` AS `nombre`,`srat_basicas`.`cargos_tipos`.`obs` AS `obs` from `srat_basicas`.`cargos_tipos` union all select `srat_electrica`.`cargos_tipos`.`id` AS `id`,`srat_electrica`.`cargos_tipos`.`nombre` AS `nombre`,`srat_electrica`.`cargos_tipos`.`obs` AS `obs` from `srat_electrica`.`cargos_tipos` union all select `srat_mecanica`.`cargos_tipos`.`id` AS `id`,`srat_mecanica`.`cargos_tipos`.`nombre` AS `nombre`,`srat_mecanica`.`cargos_tipos`.`obs` AS `obs` from `srat_mecanica`.`cargos_tipos` union all select `srat_quimica`.`cargos_tipos`.`id` AS `id`,`srat_quimica`.`cargos_tipos`.`nombre` AS `nombre`,`srat_quimica`.`cargos_tipos`.`obs` AS `obs` from `srat_quimica`.`cargos_tipos` union all select `srat_sistemas`.`cargos_tipos`.`id` AS `id`,`srat_sistemas`.`cargos_tipos`.`nombre` AS `nombre`,`srat_sistemas`.`cargos_tipos`.`obs` AS `obs` from `srat_sistemas`.`cargos_tipos` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -691,8 +724,8 @@ ALTER DATABASE `srat` CHARACTER SET utf8 COLLATE utf8_general_ci ;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_usuarios` AS select `srat_basicas`.`usuarios`.`id` AS `id`,`srat_basicas`.`usuarios`.`admin` AS `admin`,`srat_basicas`.`usuarios`.`legajo` AS `legajo`,`srat_basicas`.`usuarios`.`password` AS `password`,`srat_basicas`.`usuarios`.`reset` AS `reset`,`srat_basicas`.`usuarios`.`estado` AS `estado`,`srat_basicas`.`usuarios`.`apellido` AS `apellido`,`srat_basicas`.`usuarios`.`nombre` AS `nombre`,`srat_basicas`.`usuarios`.`acceso` AS `acceso` from `srat_basicas`.`usuarios` union all select `srat_electrica`.`usuarios`.`id` AS `id`,`srat_electrica`.`usuarios`.`admin` AS `admin`,`srat_electrica`.`usuarios`.`legajo` AS `legajo`,`srat_electrica`.`usuarios`.`password` AS `password`,`srat_electrica`.`usuarios`.`reset` AS `reset`,`srat_electrica`.`usuarios`.`estado` AS `estado`,`srat_electrica`.`usuarios`.`apellido` AS `apellido`,`srat_electrica`.`usuarios`.`nombre` AS `nombre`,`srat_electrica`.`usuarios`.`acceso` AS `acceso` from `srat_electrica`.`usuarios` union all select `srat_mecanica`.`usuarios`.`id` AS `id`,`srat_mecanica`.`usuarios`.`admin` AS `admin`,`srat_mecanica`.`usuarios`.`legajo` AS `legajo`,`srat_mecanica`.`usuarios`.`password` AS `password`,`srat_mecanica`.`usuarios`.`reset` AS `reset`,`srat_mecanica`.`usuarios`.`estado` AS `estado`,`srat_mecanica`.`usuarios`.`apellido` AS `apellido`,`srat_mecanica`.`usuarios`.`nombre` AS `nombre`,`srat_mecanica`.`usuarios`.`acceso` AS `acceso` from `srat_mecanica`.`usuarios` union all select `srat_quimica`.`usuarios`.`id` AS `id`,`srat_quimica`.`usuarios`.`admin` AS `admin`,`srat_quimica`.`usuarios`.`legajo` AS `legajo`,`srat_quimica`.`usuarios`.`password` AS `password`,`srat_quimica`.`usuarios`.`reset` AS `reset`,`srat_quimica`.`usuarios`.`estado` AS `estado`,`srat_quimica`.`usuarios`.`apellido` AS `apellido`,`srat_quimica`.`usuarios`.`nombre` AS `nombre`,`srat_quimica`.`usuarios`.`acceso` AS `acceso` from `srat_quimica`.`usuarios` union all select `srat_sistemas`.`usuarios`.`id` AS `id`,`srat_sistemas`.`usuarios`.`admin` AS `admin`,`srat_sistemas`.`usuarios`.`legajo` AS `legajo`,`srat_sistemas`.`usuarios`.`password` AS `password`,`srat_sistemas`.`usuarios`.`reset` AS `reset`,`srat_sistemas`.`usuarios`.`estado` AS `estado`,`srat_sistemas`.`usuarios`.`apellido` AS `apellido`,`srat_sistemas`.`usuarios`.`nombre` AS `nombre`,`srat_sistemas`.`usuarios`.`acceso` AS `acceso` from `srat_sistemas`.`usuarios` */;
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_usuarios` AS select `srat_basicas`.`usuarios`.`id` AS `id`,`srat_basicas`.`usuarios`.`admin` AS `admin`,`srat_basicas`.`usuarios`.`legajo` AS `legajo`,`srat_basicas`.`usuarios`.`password` AS `password`,`srat_basicas`.`usuarios`.`reset` AS `reset`,`srat_basicas`.`usuarios`.`estado` AS `estado`,`srat_basicas`.`usuarios`.`apellido` AS `apellido`,`srat_basicas`.`usuarios`.`nombre` AS `nombre`,`srat_basicas`.`usuarios`.`email` AS `email`,`srat_basicas`.`usuarios`.`acceso` AS `acceso` from `srat_basicas`.`usuarios` union all select `srat_electrica`.`usuarios`.`id` AS `id`,`srat_electrica`.`usuarios`.`admin` AS `admin`,`srat_electrica`.`usuarios`.`legajo` AS `legajo`,`srat_electrica`.`usuarios`.`password` AS `password`,`srat_electrica`.`usuarios`.`reset` AS `reset`,`srat_electrica`.`usuarios`.`estado` AS `estado`,`srat_electrica`.`usuarios`.`apellido` AS `apellido`,`srat_electrica`.`usuarios`.`nombre` AS `nombre`,`srat_electrica`.`usuarios`.`email` AS `email`,`srat_electrica`.`usuarios`.`acceso` AS `acceso` from `srat_electrica`.`usuarios` union all select `srat_mecanica`.`usuarios`.`id` AS `id`,`srat_mecanica`.`usuarios`.`admin` AS `admin`,`srat_mecanica`.`usuarios`.`legajo` AS `legajo`,`srat_mecanica`.`usuarios`.`password` AS `password`,`srat_mecanica`.`usuarios`.`reset` AS `reset`,`srat_mecanica`.`usuarios`.`estado` AS `estado`,`srat_mecanica`.`usuarios`.`apellido` AS `apellido`,`srat_mecanica`.`usuarios`.`nombre` AS `nombre`,`srat_mecanica`.`usuarios`.`email` AS `email`,`srat_mecanica`.`usuarios`.`acceso` AS `acceso` from `srat_mecanica`.`usuarios` union all select `srat_quimica`.`usuarios`.`id` AS `id`,`srat_quimica`.`usuarios`.`admin` AS `admin`,`srat_quimica`.`usuarios`.`legajo` AS `legajo`,`srat_quimica`.`usuarios`.`password` AS `password`,`srat_quimica`.`usuarios`.`reset` AS `reset`,`srat_quimica`.`usuarios`.`estado` AS `estado`,`srat_quimica`.`usuarios`.`apellido` AS `apellido`,`srat_quimica`.`usuarios`.`nombre` AS `nombre`,`srat_quimica`.`usuarios`.`email` AS `email`,`srat_quimica`.`usuarios`.`acceso` AS `acceso` from `srat_quimica`.`usuarios` union all select `srat_sistemas`.`usuarios`.`id` AS `id`,`srat_sistemas`.`usuarios`.`admin` AS `admin`,`srat_sistemas`.`usuarios`.`legajo` AS `legajo`,`srat_sistemas`.`usuarios`.`password` AS `password`,`srat_sistemas`.`usuarios`.`reset` AS `reset`,`srat_sistemas`.`usuarios`.`estado` AS `estado`,`srat_sistemas`.`usuarios`.`apellido` AS `apellido`,`srat_sistemas`.`usuarios`.`nombre` AS `nombre`,`srat_sistemas`.`usuarios`.`email` AS `email`,`srat_sistemas`.`usuarios`.`acceso` AS `acceso` from `srat_sistemas`.`usuarios` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
