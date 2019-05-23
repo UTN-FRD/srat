@@ -119,7 +119,7 @@ class Cargo extends AppModel {
 				'message' => 'El valor seleccionado no existe'
 			),
 			'isUnique' => array(
-				'rule' => array('validateUnique', array('asignatura_id')),
+				'rule' => array('validateUnique', array('asignatura_id', 'tipo_id', 'grado_id', 'dedicacion_id')),
 				'message' => 'El usuario seleccionado ya se encuentra asociado a la asignatura seleccionada'
 			)
 		),

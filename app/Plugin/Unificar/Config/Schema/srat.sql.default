@@ -1,0 +1,742 @@
+-- MySQL dump 10.13  Distrib 5.6.44, for Win64 (x86_64)
+--
+-- Host: localhost    Database: srat
+-- ------------------------------------------------------
+-- Server version	5.6.44-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `asignaturas`
+--
+
+DROP TABLE IF EXISTS `asignaturas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `asignaturas` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `carrera_id` tinyint(3) unsigned NOT NULL,
+  `materia_id` smallint(5) unsigned NOT NULL,
+  `area_id` tinyint(3) unsigned NOT NULL,
+  `nivel_id` tinyint(3) unsigned NOT NULL,
+  `tipo_id` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_ASIGNATURA` (`carrera_id`,`materia_id`,`area_id`,`nivel_id`,`tipo_id`),
+  KEY `IK_AREA` (`area_id`),
+  KEY `IK_MATERIA` (`materia_id`),
+  KEY `IK_NIVEL` (`nivel_id`),
+  KEY `IK_TIPO` (`tipo_id`),
+  CONSTRAINT `FK_ASIGNATURAS_AREA` FOREIGN KEY (`area_id`) REFERENCES `asignaturas_areas` (`id`),
+  CONSTRAINT `FK_ASIGNATURAS_CARRERA` FOREIGN KEY (`carrera_id`) REFERENCES `asignaturas_carreras` (`id`),
+  CONSTRAINT `FK_ASIGNATURAS_MATERIA` FOREIGN KEY (`materia_id`) REFERENCES `asignaturas_materias` (`id`),
+  CONSTRAINT `FK_ASIGNATURAS_NIVEL` FOREIGN KEY (`nivel_id`) REFERENCES `asignaturas_niveles` (`id`),
+  CONSTRAINT `FK_ASIGNATURAS_TIPO` FOREIGN KEY (`tipo_id`) REFERENCES `asignaturas_tipos` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `asignaturas_areas`
+--
+
+DROP TABLE IF EXISTS `asignaturas_areas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `asignaturas_areas` (
+  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) NOT NULL,
+  `obs` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_NOMBRE` (`nombre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `asignaturas_carreras`
+--
+
+DROP TABLE IF EXISTS `asignaturas_carreras`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `asignaturas_carreras` (
+  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) NOT NULL,
+  `obs` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_NOMBRE` (`nombre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `asignaturas_materias`
+--
+
+DROP TABLE IF EXISTS `asignaturas_materias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `asignaturas_materias` (
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) NOT NULL,
+  `obs` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_NOMBRE` (`nombre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `asignaturas_niveles`
+--
+
+DROP TABLE IF EXISTS `asignaturas_niveles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `asignaturas_niveles` (
+  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) NOT NULL,
+  `obs` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_NOMBRE` (`nombre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `asignaturas_tipos`
+--
+
+DROP TABLE IF EXISTS `asignaturas_tipos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `asignaturas_tipos` (
+  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) NOT NULL,
+  `obs` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_NOMBRE` (`nombre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cargos`
+--
+
+DROP TABLE IF EXISTS `cargos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cargos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `asignatura_id` int(10) unsigned NOT NULL,
+  `usuario_id` int(10) unsigned NOT NULL,
+  `tipo_id` tinyint(3) unsigned NOT NULL,
+  `grado_id` tinyint(3) unsigned NOT NULL,
+  `dedicacion_id` tinyint(3) unsigned NOT NULL,
+  `dedicacion` decimal(2,1) unsigned NOT NULL,
+  `resolucion` smallint(5) unsigned DEFAULT NULL,
+  `created` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_CARGO` (`asignatura_id`,`usuario_id`,`tipo_id`,`grado_id`,`dedicacion_id`),
+  KEY `IK_ASIGNATURA` (`asignatura_id`),
+  KEY `IK_USUARIO` (`usuario_id`),
+  KEY `IK_TIPO` (`tipo_id`),
+  KEY `IK_GRADO` (`grado_id`),
+  KEY `IK_DEDICACION` (`dedicacion_id`),
+  CONSTRAINT `FK_CARGOS_ASIGNATURA` FOREIGN KEY (`asignatura_id`) REFERENCES `asignaturas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_CARGOS_DEDICACION` FOREIGN KEY (`dedicacion_id`) REFERENCES `cargos_dedicaciones` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_CARGOS_GRADO` FOREIGN KEY (`grado_id`) REFERENCES `cargos_grados` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_CARGOS_TIPO` FOREIGN KEY (`tipo_id`) REFERENCES `cargos_tipos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_CARGOS_USUARIO` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cargos_dedicaciones`
+--
+
+DROP TABLE IF EXISTS `cargos_dedicaciones`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cargos_dedicaciones` (
+  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) NOT NULL,
+  `obs` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_NOMBRE` (`nombre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cargos_grados`
+--
+
+DROP TABLE IF EXISTS `cargos_grados`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cargos_grados` (
+  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) NOT NULL,
+  `obs` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_NOMBRE` (`nombre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cargos_tipos`
+--
+
+DROP TABLE IF EXISTS `cargos_tipos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cargos_tipos` (
+  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) NOT NULL,
+  `obs` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_NOMBRE` (`nombre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `horarios`
+--
+
+DROP TABLE IF EXISTS `horarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `horarios` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `asignatura_id` int(10) unsigned NOT NULL,
+  `dia` tinyint(3) unsigned NOT NULL,
+  `entrada` time NOT NULL,
+  `salida` time NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_HORARIO` (`asignatura_id`,`dia`),
+  CONSTRAINT `FK_HORARIOS_ASIGNATURA` FOREIGN KEY (`asignatura_id`) REFERENCES `asignaturas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `periodos`
+--
+
+DROP TABLE IF EXISTS `periodos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `periodos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `desde` date NOT NULL,
+  `hasta` date NOT NULL,
+  `obs` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_PERIODO` (`desde`,`hasta`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `registros`
+--
+
+DROP TABLE IF EXISTS `registros`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `registros` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `tipo` tinyint(2) unsigned NOT NULL,
+  `computable` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `asignatura_id` int(10) unsigned NOT NULL,
+  `usuario_id` int(10) unsigned NOT NULL,
+  `fecha` datetime NOT NULL,
+  `entrada` time DEFAULT NULL,
+  `salida` time DEFAULT NULL,
+  `obs` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_REGISTRO` (`tipo`,`asignatura_id`,`usuario_id`,`fecha`),
+  KEY `IK_TIPO` (`tipo`),
+  KEY `IK_ASIGNATURA` (`asignatura_id`),
+  KEY `IK_USUARIO` (`usuario_id`),
+  CONSTRAINT `FK_REGISTROS_ASIGNATURA` FOREIGN KEY (`asignatura_id`) REFERENCES `asignaturas` (`id`),
+  CONSTRAINT `FK_REGISTROS_USUARIO` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `usuarios`
+--
+
+DROP TABLE IF EXISTS `usuarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usuarios` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `admin` tinyint(1) unsigned DEFAULT NULL,
+  `legajo` mediumint(8) unsigned NOT NULL,
+  `password` char(60) NOT NULL,
+  `reset` tinyint(1) unsigned DEFAULT NULL,
+  `estado` tinyint(1) unsigned NOT NULL,
+  `apellido` varchar(25) NOT NULL,
+  `nombre` varchar(40) NOT NULL,
+  `email` varchar(60) DEFAULT NULL,
+  `acceso` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_LEGAJO` (`legajo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary table structure for view `v_asignatura_areas`
+--
+
+DROP TABLE IF EXISTS `v_asignatura_areas`;
+/*!50001 DROP VIEW IF EXISTS `v_asignatura_areas`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_asignatura_areas` AS SELECT
+ 1 AS `id`,
+ 1 AS `nombre`,
+ 1 AS `obs`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_asignatura_carreras`
+--
+
+DROP TABLE IF EXISTS `v_asignatura_carreras`;
+/*!50001 DROP VIEW IF EXISTS `v_asignatura_carreras`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_asignatura_carreras` AS SELECT
+ 1 AS `id`,
+ 1 AS `nombre`,
+ 1 AS `obs`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_asignatura_materias`
+--
+
+DROP TABLE IF EXISTS `v_asignatura_materias`;
+/*!50001 DROP VIEW IF EXISTS `v_asignatura_materias`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_asignatura_materias` AS SELECT
+ 1 AS `id`,
+ 1 AS `nombre`,
+ 1 AS `obs`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_asignatura_niveles`
+--
+
+DROP TABLE IF EXISTS `v_asignatura_niveles`;
+/*!50001 DROP VIEW IF EXISTS `v_asignatura_niveles`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_asignatura_niveles` AS SELECT
+ 1 AS `id`,
+ 1 AS `nombre`,
+ 1 AS `obs`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_asignatura_tipos`
+--
+
+DROP TABLE IF EXISTS `v_asignatura_tipos`;
+/*!50001 DROP VIEW IF EXISTS `v_asignatura_tipos`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_asignatura_tipos` AS SELECT
+ 1 AS `id`,
+ 1 AS `nombre`,
+ 1 AS `obs`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_cargo_dedicaciones`
+--
+
+DROP TABLE IF EXISTS `v_cargo_dedicaciones`;
+/*!50001 DROP VIEW IF EXISTS `v_cargo_dedicaciones`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_cargo_dedicaciones` AS SELECT
+ 1 AS `id`,
+ 1 AS `nombre`,
+ 1 AS `obs`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_cargo_grados`
+--
+
+DROP TABLE IF EXISTS `v_cargo_grados`;
+/*!50001 DROP VIEW IF EXISTS `v_cargo_grados`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_cargo_grados` AS SELECT
+ 1 AS `id`,
+ 1 AS `nombre`,
+ 1 AS `obs`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_cargo_tipos`
+--
+
+DROP TABLE IF EXISTS `v_cargo_tipos`;
+/*!50001 DROP VIEW IF EXISTS `v_cargo_tipos`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_cargo_tipos` AS SELECT
+ 1 AS `id`,
+ 1 AS `nombre`,
+ 1 AS `obs`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_usuarios`
+--
+
+DROP TABLE IF EXISTS `v_usuarios`;
+/*!50001 DROP VIEW IF EXISTS `v_usuarios`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_usuarios` AS SELECT
+ 1 AS `id`,
+ 1 AS `admin`,
+ 1 AS `legajo`,
+ 1 AS `password`,
+ 1 AS `reset`,
+ 1 AS `estado`,
+ 1 AS `apellido`,
+ 1 AS `nombre`,
+ 1 AS `email`,
+ 1 AS `acceso`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping routines for database 'srat'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `CombinarTablas` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CombinarTablas`()
+BEGIN
+
+  CALL CorregirInconsistencias();
+
+  CALL LimpiarTablas();
+
+  CALL ImportarRegistros();
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `CorregirInconsistencias` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CorregirInconsistencias`()
+BEGIN
+
+  SELECT NULL;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `ImportarRegistros` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ImportarRegistros`()
+BEGIN
+
+   INSERT INTO asignaturas_areas SELECT NULL, nombre, NULL FROM v_asignatura_areas GROUP BY nombre;
+
+   INSERT INTO asignaturas_carreras SELECT NULL, nombre, NULL FROM v_asignatura_carreras GROUP BY nombre;
+
+   INSERT INTO asignaturas_materias SELECT NULL, nombre, NULL FROM v_asignatura_materias GROUP BY nombre;
+
+   INSERT INTO asignaturas_niveles SELECT NULL, nombre, NULL FROM v_asignatura_niveles GROUP BY nombre;
+
+   INSERT INTO asignaturas_tipos SELECT NULL, nombre, NULL FROM v_asignatura_tipos GROUP BY nombre;
+
+
+
+   INSERT INTO cargos_dedicaciones SELECT NULL, nombre, NULL FROM v_cargo_dedicaciones GROUP BY nombre;
+
+   INSERT INTO cargos_grados SELECT NULL, nombre, NULL FROM v_cargo_grados GROUP BY nombre;
+
+   INSERT INTO cargos_tipos SELECT NULL, nombre, NULL FROM v_cargo_tipos GROUP BY nombre;
+
+
+
+   INSERT INTO usuarios SELECT NULL, admin, legajo, '$2a$10$Pq7YuD.I4eew98tICSNv9u5keD5WxFSfyybjoPy7WtJPBPLMlhNsm', 1, 1, apellido, nombre, email, NULL FROM v_usuarios GROUP BY legajo;
+
+   END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `LimpiarTablas` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `LimpiarTablas`()
+BEGIN
+
+   SET FOREIGN_KEY_CHECKS = 0;
+
+
+
+   TRUNCATE TABLE asignaturas;
+
+   TRUNCATE TABLE asignaturas_areas;
+
+   TRUNCATE TABLE asignaturas_carreras;
+
+   TRUNCATE TABLE asignaturas_materias;
+
+   TRUNCATE TABLE asignaturas_niveles;
+
+   TRUNCATE TABLE asignaturas_tipos;
+
+   TRUNCATE TABLE cargos;
+
+   TRUNCATE TABLE cargos_dedicaciones;
+
+   TRUNCATE TABLE cargos_grados;
+
+   TRUNCATE TABLE cargos_tipos;
+
+   TRUNCATE TABLE horarios;
+
+   TRUNCATE TABLE periodos;
+
+   TRUNCATE TABLE registros;
+
+   TRUNCATE TABLE usuarios;
+
+
+
+   SET FOREIGN_KEY_CHECKS = 1;
+
+   END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Final view structure for view `v_asignatura_areas`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_asignatura_areas`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_asignatura_areas` AS select `srat_basicas`.`asignaturas_areas`.`id` AS `id`,`srat_basicas`.`asignaturas_areas`.`nombre` AS `nombre`,`srat_basicas`.`asignaturas_areas`.`obs` AS `obs` from `srat_basicas`.`asignaturas_areas` union all select `srat_electrica`.`asignaturas_areas`.`id` AS `id`,`srat_electrica`.`asignaturas_areas`.`nombre` AS `nombre`,`srat_electrica`.`asignaturas_areas`.`obs` AS `obs` from `srat_electrica`.`asignaturas_areas` union all select `srat_mecanica`.`asignaturas_areas`.`id` AS `id`,`srat_mecanica`.`asignaturas_areas`.`nombre` AS `nombre`,`srat_mecanica`.`asignaturas_areas`.`obs` AS `obs` from `srat_mecanica`.`asignaturas_areas` union all select `srat_quimica`.`asignaturas_areas`.`id` AS `id`,`srat_quimica`.`asignaturas_areas`.`nombre` AS `nombre`,`srat_quimica`.`asignaturas_areas`.`obs` AS `obs` from `srat_quimica`.`asignaturas_areas` union all select `srat_sistemas`.`asignaturas_areas`.`id` AS `id`,`srat_sistemas`.`asignaturas_areas`.`nombre` AS `nombre`,`srat_sistemas`.`asignaturas_areas`.`obs` AS `obs` from `srat_sistemas`.`asignaturas_areas` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_asignatura_carreras`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_asignatura_carreras`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_asignatura_carreras` AS select `srat_basicas`.`asignaturas_carreras`.`id` AS `id`,`srat_basicas`.`asignaturas_carreras`.`nombre` AS `nombre`,`srat_basicas`.`asignaturas_carreras`.`obs` AS `obs` from `srat_basicas`.`asignaturas_carreras` union all select `srat_electrica`.`asignaturas_carreras`.`id` AS `id`,`srat_electrica`.`asignaturas_carreras`.`nombre` AS `nombre`,`srat_electrica`.`asignaturas_carreras`.`obs` AS `obs` from `srat_electrica`.`asignaturas_carreras` union all select `srat_mecanica`.`asignaturas_carreras`.`id` AS `id`,`srat_mecanica`.`asignaturas_carreras`.`nombre` AS `nombre`,`srat_mecanica`.`asignaturas_carreras`.`obs` AS `obs` from `srat_mecanica`.`asignaturas_carreras` union all select `srat_quimica`.`asignaturas_carreras`.`id` AS `id`,`srat_quimica`.`asignaturas_carreras`.`nombre` AS `nombre`,`srat_quimica`.`asignaturas_carreras`.`obs` AS `obs` from `srat_quimica`.`asignaturas_carreras` union all select `srat_sistemas`.`asignaturas_carreras`.`id` AS `id`,`srat_sistemas`.`asignaturas_carreras`.`nombre` AS `nombre`,`srat_sistemas`.`asignaturas_carreras`.`obs` AS `obs` from `srat_sistemas`.`asignaturas_carreras` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_asignatura_materias`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_asignatura_materias`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_asignatura_materias` AS select `srat_basicas`.`asignaturas_materias`.`id` AS `id`,`srat_basicas`.`asignaturas_materias`.`nombre` AS `nombre`,`srat_basicas`.`asignaturas_materias`.`obs` AS `obs` from `srat_basicas`.`asignaturas_materias` union all select `srat_electrica`.`asignaturas_materias`.`id` AS `id`,`srat_electrica`.`asignaturas_materias`.`nombre` AS `nombre`,`srat_electrica`.`asignaturas_materias`.`obs` AS `obs` from `srat_electrica`.`asignaturas_materias` union all select `srat_mecanica`.`asignaturas_materias`.`id` AS `id`,`srat_mecanica`.`asignaturas_materias`.`nombre` AS `nombre`,`srat_mecanica`.`asignaturas_materias`.`obs` AS `obs` from `srat_mecanica`.`asignaturas_materias` union all select `srat_quimica`.`asignaturas_materias`.`id` AS `id`,`srat_quimica`.`asignaturas_materias`.`nombre` AS `nombre`,`srat_quimica`.`asignaturas_materias`.`obs` AS `obs` from `srat_quimica`.`asignaturas_materias` union all select `srat_sistemas`.`asignaturas_materias`.`id` AS `id`,`srat_sistemas`.`asignaturas_materias`.`nombre` AS `nombre`,`srat_sistemas`.`asignaturas_materias`.`obs` AS `obs` from `srat_sistemas`.`asignaturas_materias` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_asignatura_niveles`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_asignatura_niveles`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_asignatura_niveles` AS select `srat_basicas`.`asignaturas_niveles`.`id` AS `id`,`srat_basicas`.`asignaturas_niveles`.`nombre` AS `nombre`,`srat_basicas`.`asignaturas_niveles`.`obs` AS `obs` from `srat_basicas`.`asignaturas_niveles` union all select `srat_electrica`.`asignaturas_niveles`.`id` AS `id`,`srat_electrica`.`asignaturas_niveles`.`nombre` AS `nombre`,`srat_electrica`.`asignaturas_niveles`.`obs` AS `obs` from `srat_electrica`.`asignaturas_niveles` union all select `srat_mecanica`.`asignaturas_niveles`.`id` AS `id`,`srat_mecanica`.`asignaturas_niveles`.`nombre` AS `nombre`,`srat_mecanica`.`asignaturas_niveles`.`obs` AS `obs` from `srat_mecanica`.`asignaturas_niveles` union all select `srat_quimica`.`asignaturas_niveles`.`id` AS `id`,`srat_quimica`.`asignaturas_niveles`.`nombre` AS `nombre`,`srat_quimica`.`asignaturas_niveles`.`obs` AS `obs` from `srat_quimica`.`asignaturas_niveles` union all select `srat_sistemas`.`asignaturas_niveles`.`id` AS `id`,`srat_sistemas`.`asignaturas_niveles`.`nombre` AS `nombre`,`srat_sistemas`.`asignaturas_niveles`.`obs` AS `obs` from `srat_sistemas`.`asignaturas_niveles` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_asignatura_tipos`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_asignatura_tipos`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_asignatura_tipos` AS select `srat_basicas`.`asignaturas_tipos`.`id` AS `id`,`srat_basicas`.`asignaturas_tipos`.`nombre` AS `nombre`,`srat_basicas`.`asignaturas_tipos`.`obs` AS `obs` from `srat_basicas`.`asignaturas_tipos` union all select `srat_electrica`.`asignaturas_tipos`.`id` AS `id`,`srat_electrica`.`asignaturas_tipos`.`nombre` AS `nombre`,`srat_electrica`.`asignaturas_tipos`.`obs` AS `obs` from `srat_electrica`.`asignaturas_tipos` union all select `srat_mecanica`.`asignaturas_tipos`.`id` AS `id`,`srat_mecanica`.`asignaturas_tipos`.`nombre` AS `nombre`,`srat_mecanica`.`asignaturas_tipos`.`obs` AS `obs` from `srat_mecanica`.`asignaturas_tipos` union all select `srat_quimica`.`asignaturas_tipos`.`id` AS `id`,`srat_quimica`.`asignaturas_tipos`.`nombre` AS `nombre`,`srat_quimica`.`asignaturas_tipos`.`obs` AS `obs` from `srat_quimica`.`asignaturas_tipos` union all select `srat_sistemas`.`asignaturas_tipos`.`id` AS `id`,`srat_sistemas`.`asignaturas_tipos`.`nombre` AS `nombre`,`srat_sistemas`.`asignaturas_tipos`.`obs` AS `obs` from `srat_sistemas`.`asignaturas_tipos` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_cargo_dedicaciones`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_cargo_dedicaciones`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_cargo_dedicaciones` AS select `srat_basicas`.`cargos_dedicaciones`.`id` AS `id`,`srat_basicas`.`cargos_dedicaciones`.`nombre` AS `nombre`,`srat_basicas`.`cargos_dedicaciones`.`obs` AS `obs` from `srat_basicas`.`cargos_dedicaciones` union all select `srat_electrica`.`cargos_dedicaciones`.`id` AS `id`,`srat_electrica`.`cargos_dedicaciones`.`nombre` AS `nombre`,`srat_electrica`.`cargos_dedicaciones`.`obs` AS `obs` from `srat_electrica`.`cargos_dedicaciones` union all select `srat_mecanica`.`cargos_dedicaciones`.`id` AS `id`,`srat_mecanica`.`cargos_dedicaciones`.`nombre` AS `nombre`,`srat_mecanica`.`cargos_dedicaciones`.`obs` AS `obs` from `srat_mecanica`.`cargos_dedicaciones` union all select `srat_quimica`.`cargos_dedicaciones`.`id` AS `id`,`srat_quimica`.`cargos_dedicaciones`.`nombre` AS `nombre`,`srat_quimica`.`cargos_dedicaciones`.`obs` AS `obs` from `srat_quimica`.`cargos_dedicaciones` union all select `srat_sistemas`.`cargos_dedicaciones`.`id` AS `id`,`srat_sistemas`.`cargos_dedicaciones`.`nombre` AS `nombre`,`srat_sistemas`.`cargos_dedicaciones`.`obs` AS `obs` from `srat_sistemas`.`cargos_dedicaciones` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_cargo_grados`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_cargo_grados`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_cargo_grados` AS select `srat_basicas`.`cargos_grados`.`id` AS `id`,`srat_basicas`.`cargos_grados`.`nombre` AS `nombre`,`srat_basicas`.`cargos_grados`.`obs` AS `obs` from `srat_basicas`.`cargos_grados` union all select `srat_electrica`.`cargos_grados`.`id` AS `id`,`srat_electrica`.`cargos_grados`.`nombre` AS `nombre`,`srat_electrica`.`cargos_grados`.`obs` AS `obs` from `srat_electrica`.`cargos_grados` union all select `srat_mecanica`.`cargos_grados`.`id` AS `id`,`srat_mecanica`.`cargos_grados`.`nombre` AS `nombre`,`srat_mecanica`.`cargos_grados`.`obs` AS `obs` from `srat_mecanica`.`cargos_grados` union all select `srat_quimica`.`cargos_grados`.`id` AS `id`,`srat_quimica`.`cargos_grados`.`nombre` AS `nombre`,`srat_quimica`.`cargos_grados`.`obs` AS `obs` from `srat_quimica`.`cargos_grados` union all select `srat_sistemas`.`cargos_grados`.`id` AS `id`,`srat_sistemas`.`cargos_grados`.`nombre` AS `nombre`,`srat_sistemas`.`cargos_grados`.`obs` AS `obs` from `srat_sistemas`.`cargos_grados` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_cargo_tipos`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_cargo_tipos`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_cargo_tipos` AS select `srat_basicas`.`cargos_tipos`.`id` AS `id`,`srat_basicas`.`cargos_tipos`.`nombre` AS `nombre`,`srat_basicas`.`cargos_tipos`.`obs` AS `obs` from `srat_basicas`.`cargos_tipos` union all select `srat_electrica`.`cargos_tipos`.`id` AS `id`,`srat_electrica`.`cargos_tipos`.`nombre` AS `nombre`,`srat_electrica`.`cargos_tipos`.`obs` AS `obs` from `srat_electrica`.`cargos_tipos` union all select `srat_mecanica`.`cargos_tipos`.`id` AS `id`,`srat_mecanica`.`cargos_tipos`.`nombre` AS `nombre`,`srat_mecanica`.`cargos_tipos`.`obs` AS `obs` from `srat_mecanica`.`cargos_tipos` union all select `srat_quimica`.`cargos_tipos`.`id` AS `id`,`srat_quimica`.`cargos_tipos`.`nombre` AS `nombre`,`srat_quimica`.`cargos_tipos`.`obs` AS `obs` from `srat_quimica`.`cargos_tipos` union all select `srat_sistemas`.`cargos_tipos`.`id` AS `id`,`srat_sistemas`.`cargos_tipos`.`nombre` AS `nombre`,`srat_sistemas`.`cargos_tipos`.`obs` AS `obs` from `srat_sistemas`.`cargos_tipos` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_usuarios`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_usuarios`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_usuarios` AS select `srat_basicas`.`usuarios`.`id` AS `id`,`srat_basicas`.`usuarios`.`admin` AS `admin`,`srat_basicas`.`usuarios`.`legajo` AS `legajo`,`srat_basicas`.`usuarios`.`password` AS `password`,`srat_basicas`.`usuarios`.`reset` AS `reset`,`srat_basicas`.`usuarios`.`estado` AS `estado`,`srat_basicas`.`usuarios`.`apellido` AS `apellido`,`srat_basicas`.`usuarios`.`nombre` AS `nombre`,`srat_basicas`.`usuarios`.`email` AS `email`,`srat_basicas`.`usuarios`.`acceso` AS `acceso` from `srat_basicas`.`usuarios` union all select `srat_electrica`.`usuarios`.`id` AS `id`,`srat_electrica`.`usuarios`.`admin` AS `admin`,`srat_electrica`.`usuarios`.`legajo` AS `legajo`,`srat_electrica`.`usuarios`.`password` AS `password`,`srat_electrica`.`usuarios`.`reset` AS `reset`,`srat_electrica`.`usuarios`.`estado` AS `estado`,`srat_electrica`.`usuarios`.`apellido` AS `apellido`,`srat_electrica`.`usuarios`.`nombre` AS `nombre`,`srat_electrica`.`usuarios`.`email` AS `email`,`srat_electrica`.`usuarios`.`acceso` AS `acceso` from `srat_electrica`.`usuarios` union all select `srat_mecanica`.`usuarios`.`id` AS `id`,`srat_mecanica`.`usuarios`.`admin` AS `admin`,`srat_mecanica`.`usuarios`.`legajo` AS `legajo`,`srat_mecanica`.`usuarios`.`password` AS `password`,`srat_mecanica`.`usuarios`.`reset` AS `reset`,`srat_mecanica`.`usuarios`.`estado` AS `estado`,`srat_mecanica`.`usuarios`.`apellido` AS `apellido`,`srat_mecanica`.`usuarios`.`nombre` AS `nombre`,`srat_mecanica`.`usuarios`.`email` AS `email`,`srat_mecanica`.`usuarios`.`acceso` AS `acceso` from `srat_mecanica`.`usuarios` union all select `srat_quimica`.`usuarios`.`id` AS `id`,`srat_quimica`.`usuarios`.`admin` AS `admin`,`srat_quimica`.`usuarios`.`legajo` AS `legajo`,`srat_quimica`.`usuarios`.`password` AS `password`,`srat_quimica`.`usuarios`.`reset` AS `reset`,`srat_quimica`.`usuarios`.`estado` AS `estado`,`srat_quimica`.`usuarios`.`apellido` AS `apellido`,`srat_quimica`.`usuarios`.`nombre` AS `nombre`,`srat_quimica`.`usuarios`.`email` AS `email`,`srat_quimica`.`usuarios`.`acceso` AS `acceso` from `srat_quimica`.`usuarios` union all select `srat_sistemas`.`usuarios`.`id` AS `id`,`srat_sistemas`.`usuarios`.`admin` AS `admin`,`srat_sistemas`.`usuarios`.`legajo` AS `legajo`,`srat_sistemas`.`usuarios`.`password` AS `password`,`srat_sistemas`.`usuarios`.`reset` AS `reset`,`srat_sistemas`.`usuarios`.`estado` AS `estado`,`srat_sistemas`.`usuarios`.`apellido` AS `apellido`,`srat_sistemas`.`usuarios`.`nombre` AS `nombre`,`srat_sistemas`.`usuarios`.`email` AS `email`,`srat_sistemas`.`usuarios`.`acceso` AS `acceso` from `srat_sistemas`.`usuarios` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed
