@@ -53,18 +53,16 @@ $this->Html->script('dashboard', array('inline' => false));
 					<td><?php echo h($this->request->data['Cargo'][$rid]['asignatura']) ?></td>
 					<td>
 						<?php
-						echo $this->Form->input(sprintf('Registro.%d.entrada', $rid), array(
-							'error' => false, 'interval' => 5, 'label' => false,
-							'required' => false, 'separator' => ' : ', 'timeFormat' => 24
-						))
+						echo $this->Form->hidden(sprintf('Registro.%d.entrada', $rid));
+						echo date('H:i', strtotime($this->request->data['Registro'][$rid]['entrada']));
 						?>
 					</td>
 					<td>
 						<?php
-						echo $this->Form->input(sprintf('Registro.%d.salida', $rid), array(
-							'error' => false, 'interval' => 5, 'label' => false,
-							'required' => false, 'separator' => ' : ', 'timeFormat' => 24
-						))
+						echo $this->Form->hidden(sprintf('Registro.%d.salida', $rid));
+						if (!empty($this->request->data['Registro'][$rid]['salida'])):
+							echo date('H:i', strtotime($this->request->data['Registro'][$rid]['salida']));
+						endif;
 						?>
 					</td>
 				</tr>

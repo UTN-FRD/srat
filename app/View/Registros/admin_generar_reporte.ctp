@@ -104,6 +104,7 @@ $this->Html->addCrumb('Generar reporte');
 		$start = $this->Paginator->counter(array('format' => '%start%'));
 		foreach ($rows as $rid => $row):
 			$asistencia = ($row['Registro']['tipo'] == '1');
+			$salida = (!empty($row['Registro']['salida']) ? date('H:i', strtotime($row['Registro']['salida'])) : '-');
 			$rows[$rid] = array(
 				$start++,
 				str_replace(':', ':<br />', h($row['Registro']['asignatura'])),
@@ -111,7 +112,7 @@ $this->Html->addCrumb('Generar reporte');
 				h($row['Registro']['usuario']),
 				date('d/m/Y' . ($asistencia ? ' H:i:s' : ''), strtotime($row['Registro']['fecha'])),
 				($asistencia ? date('H:i', strtotime($row['Registro']['entrada'])) : '-'),
-				($asistencia ? date('H:i', strtotime($row['Registro']['salida'])) : '-'),
+				($asistencia ? $salida : '-'),
 				nl2br(h($row['Registro']['obs']))
 			);
 		endforeach;

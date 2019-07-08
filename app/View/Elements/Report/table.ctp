@@ -35,6 +35,7 @@
 		if (!empty($chunk)):
 			foreach ($chunk as $rid => $row):
 				$asistencia = ($row['Registro']['tipo'] === '1');
+				$salida = (!empty($row['Registro']['salida']) ? date('H:i', strtotime($row['Registro']['salida'])) : '-');
 		?>
 		<tr>
 			<?php if (empty($data['asignatura'])): ?>
@@ -55,7 +56,7 @@
 			</td>
 
 			<td class="row6">
-				<?php echo ($asistencia ? date('H:i', strtotime($row['Registro']['salida'])) : '-') ?>
+				<?php echo ($asistencia ? $salida : '-') ?>
 			</td>
 
 			<td class="row7">
