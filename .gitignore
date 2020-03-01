@@ -12,6 +12,8 @@
 /*.sublime-project
 /*.sublime-workspace
 /.idea
+/.vscode
+/*.code-*
 
 # Makefile
 /build
