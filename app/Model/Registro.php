@@ -14,6 +14,7 @@
  * Dependencias
  */
 App::uses('AppModel', 'Model');
+App::uses('CakeSession', 'Model/Datasource');
 
 /**
  * Registro
@@ -116,7 +117,7 @@ class Registro extends AppModel {
 			'notBlank' => array(
 				'rule' => 'notBlank',
 				'required' => true,
-				'allowEmpty' => false,
+				'allowEmpty' => true,
 				'last' => true,
 				'message' => 'Este campo no puede estar vacío'
 			),
@@ -154,10 +155,33 @@ class Registro extends AppModel {
 		if (!isset($this->data[$this->alias]['id'])) {
 			if (empty($this->data[$this->alias]['obs'])) {
 				$this->data = $this->validate = array();
+			} else {
+				$this->data[$this->alias]['entrada'] = date('H:i:s');
+			}
+		} else {
+			$registros = (array)CakeSession::read('RegistrosCreados');
+			if (!in_array($this->data[$this->alias]['id'], $registros)) {
+				$this->data[$this->alias]['salida'] = date('H:i:s');
 			}
 		}
 
 		return true;
+	}
+
+/**
+ * afterSave
+ *
+ * @param bool $created Indica si el registro se ha creado
+ * @param array $options Opciones
+ *
+ * @return void
+ */
+	public function afterSave($created, $options = array()) {
+		if ($created) {
+			$registros = (array)CakeSession::read('RegistrosCreados');
+			$registros[] = $this->data[$this->alias]['id'];
+			CakeSession::write('RegistrosCreados', $registros);
+		}
 	}
 
 /**

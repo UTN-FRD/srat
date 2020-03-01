@@ -342,9 +342,9 @@ class Usuario extends AppModel {
 			foreach ($rows as $rid => $row) {
 				if (empty($row['Registro']['id'])) {
 					$row['Registro']['asignatura_id'] = $row['Cargo']['asignatura_id'];
-					$row['Registro']['entrada'] = $row['Horario']['entrada'];
+					$row['Registro']['entrada'] = date('H:i:s');
 					$row['Registro']['fecha'] = date('Y-m-d H:i:s');
-					$row['Registro']['salida'] = $row['Horario']['salida'];
+					$row['Registro']['salida'] = null;
 					$row['Registro']['tipo'] = 1;
 					$row['Registro']['usuario_id'] = $id;
 				}
