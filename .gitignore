@@ -17,3 +17,6 @@
 
 # Makefile
 /build
+
+# Dotenv
+.env
