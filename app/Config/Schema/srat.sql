@@ -401,7 +401,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,1,1,'$2a$10$JTFmlyWPAXBXVh.NW0azOuU1WvwL/W0q2vRQum7vM645Ote/Cy8Oq',NULL,1,'-','Administrador',NULL);
+INSERT INTO `usuarios` VALUES (1,1,1,'$2a$10$JTFmlyWPAXBXVh.NW0azOuU1WvwL/W0q2vRQum7vM645Ote/Cy8Oq',NULL,1,'-','Administrador','admin@localhost', NULL);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
