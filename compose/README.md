@@ -9,6 +9,9 @@
 
     https://book.cakephp.org/2/es/getting-started.html#configuracion-opcional
 
+# Base de datos
+
+Colocar los scripts SQL en el directorio `sql` para que sean ejecutados la primera vez que se genera el proyecto. De ser necesario, numerar los archivos para que se ejecuten en el orden deseado.
 
 # Proyecto
 
