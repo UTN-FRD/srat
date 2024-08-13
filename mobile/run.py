@@ -23,20 +23,22 @@ def index():
     editable = isIPEditable()
     reload = False
     registros = RegistrosLegajo.get_by_legajo(current_user.legajo)
-    for registro in registros:
-        if not registro.registro_entrada:
-            reload = True
-            reg = Registros(
-                tipo=1, 
-                computable=1, 
-                asignatura_id=registro.asignatura_id, 
-                usuario_id=registro.usuario_id, 
-                fecha=date.today(), 
-                entrada=datetime.now().strftime("%H:%M:%S") )
-            reg.save()
+    if(editable):
+        for registro in registros:
+            if not registro.registro_entrada:
+                reload = True
+                reg = Registros(
+                    tipo=1, 
+                    computable=1, 
+                    asignatura_id=registro.asignatura_id, 
+                    usuario_id=registro.usuario_id, 
+                    fecha=date.today(), 
+                    entrada=datetime.now().strftime("%H:%M:%S") )
+                reg.save()
+        
+        if reload:
+            registros = RegistrosLegajo.get_by_legajo(current_user.legajo)
     
-    if reload:
-        registros = RegistrosLegajo.get_by_legajo(current_user.legajo)
     return render_template("registros_form.html", registros=registros, editable=editable)
 
 @app.route("/registros", methods=['POST'])
