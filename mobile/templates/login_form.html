@@ -1,0 +1,27 @@
+{% extends "base_template.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    {% if msg %}
+    <div class="alert alert-danger" role="alert">
+        {{ msg }}
+    </div>
+    {% endif %}
+    <div>
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">{{ form.legajo.label }}</label>
+              {{ form.legajo }}
+              <div id="emailHelp" class="form-text">Ingrese su n&uacute;mero de legajo.</div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">{{ form.password.label }}</label>
+              {{ form.password }}
+            </div>
+            {{ form.submit() }}
+        </form>
+    </div>
+
+{% endblock %}
